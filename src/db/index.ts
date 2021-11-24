@@ -1,13 +1,11 @@
-import mongoose from 'mongoose'
+import mongoose, { MongooseOptions } from 'mongoose'
 import { config } from '../config'
 
 const { isValidObjectId } = mongoose
 
-console.log(config)
-
 mongoose.connect(config.MONGO_URI, {
   useNewUrlParser: true,
-} as any)
+} as MongooseOptions)
 
 mongoose.connection
   .on('error', err => console.error(err))

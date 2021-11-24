@@ -1,5 +1,5 @@
 export type Config = {
-  PORT: string
+  PORT: number
   MONGO_URI: string
   SECRET: string
 }

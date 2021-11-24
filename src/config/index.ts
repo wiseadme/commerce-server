@@ -9,7 +9,7 @@ dotenv.config({
 })
 
 export const config: Config = {
-  PORT: process.env.PORT!,
+  PORT: Number(process.env.PORT!),
   MONGO_URI: process.env.MONGO_URI!,
-  SECRET: process.env.SECRET!
+  SECRET: process.env.SECRET_KEY!
 }
