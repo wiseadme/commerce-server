@@ -1,5 +1,6 @@
 import { json, urlencoded } from 'express'
 import App from './app'
+import db from './db'
 
 import loggerMiddleware from './middlewares/logger-middleware'
 
@@ -18,5 +19,5 @@ const app = new App({
     new MainController
   ]
 })
-
+db.now()
 app.listen()
