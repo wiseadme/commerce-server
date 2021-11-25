@@ -1,6 +1,7 @@
 import { Router } from 'express'
+import { Controller } from '../types'
 
-class MainController {
+class MainController implements Controller {
   public path = '/'
   public router = Router()
 
@@ -19,15 +20,10 @@ class MainController {
   }
 
   getUser(req, res) {
-    console.log(req.headers)
     res.status(200).json({
       ok: true,
       data: { user: 'Anar' }
     })
-  }
-
-  patch() {
-
   }
 }
 

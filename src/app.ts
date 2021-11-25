@@ -21,7 +21,11 @@ class App {
 
   private routes(controllers: Array<any>) {
     controllers.forEach(controller => {
-      this.app.use(controller.path, controller.router)
+      if (typeof controller === 'function') {
+        this.app.use(controller)
+      } else {
+        this.app.use(controller.path, controller.router)
+      }
     })
   }
 
