@@ -1,10 +1,13 @@
 import { Router, Request, Response } from 'express'
-import { Controller } from '../types'
-import { CategoryType } from '../types/models'
+
 import expressAsyncHandler from 'express-async-handler'
 import categoryService from '../services/category-service'
 
-export class CategoryController implements Controller {
+// Types
+import { IController } from '../types'
+import { ICategory } from '../types/models'
+
+export class CategoryController implements IController {
   public path = '/category'
   public router = Router()
 
@@ -14,23 +17,44 @@ export class CategoryController implements Controller {
 
   public initRoutes() {
     this.router.post('/create', expressAsyncHandler(this.createCategory))
+    this.router.patch('/update', expressAsyncHandler(this.updateCategory))
   }
 
   async createCategory(req: Request, res: Response) {
     const { create } = categoryService
-    const params: CategoryType = req.body
+    const params: ICategory = req.body
 
     try {
       const category = await create(params)
 
-      res.status(200).json({
+      res.status(201).json({
         ok: true,
         data: category
       })
     } catch (err: any) {
       return Promise.reject({
         ok: false,
-        status: 501,
+        status: err.status || 501,
+        message: err.message || err
+      })
+    }
+  }
+
+  async updateCategory(req: Request, res: Response) {
+    const { update } = categoryService
+    const params: Partial<ICategory> = req.body
+
+    try {
+      const { updated } = await update(params)
+
+      res.status(201).json({
+        ok: true,
+        data: updated
+      })
+    } catch (err: any) {
+      return Promise.reject({
+        ok: false,
+        status: err.status || 501,
         message: err.message || err
       })
     }
@@ -38,3 +62,6 @@ export class CategoryController implements Controller {
 }
 
 export default CategoryController
+
+
+

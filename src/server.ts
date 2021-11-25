@@ -1,27 +1,32 @@
+// Depends
 import express from 'express'
-import { config } from './config'
+
+// App
 import App from './app'
+
+// Db connector
 import db from './db'
 
-import loggerMiddleware from './middlewares/logger-middleware'
+// Configs
+import { config } from './config'
+
+// Middlewares
+import { loggerMiddleware } from './middlewares/logger-middleware'
 import { errorMiddleware } from './middlewares/error-middleware'
 
-import MainController from './controllers/MainController'
+// Controllers
 import CategoryController from './controllers/CategoryController'
 
 const app = new App({
   port: config.PORT,
 
   middleWares: [
-    express.json({
-      type: 'application/json'
-    }),
+    express.json({}),
     express.urlencoded({}),
     loggerMiddleware,
   ],
 
   controllers: [
-    new MainController(),
     new CategoryController(),
     errorMiddleware
   ]

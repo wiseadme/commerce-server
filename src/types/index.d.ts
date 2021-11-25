@@ -6,7 +6,7 @@ export type Config = {
   SECRET: string
 }
 
-export interface Controller {
+export interface IController {
   path: string
   router: Router
   initRoutes: () => void

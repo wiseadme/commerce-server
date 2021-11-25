@@ -1,16 +1,15 @@
 import mongoose, { Document } from 'mongoose'
-import Category from '../models/CategoryModel'
-import { CategoryType } from '../types/models'
+import CategoryModel from '../models/CategoryModel'
+import { ICategory } from '../types/models'
 import { translator } from '../utils/translator'
 
-interface CategoryServiceType {
-  create: (category: CategoryType) => Promise<CategoryType & Document>
+interface ICategoryService {
+  create: (category: ICategory) => Promise<ICategory & Document>
 }
 
-class CategoryService implements CategoryServiceType {
-  async create(category: CategoryType) {
-
-    const created = new Category({
+class CategoryService implements ICategoryService {
+  async create(category: ICategory) {
+    const created = new CategoryModel({
       _id: new mongoose.Types.ObjectId(),
       title: category.title,
       url: translator(category.title),
@@ -19,6 +18,22 @@ class CategoryService implements CategoryServiceType {
     })
 
     return created.save()
+  }
+
+  async update(updates) {
+    const $set = updates
+
+    if ($set.seo) {
+      $set.seo = JSON.parse($set.seo)
+    }
+
+    const updated = await CategoryModel.findByIdAndUpdate(
+      { _id: $set._id },
+      { $set },
+      { new: true }
+    )
+
+    return { updated }
   }
 }
 

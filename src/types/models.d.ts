@@ -1,6 +1,6 @@
 import { Document } from 'mongoose'
 
-export interface CategoryType{
+export interface ICategory{
   title: string
   image?: string
   seo?: SeoType
