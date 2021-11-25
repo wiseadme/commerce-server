@@ -1,7 +1,8 @@
 import { Request, Response } from 'express'
+import consola from 'consola'
 
 export const loggerMiddleware = (req: Request, resp: Response, next) => {
 
-  console.log('Request logged:', req.method, req.path)
+  consola.info('Request logged:', req.method, req.path)
   next()
 }

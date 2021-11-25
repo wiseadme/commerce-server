@@ -8,13 +8,14 @@ interface ICategoryService {
 }
 
 class CategoryService implements ICategoryService {
-  async create(category: ICategory) {
+  async create({ title, seo, order }: ICategory) {
+
     const created = new CategoryModel({
       _id: new mongoose.Types.ObjectId(),
-      title: category.title,
-      url: translator(category.title),
-      seo: JSON.parse(category.seo as any),
-      order: category.order
+      url: translator(title),
+      seo: JSON.parse(seo as any),
+      title,
+      order
     })
 
     return created.save()

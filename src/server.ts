@@ -17,7 +17,7 @@ import { errorMiddleware } from './middlewares/error-middleware'
 // Controllers
 import CategoryController from './controllers/CategoryController'
 
-const app = new App({
+export const server = new App({
   port: config.PORT,
 
   middleWares: [
@@ -33,4 +33,4 @@ const app = new App({
 })
 
 db.now()
-app.listen()
+// app.listen()
