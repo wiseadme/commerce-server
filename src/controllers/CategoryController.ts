@@ -16,8 +16,11 @@ export class CategoryController implements IController {
   }
 
   public initRoutes() {
+    this.router.get('/', expressAsyncHandler(this.getAllCategories))
+    this.router.get('/', expressAsyncHandler(this.getCategory))
     this.router.post('/create', expressAsyncHandler(this.createCategory))
     this.router.patch('/update', expressAsyncHandler(this.updateCategory))
+    this.router.delete('/', expressAsyncHandler(this.deleteCategory))
   }
 
   async createCategory(req: Request, res: Response) {
@@ -58,6 +61,18 @@ export class CategoryController implements IController {
         message: err.message || err
       })
     }
+  }
+
+  async deleteCategory(req: Request, res: Response) {
+
+  }
+
+  async getAllCategories(req: Request, res: Response) {
+
+  }
+
+  async getCategory(req: Request, res: Response) {
+
   }
 }
 

@@ -1,3 +1,3 @@
-export const errorMiddleware = (err, req, res) => {
-  res.status(err.status).json(err)
+export const errorMiddleware = (err, req, res, next) => {
+  res?.status(err.status).json(err)
 }

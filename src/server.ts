@@ -5,7 +5,7 @@ import express from 'express'
 import App from './app'
 
 // Db connector
-import db from './db'
+import { connectDb } from './db'
 
 // Configs
 import { config } from './config'
@@ -16,6 +16,8 @@ import { errorMiddleware } from './middlewares/error-middleware'
 
 // Controllers
 import CategoryController from './controllers/CategoryController'
+
+const { mongoose } = connectDb()
 
 export const server = new App({
   port: config.PORT,
@@ -31,6 +33,3 @@ export const server = new App({
     errorMiddleware
   ]
 })
-
-db.now()
-// app.listen()
