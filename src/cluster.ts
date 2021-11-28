@@ -8,10 +8,10 @@ if (cluster.isMaster) {
   for (let i = 0; i < cCPUs; i++) {
     cluster.fork()
   }
-  cluster.on('online', function (worker) {
+  cluster.on('online', (worker) => {
     consola.success('Worker ' + worker.process.pid + ' is online.')
   })
-  cluster.on('exit', function (worker, code, signal) {
+  cluster.on('exit', (worker, code, signal) => {
     consola.info('worker ' + worker.process.pid + ' died.')
   })
 } else {

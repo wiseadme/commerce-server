@@ -2,9 +2,11 @@ import mongoose, { Document } from 'mongoose'
 import CategoryModel from '../models/CategoryModel'
 import { ICategory } from '../types/models'
 import { translator } from '../utils/translator'
+import * as QueryString from 'querystring'
 
 interface ICategoryService {
   create: (category: ICategory) => Promise<ICategory & Document>
+  read: (query: any) => Promise<Array<ICategory>>
 }
 
 class CategoryService implements ICategoryService {
@@ -35,6 +37,15 @@ class CategoryService implements ICategoryService {
     )
 
     return { updated }
+  }
+
+  async read({ category_id }: any) {
+    const queryParams = category_id ? { _id: category_id } : {}
+    return CategoryModel.find(queryParams as any)
+  }
+
+  async delete(id: string) {
+    return CategoryModel.findByIdAndDelete({ _id: id })
   }
 }
 

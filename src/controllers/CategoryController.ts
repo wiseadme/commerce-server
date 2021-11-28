@@ -24,10 +24,10 @@ export class CategoryController implements IController {
 
   async createCategory(req: Request, res: Response) {
     const { create } = categoryService
-    const params: ICategory = req.body
+    const body: ICategory = req.body
 
     try {
-      const category = await create(params)
+      const category = await create(body)
 
       res.status(201).json({
         ok: true,
@@ -44,10 +44,10 @@ export class CategoryController implements IController {
 
   async updateCategory(req: Request, res: Response) {
     const { update } = categoryService
-    const params: Partial<ICategory> = req.body
+    const body: Partial<ICategory> = req.body
 
     try {
-      const { updated } = await update(params)
+      const { updated } = await update(body)
 
       res.status(201).json({
         ok: true,
@@ -63,11 +63,27 @@ export class CategoryController implements IController {
   }
 
   async deleteCategory(req: Request, res: Response) {
-
+    console.log(req.body)
   }
 
   async getCategories(req: Request, res: Response) {
+    const query = req.query
+    const { read } = categoryService
 
+    try {
+      const categories = await read(query)
+
+      res.status(200).json({
+        ok: true,
+        data: categories
+      })
+    } catch (err: any) {
+      return Promise.reject({
+        ok: false,
+        status: err.status || 501,
+        message: err.message || err
+      })
+    }
   }
 }
 
