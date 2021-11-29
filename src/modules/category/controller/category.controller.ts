@@ -1,15 +1,17 @@
 import { Router, Request, Response } from 'express'
 
 import expressAsyncHandler from 'express-async-handler'
-import categoryService from '../service/category.service'
+import { injectable, inject } from 'inversify'
 import 'reflect-metadata'
 
 // Types
-import { IController, ILogger } from '../../../types'
+import { IController } from '../../../types'
 import { ICategory } from '../../../types/models'
+import { ILogger } from '../../../types/utils'
 import { ICategoryService } from '../../../types/services'
-import { injectable, inject } from 'inversify'
-import { TYPES } from '../../../schemes/di-types'
+
+// Schemes
+import { TYPES } from '../../../app/schemes/di-types'
 
 @injectable()
 export class CategoryController implements IController {
@@ -17,10 +19,9 @@ export class CategoryController implements IController {
   public router = Router()
 
   constructor(
-    @inject(TYPES.ILogger) public logger: ILogger,
-    @inject(TYPES.ICategoryService) public categoryService: ICategoryService
+    @inject(TYPES.UTILS.ILogger) private logger: ILogger,
+    @inject(TYPES.SERVICES.ICategoryService) private categoryService: ICategoryService,
   ) {
-    this.logger.error('oh no!')
     this.initRoutes()
   }
 
@@ -73,9 +74,7 @@ export class CategoryController implements IController {
     console.log(req.body)
   }
 
-  async getCategories(req: Request, res: Response) {
-    const query = req.query
-
+  async getCategories({ query }: Request, res: Response) {
     try {
       const categories = await this.categoryService.read(query)
 

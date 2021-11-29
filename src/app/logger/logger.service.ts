@@ -1,5 +1,5 @@
 import { Consola, JSONReporter } from 'consola'
-import { ILogger } from '../types'
+import { ILogger } from '../../types/utils'
 import { injectable } from 'inversify'
 import 'reflect-metadata'
 

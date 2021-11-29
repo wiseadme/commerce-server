@@ -1,11 +1,11 @@
 import dotenv from 'dotenv'
 import path from 'path'
-import { Config } from '../types'
+import { Config } from '../../types'
 
 const root = path.join.bind(this, __dirname)
 
 dotenv.config({
-  path: root('../../.env')
+  path: root('../../../.env')
 })
 
 export const config: Config = {

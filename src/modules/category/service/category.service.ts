@@ -1,40 +1,38 @@
-import mongoose, { Document } from 'mongoose'
-import { injectable } from 'inversify'
-import CategoryModel from '../model/category.model'
-import { translator } from '../../../utils/translator'
+import { Document } from 'mongoose'
+import { inject, injectable } from 'inversify'
+
+// Model
+import { CategoryModel } from '../model/category.model'
+
+// Entity
+import { Category } from '../entity/category.entity'
+
+// Schemes
+import { TYPES } from '../../../app/schemes/di-types'
+
 // Types
 import { ICategory } from '../../../types/models'
 import { ICategoryService } from '../../../types/services'
+import { ILogger } from '../../../types/utils'
 
 @injectable()
 export class CategoryService implements ICategoryService {
+
+  constructor(
+    @inject(TYPES.UTILS.ILogger) private logger: ILogger,
+    @inject(TYPES.REPOSITORIES.CategoryRepository) private categoryRepository: any
+  ) {
+  }
+
   async create({ title, seo, order }: ICategory) {
+    const category = new Category(title, order)
+    seo && category.setSeo(seo)
 
-    const created = new CategoryModel({
-      _id: new mongoose.Types.ObjectId(),
-      url: translator(title),
-      seo: JSON.parse(seo as any),
-      title,
-      order
-    })
-
-    return created.save()
+    return await this.categoryRepository.create(category)
   }
 
   async update(updates: any): Promise<{ updated: Document<ICategory> }> {
-    const $set = updates
-
-    if ($set.seo) {
-      $set.seo = JSON.parse($set.seo)
-    }
-
-    const updated = await CategoryModel.findByIdAndUpdate(
-      { _id: $set._id },
-      { $set },
-      { new: true }
-    ) as Document<ICategory>
-
-    return { updated }
+    return this.categoryRepository.update(updates)
   }
 
   async read({ category_id }: any) {
@@ -47,5 +45,3 @@ export class CategoryService implements ICategoryService {
     return true
   }
 }
-
-export default new CategoryService()

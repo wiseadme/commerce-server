@@ -6,7 +6,7 @@
   "type": "commonjs",
   "scripts": {
     "build": "tsc --project ./",
-    "dev": "nodemon src/cluster.ts"
+    "dev": "nodemon src/app/cluster.ts"
   },
   "keywords": [],
   "author": "",
