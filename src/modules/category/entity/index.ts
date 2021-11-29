@@ -1,3 +1,4 @@
-export class Category {
-
+export class CategoryEntity {
+  constructor() {
+  }
 }

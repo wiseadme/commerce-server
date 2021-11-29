@@ -2,32 +2,40 @@ import { Router, Request, Response } from 'express'
 
 import expressAsyncHandler from 'express-async-handler'
 import categoryService from '../service/category.service'
+import 'reflect-metadata'
 
 // Types
-import { IController } from '../../../types'
+import { IController, ILogger } from '../../../types'
 import { ICategory } from '../../../types/models'
+import { ICategoryService } from '../../../types/services'
+import { injectable, inject } from 'inversify'
+import { TYPES } from '../../../schemes/di-types'
 
+@injectable()
 export class CategoryController implements IController {
   public path = '/category'
   public router = Router()
 
-  constructor() {
+  constructor(
+    @inject(TYPES.ILogger) public logger: ILogger,
+    @inject(TYPES.ICategoryService) public categoryService: ICategoryService
+  ) {
+    this.logger.error('oh no!')
     this.initRoutes()
   }
 
   public initRoutes() {
-    this.router.get('/', expressAsyncHandler(this.getCategories))
-    this.router.post('/', expressAsyncHandler(this.createCategory))
-    this.router.patch('/', expressAsyncHandler(this.updateCategory))
-    this.router.delete('/', expressAsyncHandler(this.deleteCategory))
+    this.router.get('/', expressAsyncHandler(this.getCategories.bind(this)))
+    this.router.post('/', expressAsyncHandler(this.createCategory.bind(this)))
+    this.router.patch('/', expressAsyncHandler(this.updateCategory.bind(this)))
+    this.router.delete('/', expressAsyncHandler(this.deleteCategory.bind(this)))
   }
 
   async createCategory(req: Request, res: Response) {
-    const { create } = categoryService
     const body: ICategory = req.body
 
     try {
-      const category = await create(body)
+      const category = await this.categoryService.create(body)
 
       res.status(201).json({
         ok: true,
@@ -43,11 +51,10 @@ export class CategoryController implements IController {
   }
 
   async updateCategory(req: Request, res: Response) {
-    const { update } = categoryService
     const body: Partial<ICategory> = req.body
 
     try {
-      const { updated } = await update(body)
+      const { updated } = await this.categoryService.update(body)
 
       res.status(201).json({
         ok: true,
@@ -68,10 +75,9 @@ export class CategoryController implements IController {
 
   async getCategories(req: Request, res: Response) {
     const query = req.query
-    const { read } = categoryService
 
     try {
-      const categories = await read(query)
+      const categories = await this.categoryService.read(query)
 
       res.status(200).json({
         ok: true,

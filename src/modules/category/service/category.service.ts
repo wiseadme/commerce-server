@@ -1,9 +1,10 @@
 import mongoose, { Document } from 'mongoose'
+import { injectable } from 'inversify'
 import CategoryModel from '../model/category.model'
+import { translator } from '../../../utils/translator'
+// Types
 import { ICategory } from '../../../types/models'
 import { ICategoryService } from '../../../types/services'
-import { translator } from '../../../utils/translator'
-import { injectable } from 'inversify'
 
 @injectable()
 export class CategoryService implements ICategoryService {

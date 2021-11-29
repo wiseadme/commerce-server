@@ -19,6 +19,8 @@ import { LoggerService } from './logger/logger.service'
 
 // Controllers
 import CategoryController from './modules/category/controller/category.controller'
+import { container } from './dependencies'
+import { TYPES } from './schemes/di-types'
 
 const { mongoose } = connectDb()
 
@@ -31,7 +33,7 @@ export const server = new App({
     loggerMiddleware,
   ],
   controllers: [
-    new CategoryController(),
+    container.get(TYPES.CategoryController),
     errorMiddleware
   ]
 })
