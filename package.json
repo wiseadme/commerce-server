@@ -2,7 +2,8 @@
   "name": "shop-server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "cluster.js",
+  "type": "commonjs",
   "scripts": {
     "build": "tsc --project ./",
     "dev": "nodemon src/cluster.ts"
@@ -23,6 +24,8 @@
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-async-handler": "^1.2.0",
-    "mongoose": "^6.0.13"
+    "inversify": "^6.0.1",
+    "mongoose": "^6.0.13",
+    "reflect-metadata": "^0.1.13"
   }
 }

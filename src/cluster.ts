@@ -15,5 +15,5 @@ if (cluster.isMaster) {
     consola.info('worker ' + worker.process.pid + ' died.')
   })
 } else {
-  server.listen()
+  (server as any).listen()
 }

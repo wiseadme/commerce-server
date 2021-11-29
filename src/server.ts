@@ -14,20 +14,22 @@ import { config } from './config'
 import { loggerMiddleware } from './middlewares/logger-middleware'
 import { errorMiddleware } from './middlewares/error-middleware'
 
+// Services
+import { LoggerService } from './logger/logger.service'
+
 // Controllers
-import CategoryController from './controllers/CategoryController'
+import CategoryController from './modules/category/controller/category.controller'
 
 const { mongoose } = connectDb()
 
 export const server = new App({
+  logger: new LoggerService(),
   port: config.PORT,
-
   middleWares: [
     express.json({}),
     express.urlencoded({}),
     loggerMiddleware,
   ],
-
   controllers: [
     new CategoryController(),
     errorMiddleware

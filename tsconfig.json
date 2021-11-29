@@ -6,10 +6,18 @@
     "outDir": "./dist",
     "noImplicitAny": false,
     "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "strict": true,
     "types": [
       "@types/express"
-    ]
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "src/"
+      ]
+    }
   },
   "include": [
     "src/"

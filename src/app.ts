@@ -1,16 +1,24 @@
 import express from 'express'
 import { Application } from 'express'
+import { ILogger } from './types'
 
 class App {
   public app: Application
   public port: number
+  public logger: ILogger
 
-  constructor(appInit: { port: number, middleWares: any, controllers: any }) {
+  constructor(init: {
+    port: number,
+    middleWares: any[],
+    controllers: any[],
+    logger: ILogger
+  }) {
     this.app = express()
-    this.port = appInit.port
+    this.port = init.port
+    this.logger = init.logger
 
-    this.middleWares(appInit.middleWares)
-    this.routes(appInit.controllers)
+    this.middleWares(init.middleWares)
+    this.routes(init.controllers)
   }
 
   private middleWares(middleWares: Array<any>) {
@@ -30,7 +38,7 @@ class App {
   }
 
   public listen() {
-    this.app.listen(this.port, () => console.log('server is running on ' + this.port))
+    this.app.listen(this.port, () => this.logger.log('server is running on ', this.port))
   }
 }
 

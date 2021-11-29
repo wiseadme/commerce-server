@@ -1,15 +1,12 @@
 import mongoose, { Document } from 'mongoose'
-import CategoryModel from '../models/CategoryModel'
-import { ICategory } from '../types/models'
-import { translator } from '../utils/translator'
-import * as QueryString from 'querystring'
+import CategoryModel from '../model/category.model'
+import { ICategory } from '../../../types/models'
+import { ICategoryService } from '../../../types/services'
+import { translator } from '../../../utils/translator'
+import { injectable } from 'inversify'
 
-interface ICategoryService {
-  create: (category: ICategory) => Promise<ICategory & Document>
-  read: (query: any) => Promise<Array<ICategory>>
-}
-
-class CategoryService implements ICategoryService {
+@injectable()
+export class CategoryService implements ICategoryService {
   async create({ title, seo, order }: ICategory) {
 
     const created = new CategoryModel({
@@ -23,7 +20,7 @@ class CategoryService implements ICategoryService {
     return created.save()
   }
 
-  async update(updates) {
+  async update(updates: any): Promise<{ updated: Document<ICategory> }> {
     const $set = updates
 
     if ($set.seo) {
@@ -34,7 +31,7 @@ class CategoryService implements ICategoryService {
       { _id: $set._id },
       { $set },
       { new: true }
-    )
+    ) as Document<ICategory>
 
     return { updated }
   }
@@ -44,8 +41,9 @@ class CategoryService implements ICategoryService {
     return CategoryModel.find(queryParams as any)
   }
 
-  async delete(id: string) {
-    return CategoryModel.findByIdAndDelete({ _id: id })
+  async delete(id: string): Promise<boolean> {
+    await CategoryModel.findByIdAndDelete({ _id: id })
+    return true
   }
 }
 

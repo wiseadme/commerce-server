@@ -1,11 +1,11 @@
 import { Router, Request, Response } from 'express'
 
 import expressAsyncHandler from 'express-async-handler'
-import categoryService from '../services/category-service'
+import categoryService from '../service/category.service'
 
 // Types
-import { IController } from '../types'
-import { ICategory } from '../types/models'
+import { IController } from '../../../types'
+import { ICategory } from '../../../types/models'
 
 export class CategoryController implements IController {
   public path = '/category'
