@@ -11,3 +11,10 @@ export interface IConfig {
   dbUri: string
   secret: string
 }
+
+export interface IDb {
+  connect: () => any
+  onConnect: () => void
+  onError: () => void
+  onClose: () => void
+}

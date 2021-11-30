@@ -2,5 +2,5 @@ import { Response } from 'express'
 
 export interface IBaseController {
   send: (res: Response, payload: any) => void,
-  handleError: (err: any) => Promise<any>
+  error: (status: number, err: any) => Promise<any>
 }

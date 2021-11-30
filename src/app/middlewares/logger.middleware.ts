@@ -1,16 +1,17 @@
 import { inject, injectable } from 'inversify'
 import { TYPES } from '../schemes/di-types'
-import { ILogger } from '../../types/utils'
+import { ILogger } from '@/types/utils'
+import { IMiddleware } from '@/types/middlewares'
 
 
 @injectable()
-export class LoggerMiddleware {
+export class LoggerMiddleware implements IMiddleware{
   constructor(
     @inject(TYPES.UTILS.ILogger) private logger: ILogger
   ) {
   }
 
-  handler(err, req, res, next) {
+  execute(req, res, next) {
     this.logger.log('Request logged:', req.method, req.path)
     next()
   }

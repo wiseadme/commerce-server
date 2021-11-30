@@ -34,25 +34,21 @@ export class CategoryController extends BaseController implements IController {
     this.router.delete('/', expressAsyncHandler(this.deleteCategory.bind(this)))
   }
 
-  async createCategory(req: Request, res: Response) {
-    const body: ICategory = req.body
-
+  async createCategory({ body }: Request, res: Response, next) {
     try {
-      const category = await this.categoryService.create(body)
+      const category = await this.categoryService.create(body as ICategory)
       this.send(res, category)
     } catch (err: any) {
-      return this.handleError(err)
+      return this.error(500, err)
     }
   }
 
-  async updateCategory(req: Request, res: Response) {
-    const body: Partial<ICategory> = req.body
-
+  async updateCategory({ body }: Request, res: Response) {
     try {
-      const { updated } = await this.categoryService.update(body)
+      const { updated } = await this.categoryService.update(body as Partial<ICategory>)
       this.send(res, updated)
     } catch (err: any) {
-      return this.handleError(err)
+      return this.error(500, err)
     }
   }
 
@@ -61,7 +57,7 @@ export class CategoryController extends BaseController implements IController {
       const categories = await this.categoryService.read(query)
       this.send(res, categories)
     } catch (err: any) {
-      return this.handleError(err)
+      return this.error(500, err)
     }
   }
 

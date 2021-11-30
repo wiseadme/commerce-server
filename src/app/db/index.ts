@@ -1,13 +1,13 @@
 import mongoose, { MongooseOptions } from 'mongoose'
 import { inject, injectable } from 'inversify'
 import { TYPES } from '../schemes/di-types'
-import { ILogger } from '../../types/utils'
-import { IConfig } from '../../types'
+import { ILogger } from '@/types/utils'
+import { IConfig, IDb } from '@/types'
 
 const { isValidObjectId } = mongoose
 
 @injectable()
-export class DB {
+export class DB implements IDb {
   constructor(
     @inject(TYPES.UTILS.ILogger) private logger: ILogger,
     @inject(TYPES.CONFIG) private config: IConfig

@@ -1,11 +1,10 @@
-import express from 'express'
-import { Application } from 'express'
-import { ILogger } from '@/types/utils'
-import { DB } from './db'
+import express, { Application } from 'express'
 import { inject, injectable, multiInject } from 'inversify'
+import { DB } from './db'
 import { TYPES } from './schemes/di-types'
-import { IErrorMiddleware, IMiddleware } from '@/types/middlewares'
 import { IConfig, IController } from '@/types'
+import { IErrorRouteMiddleware, IMiddleware } from '@/types/middlewares'
+import { ILogger } from '@/types/utils'
 
 @injectable()
 class App {
@@ -16,7 +15,7 @@ class App {
     @inject(TYPES.DB) private db: DB,
     @inject(TYPES.UTILS.ILogger) private logger: ILogger,
     @inject(TYPES.CONFIG) private config: IConfig,
-    @inject(TYPES.MIDDLEWARES.IErrorMiddleware) private errorHandler: IErrorMiddleware,
+    @inject(TYPES.MIDDLEWARES.IErrorRouteMiddleware) private errorRouteMiddleware: IErrorRouteMiddleware,
     @multiInject(TYPES.CONTROLLERS.IController) private routesArray: IController[],
     @multiInject(TYPES.MIDDLEWARES.IMiddleware) private middlewaresArray: IMiddleware[],
   ) {
@@ -25,13 +24,16 @@ class App {
 
     this.middleWares(middlewaresArray)
     this.routes(routesArray)
-    this.handlers()
     this.db.connect()
   }
 
+  // TODO - replace express middlewares with with middleware classes
   private middleWares(middleWares: Array<any>) {
+    this.app.use(express.json({}))
+    this.app.use(express.urlencoded({}))
+
     middleWares.forEach(middleWare => {
-      this.app.use(middleWare.handler.bind(middleWare))
+      this.app.use(middleWare.execute.bind(middleWare))
     })
   }
 
@@ -39,10 +41,8 @@ class App {
     controllers.forEach(controller => {
       this.app.use(controller.path, controller.router)
     })
-  }
 
-  private handlers() {
-    this.app.use(this.errorHandler.handler as any)
+    this.app.use(this.errorRouteMiddleware.execute as any)
   }
 
   public listen() {

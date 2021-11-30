@@ -1,15 +1,15 @@
 import { inject, injectable } from 'inversify'
 import { TYPES } from '../schemes/di-types'
-import { ILogger } from '../../types/utils'
+import { ILogger } from '@/types/utils'
 
 @injectable()
-export class ErrorHandler {
+export class ErrorRouteMiddleware {
   constructor(
     @inject(TYPES.UTILS.ILogger) private logger: ILogger
   ) {
   }
 
-  handler(err, req, res, next) {
+  execute(err, req, res, next) {
     res?.status(err.status).json(err)
   }
 }

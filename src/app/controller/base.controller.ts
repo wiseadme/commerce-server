@@ -11,10 +11,10 @@ export class BaseController implements IBaseController {
     })
   }
 
-  handleError(err): Promise<any> {
+  error(status: number, err: any): Promise<any> {
     return Promise.reject({
       ok: false,
-      status: err.status || 501,
+      status: err.status || status,
       message: err.message || err
     })
   }
