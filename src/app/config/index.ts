@@ -1,6 +1,7 @@
 import dotenv from 'dotenv'
 import path from 'path'
-import { Config } from '../../types'
+import { injectable } from 'inversify'
+import { IConfig } from '../../types'
 
 const root = path.join.bind(this, __dirname)
 
@@ -8,8 +9,9 @@ dotenv.config({
   path: root('../../../.env')
 })
 
-export const config: Config = {
-  PORT: Number(process.env.PORT!),
-  MONGO_URI: process.env.MONGO_URI!,
-  SECRET: process.env.SECRET_KEY!
+@injectable()
+export class Config implements IConfig{
+  port: number = Number(process.env.PORT!)
+  dbUri: string = process.env.MONGO_URI!
+  secret: string = process.env.SECRET_KEY!
 }

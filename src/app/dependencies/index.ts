@@ -10,15 +10,18 @@ import { DB } from '../db'
 import { ICategoryService } from '../../types/services'
 import { ICategoryRepository } from '../../types/repositories'
 import { ILogger } from '../../types/utils'
-import { IController } from '../../types'
+import { IController, IConfig } from '../../types'
 import { IMiddleware, IErrorMiddleware } from '../../types/middlewares'
 import { ErrorHandler } from '../middlewares/error.middleware'
 import { LoggerMiddleware } from '../middlewares/logger.middleware'
+import { Config } from '../config'
 
 export const container = new Container()
 
+// Globals
 container.bind<App>(TYPES.APPLICATION).to(App)
 container.bind<DB>(TYPES.DB).to(DB)
+container.bind<IConfig>(TYPES.CONFIG).to(Config)
 
 // Utils
 container.bind<ILogger>(TYPES.UTILS.ILogger).to(LoggerService)

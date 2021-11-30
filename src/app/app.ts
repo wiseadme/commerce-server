@@ -5,6 +5,7 @@ import { DB } from './db'
 import { inject, injectable, multiInject } from 'inversify'
 import { TYPES } from './schemes/di-types'
 import { IErrorMiddleware, IMiddleware } from '../types/middlewares'
+import { IConfig, IController } from '../types'
 
 @injectable()
 class App {
@@ -12,14 +13,15 @@ class App {
   public port: number
 
   constructor(
-    @inject(TYPES.UTILS.ILogger) private logger: ILogger,
     @inject(TYPES.DB) private db: DB,
+    @inject(TYPES.UTILS.ILogger) private logger: ILogger,
+    @inject(TYPES.CONFIG) private config: IConfig,
     @inject(TYPES.MIDDLEWARES.IErrorMiddleware) private errorHandler: IErrorMiddleware,
-    @multiInject(TYPES.CONTROLLERS.IController) private routesArray: any[],
+    @multiInject(TYPES.CONTROLLERS.IController) private routesArray: IController[],
     @multiInject(TYPES.MIDDLEWARES.IMiddleware) private middlewaresArray: IMiddleware[],
   ) {
     this.app = express()
-    this.port = 5000
+    this.port = this.config.port
 
     this.middleWares(middlewaresArray)
     this.routes(routesArray)
@@ -33,13 +35,9 @@ class App {
     })
   }
 
-  private routes(controllers: Array<any>) {
+  private routes(controllers: Array<IController>) {
     controllers.forEach(controller => {
-      if (typeof controller === 'function') {
-        this.app.use(controller)
-      } else {
-        this.app.use(controller.path, controller.router)
-      }
+      this.app.use(controller.path, controller.router)
     })
   }
 

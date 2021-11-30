@@ -6,7 +6,8 @@
   "type": "commonjs",
   "scripts": {
     "build": "tsc --project ./",
-    "dev": "nodemon src/app/cluster.ts"
+    "dev": "nodemon src/app/cluster.ts",
+    "start": "node dist/index.js"
   },
   "keywords": [],
   "author": "",

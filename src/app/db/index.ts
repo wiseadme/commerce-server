@@ -1,18 +1,21 @@
 import mongoose, { MongooseOptions } from 'mongoose'
-import { config } from '../config'
 import { inject, injectable } from 'inversify'
 import { TYPES } from '../schemes/di-types'
 import { ILogger } from '../../types/utils'
+import { IConfig } from '../../types'
 
 const { isValidObjectId } = mongoose
 
 @injectable()
 export class DB {
-  constructor(@inject(TYPES.UTILS.ILogger) private logger: ILogger) {
+  constructor(
+    @inject(TYPES.UTILS.ILogger) private logger: ILogger,
+    @inject(TYPES.CONFIG) private config: IConfig
+  ) {
   }
 
   connect() {
-    mongoose.connect(config.MONGO_URI, {
+    mongoose.connect(this.config.dbUri, {
       useNewUrlParser: true,
     } as MongooseOptions)
 

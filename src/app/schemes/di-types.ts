@@ -1,6 +1,7 @@
 export const TYPES = {
   APPLICATION: Symbol.for('App'),
   DB: Symbol.for('DB'),
+  CONFIG: Symbol.for('CONFIG'),
   SERVICES: {
     ICategoryService: Symbol.for('ICategoryService')
   },
