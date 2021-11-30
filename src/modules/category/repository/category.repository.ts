@@ -1,10 +1,10 @@
 import mongoose, { Document } from 'mongoose'
 import { inject, injectable } from 'inversify'
 import { CategoryModel } from '../model/category.model'
-import { TYPES } from '../../../app/schemes/di-types'
-import { ILogger } from '../../../types/utils'
-import { ICategoryRepository } from '../../../types/repositories'
-import { ICategory } from '../../../types/models'
+import { TYPES } from '@/app/schemes/di-types'
+import { ILogger } from '@/types/utils'
+import { ICategoryRepository } from '@/types/repositories'
+import { ICategory } from '@/types/models'
 
 @injectable()
 export class CategoryRepository implements ICategoryRepository {

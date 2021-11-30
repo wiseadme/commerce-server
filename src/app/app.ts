@@ -1,11 +1,11 @@
 import express from 'express'
 import { Application } from 'express'
-import { ILogger } from '../types/utils'
+import { ILogger } from '@/types/utils'
 import { DB } from './db'
 import { inject, injectable, multiInject } from 'inversify'
 import { TYPES } from './schemes/di-types'
-import { IErrorMiddleware, IMiddleware } from '../types/middlewares'
-import { IConfig, IController } from '../types'
+import { IErrorMiddleware, IMiddleware } from '@/types/middlewares'
+import { IConfig, IController } from '@/types'
 
 @injectable()
 class App {

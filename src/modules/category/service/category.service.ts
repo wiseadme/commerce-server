@@ -8,12 +8,12 @@ import { CategoryModel } from '../model/category.model'
 import { Category } from '../entity/category.entity'
 
 // Schemes
-import { TYPES } from '../../../app/schemes/di-types'
+import { TYPES } from '@/app/schemes/di-types'
 
 // Types
-import { ICategory } from '../../../types/models'
-import { ICategoryService } from '../../../types/services'
-import { ILogger } from '../../../types/utils'
+import { ICategory } from '@/types/models'
+import { ICategoryService } from '@/types/services'
+import { ILogger } from '@/types/utils'
 
 @injectable()
 export class CategoryService implements ICategoryService {

@@ -1,5 +1,5 @@
-import { SeoType } from '../../../types/models'
-import { translator } from '../../../app/utils/translator'
+import { SeoType } from '@/types/models'
+import { translator } from '@/app/utils/translator'
 
 export class Category {
   private readonly _url: string

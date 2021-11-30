@@ -2,19 +2,20 @@ import { Router, Request, Response } from 'express'
 
 import expressAsyncHandler from 'express-async-handler'
 import { injectable, inject } from 'inversify'
-import 'reflect-metadata'
+
+import { BaseController } from '@/app/controller/base.controller'
 
 // Types
-import { IController } from '../../../types'
-import { ICategory } from '../../../types/models'
-import { ILogger } from '../../../types/utils'
-import { ICategoryService } from '../../../types/services'
+import { IController } from '@/types'
+import { ICategory } from '@/types/models'
+import { ILogger } from '@/types/utils'
+import { ICategoryService } from '@/types/services'
 
 // Schemes
-import { TYPES } from '../../../app/schemes/di-types'
+import { TYPES } from '@/app/schemes/di-types'
 
 @injectable()
-export class CategoryController implements IController {
+export class CategoryController extends BaseController implements IController {
   public path = '/category'
   public router = Router()
 
@@ -22,6 +23,7 @@ export class CategoryController implements IController {
     @inject(TYPES.UTILS.ILogger) private logger: ILogger,
     @inject(TYPES.SERVICES.ICategoryService) private categoryService: ICategoryService,
   ) {
+    super()
     this.initRoutes()
   }
 
@@ -37,17 +39,9 @@ export class CategoryController implements IController {
 
     try {
       const category = await this.categoryService.create(body)
-
-      res.status(201).json({
-        ok: true,
-        data: category
-      })
+      this.send(res, category)
     } catch (err: any) {
-      return Promise.reject({
-        ok: false,
-        status: err.status || 501,
-        message: err.message || err
-      })
+      return this.handleError(err)
     }
   }
 
@@ -56,39 +50,23 @@ export class CategoryController implements IController {
 
     try {
       const { updated } = await this.categoryService.update(body)
-
-      res.status(201).json({
-        ok: true,
-        data: updated
-      })
+      this.send(res, updated)
     } catch (err: any) {
-      return Promise.reject({
-        ok: false,
-        status: err.status || 501,
-        message: err.message || err
-      })
+      return this.handleError(err)
     }
-  }
-
-  async deleteCategory(req: Request, res: Response) {
-    console.log(req.body)
   }
 
   async getCategories({ query }: Request, res: Response) {
     try {
       const categories = await this.categoryService.read(query)
-
-      res.status(200).json({
-        ok: true,
-        data: categories
-      })
+      this.send(res, categories)
     } catch (err: any) {
-      return Promise.reject({
-        ok: false,
-        status: err.status || 501,
-        message: err.message || err
-      })
+      return this.handleError(err)
     }
+  }
+
+  async deleteCategory(req: Request, res: Response) {
+    console.log(req.body)
   }
 }
 
