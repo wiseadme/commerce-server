@@ -25,8 +25,8 @@ export class CategoryService implements ICategoryService {
   ) {
   }
 
-  async create({ title, seo, order }: IJSONCategory) {
-    const category = new Category(title, order, (seo && JSON.parse(seo)))
+  async create({ title, seo, image, order }: IJSONCategory) {
+    const category = new Category({ title, order, seo: seo && JSON.parse(seo!), image })
 
     return await this.repository.create(category)
   }
@@ -37,8 +37,8 @@ export class CategoryService implements ICategoryService {
     order,
     _id
   }: Partial<Document & IJSONCategory>): Promise<{ updated: Document<ICategory> }> {
-
     seo && (seo = JSON.parse(seo))
+
     return this.repository.update({ title, seo, order, _id } as ICategory)
   }
 

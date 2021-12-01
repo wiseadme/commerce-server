@@ -23,7 +23,8 @@ export class CategoryRepository implements ICategoryRepository {
       _id: new mongoose.Types.ObjectId(),
       title: category.title,
       order: category.order,
-      seo: category.seo
+      seo: category.seo,
+      image: category.image
     }).save()
   }
 
