@@ -9,6 +9,8 @@ import { CategoryRepository } from '@/modules/category/repository/category.repos
 import { DB } from '../db'
 import { Config } from '../config'
 // Middlewares
+import { JsonMiddleware } from '@/app/middlewares/json.middleware'
+import { UrlEncodedMiddleware } from '@/app/middlewares/urlecoded.middleware'
 import { LoggerMiddleware } from '../middlewares/logger.middleware'
 import { ErrorRouteMiddleware } from '../middlewares/error.route.middleware'
 // Types
@@ -16,7 +18,7 @@ import { ICategoryService } from '@/types/services'
 import { ICategoryRepository } from '@/types/repositories'
 import { ILogger } from '@/types/utils'
 import { IController, IConfig, IDb } from '@/types'
-import { IMiddleware, IErrorRouteMiddleware } from '@/types/middlewares'
+import { IMiddleware, IErrorRouteMiddleware, IExpressMiddleware } from '@/types/middlewares'
 
 export const container = new Container()
 
@@ -35,6 +37,8 @@ container.bind<ICategoryService>(TYPES.SERVICES.ICategoryService).to(CategorySer
 container.bind<IController>(TYPES.CONTROLLERS.IController).to(CategoryController)
 
 // Middlewares
+container.bind<IExpressMiddleware>(TYPES.MIDDLEWARES.IMiddleware).to(JsonMiddleware)
+container.bind<IExpressMiddleware>(TYPES.MIDDLEWARES.IMiddleware).to(UrlEncodedMiddleware)
 container.bind<IMiddleware>(TYPES.MIDDLEWARES.IMiddleware).to(LoggerMiddleware)
 container.bind<IErrorRouteMiddleware>(TYPES.MIDDLEWARES.IErrorRouteMiddleware).to(ErrorRouteMiddleware)
 

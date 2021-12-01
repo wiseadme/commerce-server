@@ -19,6 +19,6 @@ export const TYPES = {
   },
   MIDDLEWARES: {
     IMiddleware: Symbol.for('IMiddleware'),
-    IErrorRouteMiddleware: Symbol.for('IErrorRouteMiddleware')
+    IErrorRouteMiddleware: Symbol.for('IErrorRouteMiddleware'),
   }
 }

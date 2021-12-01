@@ -27,11 +27,7 @@ class App {
     this.db.connect()
   }
 
-  // TODO - replace express middlewares with with middleware classes
   private middleWares(middleWares: Array<any>) {
-    this.app.use(express.json({}))
-    this.app.use(express.urlencoded({}))
-
     middleWares.forEach(middleWare => {
       this.app.use(middleWare.execute.bind(middleWare))
     })
