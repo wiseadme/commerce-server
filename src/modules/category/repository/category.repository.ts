@@ -14,16 +14,12 @@ export class CategoryRepository implements ICategoryRepository {
   async create(category) {
     return new CategoryModel({
       _id: new mongoose.Types.ObjectId(),
-      url: category.url,
-      seo: category.seo,
-      title: category.title,
-      order: category.order
+      ...category
     }).save()
   }
 
-  async read(categoryId) {
-    const queryParams = categoryId ? { _id: categoryId } : {}
-    return CategoryModel.find(queryParams as any)
+  async read(params) {
+    return CategoryModel.find(params as any)
   }
 
   async update(updates) {

@@ -42,7 +42,7 @@ class App {
   }
 
   public listen() {
-    this.app.listen(this.port, () => this.logger.log('server is running on ', this.port))
+    this.app.listen(this.port, () => this.logger.log('server is running on', this.port))
   }
 }
 

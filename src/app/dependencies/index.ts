@@ -1,7 +1,7 @@
 import 'reflect-metadata'
 import App from '../app'
 import { TYPES } from '../schemes/di-types'
-import { LoggerService } from '../logger/logger.service'
+import { LoggerService } from '../services/logger/logger.service'
 import { Container } from 'inversify'
 import { CategoryService } from '@/modules/category/service/category.service'
 import { CategoryController } from '@/modules/category/controller/category.controller'
@@ -10,7 +10,7 @@ import { DB } from '../db'
 import { Config } from '../config'
 // Middlewares
 import { JsonMiddleware } from '@/app/middlewares/json.middleware'
-import { UrlEncodedMiddleware } from '@/app/middlewares/urlecoded.middleware'
+import { UrlEncodedMiddleware } from '@/app/middlewares/urlencoded.middleware'
 import { LoggerMiddleware } from '../middlewares/logger.middleware'
 import { ErrorRouteMiddleware } from '../middlewares/error.route.middleware'
 // Types

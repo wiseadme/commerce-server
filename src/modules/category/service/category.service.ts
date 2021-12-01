@@ -20,7 +20,7 @@ export class CategoryService implements ICategoryService {
 
   constructor(
     @inject(TYPES.UTILS.ILogger) private logger: ILogger,
-    @inject(TYPES.REPOSITORIES.CategoryRepository) private categoryRepository: any
+    @inject(TYPES.REPOSITORIES.CategoryRepository) private repository: any
   ) {
   }
 
@@ -28,16 +28,22 @@ export class CategoryService implements ICategoryService {
     const category = new Category(title, order)
     seo && category.setSeo(seo)
 
-    return await this.categoryRepository.create(category)
+    return await this.repository.create(category)
   }
 
   async update(updates: any): Promise<{ updated: Document<ICategory> }> {
-    return this.categoryRepository.update(updates)
+    return this.repository.update(updates)
   }
 
   async read({ category_id }: any) {
     const queryParams = category_id ? { _id: category_id } : {}
-    return CategoryModel.find(queryParams as any)
+    const categories = await this.repository.read(queryParams)
+
+    if (!categories || !categories.length) {
+      throw ({ status: 404, message: 'not found' })
+    }
+
+    return categories
   }
 
   async delete(id: string): Promise<boolean> {

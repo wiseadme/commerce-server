@@ -12,7 +12,7 @@ export class LoggerMiddleware implements IMiddleware{
   }
 
   execute(req, res, next) {
-    this.logger.log('Request logged:', req.method, req.path)
+    this.logger.info('request:', req.method, req.path)
     next()
   }
 }
