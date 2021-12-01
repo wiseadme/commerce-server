@@ -14,7 +14,9 @@ export class CategoryRepository implements ICategoryRepository {
   async create(category) {
     return new CategoryModel({
       _id: new mongoose.Types.ObjectId(),
-      ...category
+      title: category.title,
+      order: category.order,
+      seo: category.seo
     }).save()
   }
 
@@ -24,10 +26,6 @@ export class CategoryRepository implements ICategoryRepository {
 
   async update(updates) {
     const $set = updates
-
-    if ($set.seo) {
-      $set.seo = JSON.parse($set.seo)
-    }
 
     const updated = await CategoryModel.findByIdAndUpdate(
       { _id: $set._id },

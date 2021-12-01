@@ -34,18 +34,18 @@ export class CategoryController extends BaseController implements IController {
     this.router.delete('/', expressAsyncHandler(this.deleteCategory.bind(this)))
   }
 
-  async createCategory({ body, method }: Request, res: Response) {
+  async createCategory({ body, method }: Request<{}, {}, ICategory>, res: Response) {
     try {
-      const category = await this.service.create(body as ICategory)
+      const category = await this.service.create(body)
       this.send(res, method, category, this.path)
     } catch (err: any) {
       return this.error(method, err, this.path)
     }
   }
 
-  async updateCategory({ body, method }: Request, res: Response) {
+  async updateCategory({ body, method }: Request<{}, {}, Partial<ICategory>>, res: Response) {
     try {
-      const { updated } = await this.service.update(body as Partial<ICategory>)
+      const { updated } = await this.service.update(body)
       this.send(res, method, updated, this.path)
     } catch (err: any) {
       return this.error(method, err, this.path)

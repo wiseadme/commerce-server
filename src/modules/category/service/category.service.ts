@@ -15,6 +15,8 @@ import { ICategory } from '@/types/models'
 import { ICategoryService } from '@/types/services'
 import { ILogger } from '@/types/utils'
 
+type Stringify<T> = string
+
 @injectable()
 export class CategoryService implements ICategoryService {
 
@@ -25,19 +27,22 @@ export class CategoryService implements ICategoryService {
   }
 
   async create({ title, seo, order }: ICategory) {
-    const category = new Category(title, order)
-    seo && category.setSeo(seo)
+    const category = new Category(title, order, seo)
 
     return await this.repository.create(category)
   }
 
   async update(updates: any): Promise<{ updated: Document<ICategory> }> {
+    if (typeof updates.seo === 'string') {
+      updates.seo = JSON.parse(updates.seo)
+    }
+
     return this.repository.update(updates)
   }
 
   async read({ category_id }: any) {
-    const queryParams = category_id ? { _id: category_id } : {}
-    const categories = await this.repository.read(queryParams)
+    const params = category_id ? { _id: category_id } : {}
+    const categories = await this.repository.read(params)
 
     if (!categories || !categories.length) {
       throw ({ status: 404, message: 'not found' })
