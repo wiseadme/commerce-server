@@ -8,47 +8,44 @@ import { CategoryModel } from '../model/category.model'
 import { Category } from '../entity/category.entity'
 
 // Schemes
-import { TYPES } from '@/app/schemes/di-types'
+import { TYPES } from '@/common/schemes/di-types'
 
 // Types
-import { ICategory } from '@/types/models'
+import { ICategory, IJSONCategory } from '@/types/models'
 import { ICategoryService } from '@/types/services'
 import { ILogger } from '@/types/utils'
-
-type Stringify<T> = string
+import { ICategoryRepository } from '@/types/repositories'
 
 @injectable()
 export class CategoryService implements ICategoryService {
 
   constructor(
     @inject(TYPES.UTILS.ILogger) private logger: ILogger,
-    @inject(TYPES.REPOSITORIES.CategoryRepository) private repository: any
+    @inject(TYPES.REPOSITORIES.CategoryRepository) private repository: ICategoryRepository
   ) {
   }
 
-  async create({ title, seo, order }: ICategory) {
-    const category = new Category(title, order, seo)
+  async create({ title, seo, order }: IJSONCategory) {
+    const category = new Category(title, order, (seo && JSON.parse(seo)))
 
     return await this.repository.create(category)
   }
 
-  async update(updates: any): Promise<{ updated: Document<ICategory> }> {
-    if (typeof updates.seo === 'string') {
-      updates.seo = JSON.parse(updates.seo)
-    }
+  async update({
+    title,
+    seo,
+    order,
+    _id
+  }: Partial<Document & IJSONCategory>): Promise<{ updated: Document<ICategory> }> {
 
-    return this.repository.update(updates)
+    seo && (seo = JSON.parse(seo))
+    return this.repository.update({ title, seo, order, _id } as ICategory)
   }
 
   async read({ category_id }: any) {
     const params = category_id ? { _id: category_id } : {}
-    const categories = await this.repository.read(params)
 
-    if (!categories || !categories.length) {
-      throw ({ status: 404, message: 'not found' })
-    }
-
-    return categories
+    return await this.repository.read(params)
   }
 
   async delete(id: string): Promise<boolean> {

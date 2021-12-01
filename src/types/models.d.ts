@@ -1,7 +1,14 @@
-export interface ICategory{
+export interface ICategory {
   title: string
   image?: string
   seo?: SeoType
+  order: number
+}
+
+export interface IJSONCategory {
+  title: string
+  image?: string
+  seo?: string
   order: number
 }
 

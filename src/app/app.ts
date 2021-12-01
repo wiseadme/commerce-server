@@ -1,7 +1,7 @@
 import express, { Application } from 'express'
 import { inject, injectable, multiInject } from 'inversify'
 import { DB } from './db'
-import { TYPES } from './schemes/di-types'
+import { TYPES } from '@/common/schemes/di-types'
 import { IConfig, IController } from '@/types'
 import { IErrorRouteMiddleware, IMiddleware } from '@/types/middlewares'
 import { ILogger } from '@/types/utils'

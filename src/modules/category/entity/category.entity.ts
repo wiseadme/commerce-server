@@ -1,5 +1,5 @@
 import { SeoType } from '@/types/models'
-import { translator } from '@/app/utils/translator'
+import { translator } from '@/common/utils/translator'
 
 export class Category {
   private readonly _url: string
@@ -7,10 +7,9 @@ export class Category {
   constructor(
     private readonly _title: string,
     private readonly _order: number,
-    private readonly _seo?: SeoType | string
+    private readonly _seo?: SeoType
   ) {
     this._url = this.setUrl(this._title)
-    this._seo && (this._seo = JSON.parse(this._seo as string))
   }
 
   get title(): string {

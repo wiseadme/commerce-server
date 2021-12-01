@@ -1,10 +1,9 @@
-import mongoose, { MongooseOptions } from 'mongoose'
+import mongoose, { MongooseOptions, isValidObjectId } from 'mongoose'
 import { inject, injectable } from 'inversify'
-import { TYPES } from '../schemes/di-types'
+import { TYPES } from '../../common/schemes/di-types'
 import { ILogger } from '@/types/utils'
 import { IConfig, IDb } from '@/types'
 
-const { isValidObjectId } = mongoose
 
 @injectable()
 export class DB implements IDb {
@@ -22,11 +21,6 @@ export class DB implements IDb {
     this.onConnect()
     this.onError()
     this.onClose()
-
-    return {
-      mongoose,
-      isValidObjectId
-    }
   }
 
   onConnect() {
