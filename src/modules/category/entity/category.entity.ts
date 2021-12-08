@@ -2,6 +2,7 @@ import { ICategory, SeoType } from '@/types/models'
 import { translator } from '@/common/utils/translator'
 
 export class Category {
+
   private readonly _url: string
   private readonly _title: string
   private readonly _order: number
@@ -38,6 +39,10 @@ export class Category {
 
   static create(params) {
     return new Category(params)
+  }
+
+  static update(params) {
+
   }
 
   public setUrl(val): string {
