@@ -1,16 +1,11 @@
-import mongoose, { Document, Query } from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 import { inject, injectable } from 'inversify';
 import { CategoryModel } from '../model/category.model';
 import { TYPES } from '@/common/schemes/di-types';
 import { ILogger } from '@/types/utils';
 import { ICategoryRepository } from '@/types/repositories';
 import { ICategory } from '@/types/models';
-
-const validate = id => {
-  if (!mongoose.isValidObjectId(id)) {
-    throw ({ status: 403, message: 'model id is not valid' });
-  }
-};
+import { validateId } from '@/common/utils/mongoose-validate-id';
 
 @injectable()
 export class CategoryRepository implements ICategoryRepository {
@@ -29,7 +24,7 @@ export class CategoryRepository implements ICategoryRepository {
   }
 
   async read<T extends { id?: string }>({ id }: T) {
-    id && validate(id);
+    id && validateId(id);
     const params = id ? { _id: id } : {};
     const categories = await CategoryModel.find(params).populate('parent', [ 'title' ]);
 
@@ -41,7 +36,7 @@ export class CategoryRepository implements ICategoryRepository {
   }
 
   async update($set: Partial<ICategory & Document>) {
-    validate($set.id);
+    validateId($set.id);
     const updated = await CategoryModel.findByIdAndUpdate(
       { _id: $set.id },
       { $set },

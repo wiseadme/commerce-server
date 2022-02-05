@@ -27,11 +27,12 @@ export interface IProductSEO extends ISEOType{
 
 export interface IProduct {
   name: string
+  description: string
   price: number
-  image: string
-  seo: IProductSEO
-  assets: IAsset[] | []
-  variants: IVariant[] | []
+  image?: string
+  seo?: IProductSEO
+  assets?: IAssetItem[] | []
+  variants?: IVariant[] | []
 }
 
 export interface IVariant {
@@ -46,7 +47,7 @@ export interface IVariantOptions {
   image?: string
 }
 
-export interface IAsset {
+export interface IAssetItem {
   url: string
   type: string
 }

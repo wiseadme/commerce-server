@@ -7,17 +7,25 @@ const ProductSchema = new Schema<IProduct & Document>({
     type: String,
     required: true
   },
+  description: {
+    type: String,
+    required: true
+  },
   price: {
     type: Number,
     default: 0
   },
   image: {
-    type: String
+    type: String,
+    default: null
   },
   seo: {
-    title: String,
-    description: String,
-    keywords: String
+    type: {
+      title: String,
+      description: String,
+      keywords: String
+    },
+    default: null
   },
   assets: [
     {
@@ -30,6 +38,10 @@ const ProductSchema = new Schema<IProduct & Document>({
       group: String,
       options: [
         {
+          value: {
+            type: String,
+            required: true
+          },
           price: {
             type: Number,
             default: 0
@@ -39,10 +51,12 @@ const ProductSchema = new Schema<IProduct & Document>({
             default: 0
           },
           sku: {
-            type: String
+            type: String,
+            default: null
           },
           image: {
-            type: String
+            type: String,
+            default: null
           }
         }
       ]
@@ -52,4 +66,4 @@ const ProductSchema = new Schema<IProduct & Document>({
   timestamps: true
 });
 
-export const ProductModel = model<IProduct>('Variant', ProductSchema);
+export const ProductModel = model<IProduct>('Product', ProductSchema);

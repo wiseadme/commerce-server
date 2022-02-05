@@ -12,10 +12,12 @@ export const TYPES = {
     ILogger: Symbol.for('ILogger'),
   },
   ENTITIES: {
-    CategoryEntity: Symbol.for('CategoryEntity')
+    CategoryEntity: Symbol.for('CategoryEntity'),
+    ProductEntity: Symbol.for('ProductEntity')
   },
   REPOSITORIES: {
-    CategoryRepository: Symbol.for('CategoryRepository')
+    CategoryRepository: Symbol.for('CategoryRepository'),
+    ProductRepository: Symbol.for('ProductRepository')
   },
   MIDDLEWARES: {
     IMiddleware: Symbol.for('IMiddleware'),

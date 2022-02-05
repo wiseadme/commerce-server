@@ -12,25 +12,25 @@ import { ProductModel } from '@/modules/product/model/product.model';
 
 @injectable()
 export class ProductController extends BaseController implements IController {
-  public path = 'v1/variants';
+  public path = '/v1/product';
   public router = Router();
 
-  constructor(@inject(TYPES.UTILS.ILogger) private logger: ILogger,){
+  constructor(@inject(TYPES.UTILS.ILogger) private logger: ILogger,) {
     super();
     this.initRoutes();
   }
 
-  public initRoutes(){
-    this.router.post('/', expressAsyncHandler(this.createVariant.bind(this)));
+  public initRoutes() {
+    this.router.post('/', expressAsyncHandler(this.createProduct.bind(this)));
   }
 
-  async createVariant({ body, method }: Request<{}, {}, {}>, res: Response){
+  async createProduct({ body, method }: Request<{}, {}, {}>, res: Response) {
     try {
-      const variant = await ProductModel.create({
+      const product = await ProductModel.create({
         _id: new mongoose.Types.ObjectId(),
         ...body
       });
-      this.send(res, method, variant, this.path);
+      this.send(res, method, product, this.path);
     } catch (err) {
       return this.error(method, err, this.path);
     }
