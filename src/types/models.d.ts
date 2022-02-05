@@ -7,14 +7,6 @@ export interface ICategory {
   order?: number
 }
 
-export interface IJSONCategory {
-  title: string
-  image?: string
-  seo?: string
-  parent?: string
-  order: number
-}
-
 export interface ISEOType {
   title: string
   description: string
@@ -31,8 +23,8 @@ export interface IProduct {
   price: number
   image?: string
   seo?: IProductSEO
-  assets?: IAssetItem[] | []
-  variants?: IVariant[] | []
+  assets?: IAssetItem[]
+  variants?: IVariant[]
 }
 
 export interface IVariant {

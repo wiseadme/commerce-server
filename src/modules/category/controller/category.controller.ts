@@ -7,7 +7,7 @@ import { BaseController } from '@/common/controller/base.controller';
 
 // Types
 import { IController } from '@/types';
-import { IJSONCategory } from '@/types/models';
+import { ICategory } from '@/types/models';
 import { ILogger } from '@/types/utils';
 import { ICategoryService } from '@/types/services';
 
@@ -35,7 +35,7 @@ export class CategoryController extends BaseController implements IController {
     this.router.delete('/', expressAsyncHandler(this.deleteCategory.bind(this)));
   }
 
-  async createCategory({ body, method }: Request<{}, {}, IJSONCategory>, res: Response) {
+  async createCategory({ body, method }: Request<{}, {}, ICategory>, res: Response) {
     try {
       const category = await this.service.create(body);
       this.send(res, method, category, this.path);
@@ -44,7 +44,7 @@ export class CategoryController extends BaseController implements IController {
     }
   }
 
-  async updateCategory({ body, method }: Request<{}, {}, Partial<IJSONCategory & Document>>, res: Response) {
+  async updateCategory({ body, method }: Request<{}, {}, Partial<ICategory & Document>>, res: Response) {
     try {
       const { updated } = await this.service.update(body);
       this.send(res, method, updated, this.path);
