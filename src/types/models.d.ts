@@ -2,13 +2,16 @@ export interface ICategory {
   title: string
   image?: string
   seo?: SeoType
-  order: number
+  url?: string
+  parent?: string
+  order?: number
 }
 
 export interface IJSONCategory {
   title: string
   image?: string
   seo?: string
+  parent?: string
   order: number
 }
 

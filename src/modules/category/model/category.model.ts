@@ -1,5 +1,5 @@
-import { model, Schema } from 'mongoose'
-import { ICategory } from '@/types/models'
+import { model, Schema } from 'mongoose';
+import { ICategory } from '@/types/models';
 
 const CategorySchema: Schema = new Schema({
   _id: Schema.Types.ObjectId,
@@ -15,12 +15,17 @@ const CategorySchema: Schema = new Schema({
     description: String,
     keywords: String
   },
+  parent: {
+    type: Schema.Types.ObjectId,
+    ref: 'Category',
+    default: null
+  },
   order: {
     type: Number,
     default: 0
   }
 }, {
   timestamps: true
-})
+});
 
-export const CategoryModel =  model<ICategory>('Category', CategorySchema)
+export const CategoryModel = model<ICategory>('Category', CategorySchema);

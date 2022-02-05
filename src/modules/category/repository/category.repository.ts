@@ -1,17 +1,16 @@
-import mongoose, { Document } from 'mongoose'
-import { inject, injectable } from 'inversify'
-import { CategoryModel } from '../model/category.model'
-import { TYPES } from '@/common/schemes/di-types'
-import { ILogger } from '@/types/utils'
-import { ICategoryRepository } from '@/types/repositories'
-import { ICategory } from '@/types/models'
-import { translator } from '@/common/utils/translator'
+import mongoose, { Document, Query } from 'mongoose';
+import { inject, injectable } from 'inversify';
+import { CategoryModel } from '../model/category.model';
+import { TYPES } from '@/common/schemes/di-types';
+import { ILogger } from '@/types/utils';
+import { ICategoryRepository } from '@/types/repositories';
+import { ICategory } from '@/types/models';
 
 const validate = id => {
   if (!mongoose.isValidObjectId(id)) {
-    throw ({ status: 403, message: 'model id is not valid' })
+    throw ({ status: 403, message: 'model id is not valid' });
   }
-}
+};
 
 @injectable()
 export class CategoryRepository implements ICategoryRepository {
@@ -24,36 +23,35 @@ export class CategoryRepository implements ICategoryRepository {
       title: category.title,
       order: category.order,
       seo: category.seo,
-      image: category.image
-    }).save()
+      image: category.image,
+      parent: category.parent
+    }).save();
   }
 
-  async read(params: Partial<ICategory> & Document) {
-    validate(params._id)
-    const categories = await CategoryModel.find(params as any)
+  async read<T extends { id?: string }>({ id }: T) {
+    id && validate(id);
+    const params = id ? { _id: id } : {};
+    const categories = await CategoryModel.find(params).populate('parent', [ 'title' ]);
 
-    if (params._id && !categories.length) {
-      throw ({ status: 404, message: 'not found' })
+    if (id && !categories.length) {
+      throw ({ status: 404, message: 'not found' });
     }
 
-    return categories
+    return categories;
   }
 
-  async update($set) {
-    if ($set.title) {
-      $set.url = translator($set.title)
-    }
-
+  async update($set: Partial<ICategory & Document>) {
+    validate($set.id);
     const updated = await CategoryModel.findByIdAndUpdate(
-      { _id: $set._id },
+      { _id: $set.id },
       { $set },
       { new: true }
-    ) as Document<ICategory>
+    ) as Document<ICategory>;
 
-    return { updated }
+    return { updated };
   }
 
-  async delete() {
-    return true
+  async delete(id) {
+    return !!await CategoryModel.findByIdAndDelete({ _id: id });
   }
 }
