@@ -7,3 +7,7 @@ interface ICategoryService {
   update: (updates: Partial<IJSONCategory>) => Promise<{ updated: Document<ICategory> }>;
   delete: (id: string) => Promise<boolean>;
 }
+
+interface IVariantsService {
+
+}

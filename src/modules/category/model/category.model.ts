@@ -1,7 +1,7 @@
-import { model, Schema } from 'mongoose';
+import { Document, model, Schema } from 'mongoose';
 import { ICategory } from '@/types/models';
 
-const CategorySchema: Schema = new Schema({
+const CategorySchema: Schema = new Schema<ICategory & Document>({
   _id: Schema.Types.ObjectId,
   title: {
     type: String,

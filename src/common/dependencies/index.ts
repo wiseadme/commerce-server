@@ -1,13 +1,16 @@
 import 'reflect-metadata'
-import App from '../../app/app'
+import App from '@/app/app'
+import { DB } from '@/app/db'
+import { Config } from '@/app/config'
 import { TYPES } from '../schemes/di-types'
-import { LoggerService } from '../services/logger/logger.service'
 import { Container } from 'inversify'
+// Services
+import { LoggerService } from '../services/logger/logger.service'
 import { CategoryService } from '@/modules/category/service/category.service'
+// Controllers
 import { CategoryController } from '@/modules/category/controller/category.controller'
+import { ProductController } from '@/modules/product/controller/product.controller';
 import { CategoryRepository } from '@/modules/category/repository/category.repository'
-import { DB } from '../../app/db'
-import { Config } from '../../app/config'
 // Middlewares
 import { JsonMiddleware } from '@/common/middlewares/json.middleware'
 import { UrlEncodedMiddleware } from '@/common/middlewares/urlencoded.middleware'
@@ -35,6 +38,7 @@ container.bind<ICategoryService>(TYPES.SERVICES.ICategoryService).to(CategorySer
 
 // Controllers
 container.bind<IController>(TYPES.CONTROLLERS.IController).to(CategoryController)
+container.bind<IController>(TYPES.CONTROLLERS.IController).to(ProductController)
 
 // Middlewares
 container.bind<IExpressMiddleware>(TYPES.MIDDLEWARES.IMiddleware).to(JsonMiddleware)

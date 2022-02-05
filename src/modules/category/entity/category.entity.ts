@@ -1,4 +1,4 @@
-import { ICategory, SeoType } from '@/types/models';
+import { ICategory, ISEOType } from '@/types/models';
 import { translator } from '@/common/utils/translator';
 
 export class Category {
@@ -6,7 +6,7 @@ export class Category {
   private readonly _url: string;
   private readonly _title: string;
   private readonly _order?: number;
-  private readonly _seo?: SeoType;
+  private readonly _seo?: ISEOType;
   private readonly _image?: string;
   private readonly _parent?: string;
 
@@ -31,8 +31,8 @@ export class Category {
     return this._url;
   }
 
-  get seo(): SeoType {
-    return this._seo! as SeoType;
+  get seo(): ISEOType {
+    return this._seo! as ISEOType;
   }
 
   get image(): string {
