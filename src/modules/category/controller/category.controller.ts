@@ -15,7 +15,6 @@ import { ICategoryService } from '@/types/services';
 import { TYPES } from '@/common/schemes/di-types';
 import { Document } from 'mongoose';
 
-
 @injectable()
 export class CategoryController extends BaseController implements IController {
   public path = '/v1/category';

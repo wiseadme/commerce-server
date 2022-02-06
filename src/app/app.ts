@@ -37,11 +37,10 @@ class App {
   }
 
   private routes(controllers: Array<IController>) {
+    this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
     controllers.forEach(controller => {
       this.app.use(controller.path, controller.router);
     });
-
-    this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
     this.app.use(this.errorRouteMiddleware.execute as any);
   }
 

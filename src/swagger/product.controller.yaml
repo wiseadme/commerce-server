@@ -1,0 +1,49 @@
+#paths:
+#  /v1/category:
+#    post:
+#      summary: create new product
+#      consumes:
+#        - application/json
+#      produces:
+#        - application/json
+#        - text/xml
+#        - text/html
+#      parameters:
+#        - name: body
+#          in: body
+#          required: true
+#          schema:
+#            # Body schema with atomic property examples
+#            type: object
+#            properties:
+#              testapi:
+#                type: object
+#                properties:
+#                  messageId:
+#                    type: string
+#                    example: kkkk8
+#                  messageDateTime:
+#                    type: string
+#                    example: '2014-08-17T14:07:30+0530'
+#              testapiBody:
+#                type: object
+#                properties:
+#                  cameraServiceRq:
+#                    type: object
+#                    properties:
+#                      osType:
+#                        type: string
+#                        example: android
+#                      deviceType:
+#                        type: string
+#                        example: samsung555
+#            # Alternatively, we can use a schema-level example
+#            example:
+#              testapi:
+#                testapiContext:
+#                  messageId: kkkk8
+#                  messageDateTime: '2014-08-17T14:07:30+0530'
+#                testapiBody:
+#                  cameraServiceRq:
+#                    osType: android
+#                    deviceType: samsung555
