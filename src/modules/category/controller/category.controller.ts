@@ -23,19 +23,19 @@ export class CategoryController extends BaseController implements IController {
   constructor(
     @inject(TYPES.UTILS.ILogger) private logger: ILogger,
     @inject(TYPES.SERVICES.ICategoryService) private service: ICategoryService,
-  ) {
+  ){
     super();
     this.initRoutes();
   }
 
-  public initRoutes() {
+  public initRoutes(){
     this.router.get('/', expressAsyncHandler(this.getCategories.bind(this)));
     this.router.post('/', expressAsyncHandler(this.createCategory.bind(this)));
     this.router.patch('/', expressAsyncHandler(this.updateCategory.bind(this)));
     this.router.delete('/', expressAsyncHandler(this.deleteCategory.bind(this)));
   }
 
-  async createCategory({ body, method }: Request<{}, {}, ICategory>, res: Response) {
+  async createCategory({ body, method }: Request<{}, {}, ICategory>, res: Response){
     try {
       const category = await this.service.create(body);
       this.send(res, method, category, this.path);
@@ -44,7 +44,7 @@ export class CategoryController extends BaseController implements IController {
     }
   }
 
-  async updateCategory({ body, method }: Request<{}, {}, Partial<ICategory & Document>>, res: Response) {
+  async updateCategory({ body, method }: Request<{}, {}, Partial<ICategory & Document>>, res: Response){
     try {
       const { updated } = await this.service.update(body);
       this.send(res, method, updated, this.path);
@@ -53,7 +53,7 @@ export class CategoryController extends BaseController implements IController {
     }
   }
 
-  async getCategories({ query, method }: Request<{}, {}, {}, { id?: string }>, res: Response) {
+  async getCategories({ query, method }: Request<{}, {}, {}, { id?: string }>, res: Response){
     try {
       const categories = await this.service.read(query);
       this.send(res, method, categories, this.path);
@@ -62,7 +62,7 @@ export class CategoryController extends BaseController implements IController {
     }
   }
 
-  async deleteCategory({ query, method, path }: Request, res: Response) {
+  async deleteCategory({ query, method, path }: Request, res: Response){
     try {
       await this.service.delete(query.id as string);
       this.send(res, method, {}, this.path + path);

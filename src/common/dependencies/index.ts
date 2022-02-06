@@ -4,26 +4,34 @@ import { DB } from '@/app/db';
 import { Config } from '@/app/config';
 import { TYPES } from '../schemes/di-types';
 import { Container } from 'inversify';
+
 // Services
 import { LoggerService } from '../services/logger/logger.service';
 import { CategoryService } from '@/modules/category/service/category.service';
+import { ProductService } from '@/modules/product/service/product.service';
+
 // Controllers
 import { CategoryController } from '@/modules/category/controller/category.controller';
 import { ProductController } from '@/modules/product/controller/product.controller';
+
+// Repositories
 import { CategoryRepository } from '@/modules/category/repository/category.repository';
+import { ProductRepository } from '@/modules/product/repository/product.repository';
+
 // Middlewares
 import { JsonMiddleware } from '@/common/middlewares/json.middleware';
 import { UrlEncodedMiddleware } from '@/common/middlewares/urlencoded.middleware';
 import { LoggerMiddleware } from '../middlewares/logger.middleware';
 import { ErrorRouteMiddleware } from '../middlewares/error.route.middleware';
+
 // Types
-import { ICategoryService } from '@/types/services';
+import { ICategoryService, IProductService } from '@/types/services';
 import { ICategoryRepository, IProductRepository } from '@/types/repositories';
 import { ILogger } from '@/types/utils';
 import { IController, IConfig, IDb } from '@/types';
 import { IMiddleware, IErrorRouteMiddleware, IExpressMiddleware } from '@/types/middlewares';
-import { ProductRepository } from '@/modules/product/repository/product.repository';
-import { Category } from '@/modules/category/entity/category.entity';
+
+
 
 export const container = new Container();
 
@@ -37,6 +45,7 @@ container.bind<ILogger>(TYPES.UTILS.ILogger).to(LoggerService);
 
 // Services
 container.bind<ICategoryService>(TYPES.SERVICES.ICategoryService).to(CategoryService);
+container.bind <IProductService>(TYPES.SERVICES.IProductService).to(ProductService);
 
 // Controllers
 container.bind<IController>(TYPES.CONTROLLERS.IController).to(CategoryController);

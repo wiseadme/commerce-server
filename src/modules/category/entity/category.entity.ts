@@ -56,5 +56,4 @@ export class Category {
     if (updates.seo) updates.seo = JSON.parse(updates.seo);
     return updates;
   }
-
 }

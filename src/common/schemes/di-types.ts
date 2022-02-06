@@ -3,7 +3,8 @@ export const TYPES = {
   DB: Symbol.for('DB'),
   CONFIG: Symbol.for('CONFIG'),
   SERVICES: {
-    ICategoryService: Symbol.for('ICategoryService')
+    ICategoryService: Symbol.for('ICategoryService'),
+    IProductService: Symbol.for('IProductService')
   },
   CONTROLLERS: {
     IController: Symbol.for('IController'),
