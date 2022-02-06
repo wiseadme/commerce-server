@@ -1,0 +1,28 @@
+paths:
+  /v1/category:
+    post:
+      summary: create new category
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: category
+          description: category parameters object
+          schema:
+            type: object
+            required:
+              - title
+            properties:
+              title:
+                type: string
+              image:
+                type: string
+              seo:
+                type: object
+                properties:
+                  title:
+                    type: string
+                  description:
+                    type: string
+                  keywords:
+                    type: string

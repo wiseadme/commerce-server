@@ -6,12 +6,12 @@ export interface IBaseRepository {
 }
 
 export interface ICategoryRepository {
-  create: (category: ICategory) => Promise<Document<ICategory>>;
+  create: (category: ICategory) => Promise<Document>;
   read: (query: any) => Promise<Array<ICategory>>;
   update: (updates: Partial<ICategory>) => Promise<{ updated: Document<ICategory> }>;
   delete: (id: string) => Promise<boolean>;
 }
 
 export interface IProductRepository {
-  create: (product: IProduct) => Promise<Document<IProduct>>;
+  create: (product: IProduct) => Promise<Document>;
 }

@@ -18,16 +18,16 @@ export class ProductController extends BaseController implements IController {
   constructor(
     @inject(TYPES.UTILS.ILogger) private logger: ILogger,
     @inject(TYPES.SERVICES.IProductService) private service: IProductService
-  ){
+  ) {
     super();
     this.initRoutes();
   }
 
-  public initRoutes(){
+  public initRoutes() {
     this.router.post('/', expressAsyncHandler(this.createProduct.bind(this)));
   }
 
-  async createProduct({ body, method }: Request<{}, {}, IProduct>, res: Response){
+  async createProduct({ body, method }: Request<{}, {}, IProduct>, res: Response) {
     try {
       const product = await this.service.create(body);
       this.send(res, method, product, this.path);

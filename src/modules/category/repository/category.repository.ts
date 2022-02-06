@@ -13,7 +13,7 @@ export class CategoryRepository implements ICategoryRepository {
   }
 
   async create(category: ICategory) {
-    return new CategoryModel({
+    return await new CategoryModel({
       _id: new mongoose.Types.ObjectId(),
       title: category.title,
       order: category.order,
