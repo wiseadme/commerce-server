@@ -4,7 +4,7 @@ const options = {
   swaggerDefinition: {
     openapi: '3.0.0',
     info: {
-      title: 'Commerce Server API',
+      title: 'Ecommerce Headless Server API',
       version: '1.0.0'
     },
     servers: [
@@ -13,7 +13,9 @@ const options = {
       }
     ]
   },
-  apis: [ './swagger/*.controller.yaml']
+  apis: [ './swagger/*.controller.yaml' ]
 };
+
 export const swaggerDocs = swaggerJsDoc(options);
+
 console.log(swaggerDocs);

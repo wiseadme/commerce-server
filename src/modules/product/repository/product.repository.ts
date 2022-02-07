@@ -16,10 +16,13 @@ export class ProductRepository implements IProductRepository {
     return new ProductModel({
       _id: new mongoose.Types.ObjectId(),
       ...product
-    }).save()
+    }).save();
   }
 
   async read(query) {
-    return '' as any
+    query.id && validateId(query.id);
+    const params = query.id ? { _id: query.id } : { ...query };
+
+    return ProductModel.find(params);
   }
 }
