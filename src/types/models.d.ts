@@ -13,7 +13,7 @@ export interface ISEOType {
   keywords: string
 }
 
-export interface IProductSEO extends ISEOType{
+export interface IProductSEO extends ISEOType {
 
 }
 
@@ -22,6 +22,7 @@ export interface IProduct {
   description: string
   price: number
   image?: string
+  categories: string[] | []
   seo?: IProductSEO
   assets?: IAssetItem[]
   variants?: IVariant[]

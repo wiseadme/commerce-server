@@ -13,7 +13,7 @@ const options = {
       }
     ]
   },
-  apis: [ './src/swagger/*.controller.yaml']
+  apis: [ './swagger/*.controller.yaml']
 };
 export const swaggerDocs = swaggerJsDoc(options);
 console.log(swaggerDocs);

@@ -7,7 +7,7 @@ import { IErrorRouteMiddleware, IMiddleware } from '@/types/middlewares';
 import { ILogger } from '@/types/utils';
 
 import swaggerUi from 'swagger-ui-express';
-import { swaggerDocs } from '@/swagger';
+import { swaggerDocs } from '@swagger/swagger.docs';
 
 @injectable()
 class App {
@@ -21,7 +21,7 @@ class App {
     @inject(TYPES.MIDDLEWARES.IErrorRouteMiddleware) private errorRouteMiddleware: IErrorRouteMiddleware,
     @multiInject(TYPES.CONTROLLERS.IController) private routesArray: IController[],
     @multiInject(TYPES.MIDDLEWARES.IMiddleware) private middlewaresArray: IMiddleware[],
-  ) {
+  ){
     this.app = express();
     this.port = this.config.port;
 
@@ -30,13 +30,13 @@ class App {
     this.db.connect();
   }
 
-  private middleWares(middleWares: Array<any>) {
+  private middleWares(middleWares: Array<any>){
     middleWares.forEach(middleWare => {
       this.app.use(middleWare.execute.bind(middleWare));
     });
   }
 
-  private routes(controllers: Array<IController>) {
+  private routes(controllers: Array<IController>){
     this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
     controllers.forEach(controller => {
       this.app.use(controller.path, controller.router);
@@ -44,7 +44,7 @@ class App {
     this.app.use(this.errorRouteMiddleware.execute as any);
   }
 
-  public listen() {
+  public listen(){
     this.app.listen(this.port, () => this.logger.log('server is running on', this.port));
   }
 }

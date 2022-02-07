@@ -7,11 +7,12 @@ export class Product {
   private readonly _description: string;
   private readonly _image: string;
   private readonly _url: string;
+  private readonly _categories: string[];
   private readonly _seo: IProductSEO | null;
   private readonly _assets: IAssetItem[] | [];
   private readonly _variants: IVariant[] | [];
 
-  constructor({ name, price, description, image, assets, seo, variants }: IProduct) {
+  constructor({ name, price, description, image, assets, seo, variants, categories }: IProduct){
     this._name = name;
     this._price = price;
     this._description = description;
@@ -20,25 +21,30 @@ export class Product {
     this._seo = seo || null;
     this._assets = assets || [];
     this._variants = variants || [];
+    this._categories = categories;
   }
 
-  get name() {
-    return this._name
+  get name(){
+    return this._name;
   }
 
-  get price() {
-    return this._price
+  get price(){
+    return this._price;
   }
 
-  get description() {
-    return this._description
+  get description(){
+    return this._description;
   }
 
-  static create(product): IProduct {
+  get categories(){
+    return this._categories;
+  }
+
+  static create(product): IProduct{
     return new Product(product);
   }
 
-  static update(updates) {
+  static update(updates){
 
   }
 }

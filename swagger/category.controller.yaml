@@ -1,0 +1,52 @@
+paths:
+  /v1/category:
+    post:
+      summary: 'create new category'
+      tags:
+        - categories
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/postBody'
+      responses:
+        201:
+          description: new category created
+  /v1/category/{id}:
+    get:
+      summary: 'get categories'
+      consumes:
+        - application/json
+      tags:
+        - categories
+
+
+components:
+  schemas:
+    postBody:
+      type: object
+      required:
+        - title
+      properties:
+        title:
+          type: string
+          example: 'test category'
+        image:
+          type: string
+          example: 'https://projs.net/image'
+        order:
+          type: number
+          example: 1
+        seo:
+          type: object
+          properties:
+            title:
+              type: string
+              example: 'test category page'
+            description:
+              type: string
+              example: 'good category'
+            keywords:
+              type: string
+              example: 'buy, sold, ecommerce'

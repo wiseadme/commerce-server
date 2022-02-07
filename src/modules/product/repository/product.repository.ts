@@ -18,4 +18,8 @@ export class ProductRepository implements IProductRepository {
       ...product
     }).save()
   }
+
+  async read(query) {
+    return '' as any
+  }
 }

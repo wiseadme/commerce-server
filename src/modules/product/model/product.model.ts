@@ -15,6 +15,10 @@ const ProductSchema = new Schema<IProduct & Document>({
     type: Number,
     default: 0
   },
+  categories: {
+    type: [ String ],
+    required: true
+  },
   image: {
     type: String,
     default: null

@@ -21,4 +21,8 @@ export class ProductService implements IProductService {
   async create(product: IProduct) {
     return await this.repository.create(Product.create(product));
   }
+
+  async read(query) {
+    return await this.repository.read(query)
+  }
 }
