@@ -10,5 +10,5 @@ export interface ICategoryService {
 
 export interface IProductService {
   create: (product: IProduct) => Promise<Document<IProduct>>
-  read: (query: any) => Promise<Array<Document<IProduct>>>
+  read: (query: Partial<IProduct> & { id?: string }) => Promise<Array<Document<IProduct>>>
 }

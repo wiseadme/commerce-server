@@ -9,19 +9,26 @@ import { validateId } from '@/common/utils/mongoose-validate-id';
 
 @injectable()
 export class ProductRepository implements IProductRepository {
-  constructor(@inject(TYPES.UTILS.ILogger) private logger: ILogger) {
+  constructor(@inject(TYPES.UTILS.ILogger) private logger: ILogger){
   }
 
-  async create(product: IProduct) {
+  async create(product: IProduct){
     return new ProductModel({
       _id: new mongoose.Types.ObjectId(),
-      ...product
+      name: product.name,
+      price: product.price,
+      description: product.description,
+      image: product.image,
+      url: product.url,
+      categories: product.categories,
+      variants: product.variants,
+      seo: product.seo
     }).save();
   }
 
-  async read(query) {
-    query.id && validateId(query.id);
-    const params = query.id ? { _id: query.id } : { ...query };
+  async read({ id, page, count }): Promise<Array<IProduct & Document>>{
+    id && validateId(id);
+    const params = id ? { _id: id } : { page, count };
 
     return ProductModel.find(params);
   }

@@ -6,9 +6,9 @@ export class Category {
   private readonly _url: string;
   private readonly _title: string;
   private readonly _order?: number;
-  private readonly _seo?: ISEOType;
   private readonly _image?: string;
   private readonly _parent?: string;
+  private readonly _seo?: ICategory['seo'];
 
   constructor({ title, seo, order, image, parent }: ICategory) {
     this._title = title;

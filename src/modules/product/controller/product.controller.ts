@@ -9,6 +9,7 @@ import { ILogger } from '@/types/utils';
 import { IController } from '@/types';
 import { IProduct } from '@/types/models';
 import { IProductService } from '@/types/services';
+import { ProductQuery } from '@/types/types';
 
 @injectable()
 export class ProductController extends BaseController implements IController {
@@ -18,16 +19,17 @@ export class ProductController extends BaseController implements IController {
   constructor(
     @inject(TYPES.UTILS.ILogger) private logger: ILogger,
     @inject(TYPES.SERVICES.IProductService) private service: IProductService
-  ) {
+  ){
     super();
     this.initRoutes();
   }
 
-  public initRoutes() {
+  public initRoutes(){
     this.router.post('/', expressAsyncHandler(this.createProduct.bind(this)));
+    this.router.get('/', expressAsyncHandler(this.getProducts.bind(this)));
   }
 
-  async createProduct({ body, method }: Request<{}, {}, IProduct>, res: Response) {
+  async createProduct({ body, method }: Request<{}, {}, IProduct>, res: Response){
     try {
       const product = await this.service.create(body);
       this.send(res, method, product, this.path);
@@ -36,11 +38,10 @@ export class ProductController extends BaseController implements IController {
     }
   }
 
-  async getProducts({ query, method }: Request<{}, {}, { id?: string }>, res: Response) {
+  async getProducts({ query, method }: Request<{}, {}, ProductQuery>, res: Response){
     try {
       const products = await this.service.read(query);
       this.send(res, method, products, this.path);
-      console.log(products);
     } catch (err) {
       return this.error(method, err, this.path);
     }

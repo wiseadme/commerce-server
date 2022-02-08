@@ -22,10 +22,11 @@ export interface IProduct {
   description: string
   price: number
   image?: string
-  categories: string[] | []
+  url?: string
+  categories: string[]
   seo?: IProductSEO
-  assets?: IAssetItem[]
-  variants?: IVariant[]
+  assets: IAssetItem[]
+  variants: IVariant[]
 }
 
 export interface IVariant {
