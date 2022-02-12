@@ -1,8 +1,9 @@
 import { Router, Request, Response } from 'express';
-import { BaseController } from '@/common/controller/base.controller';
 import { inject, injectable } from 'inversify';
-import { TYPES } from '@/common/schemes/di-types';
 import expressAsyncHandler from 'express-async-handler';
+
+import { TYPES } from '@/common/schemes/di-types';
+import { BaseController } from '@/common/controller/base.controller';
 
 // Types
 import { ILogger } from '@/types/utils';

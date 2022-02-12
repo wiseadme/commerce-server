@@ -22,6 +22,7 @@ export class ProductRepository implements IProductRepository {
       url: product.url,
       categories: product.categories,
       variants: product.variants,
+      assets: product.assets,
       seo: product.seo
     }).save();
   }

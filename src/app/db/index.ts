@@ -1,6 +1,6 @@
-import mongoose, { MongooseOptions, isValidObjectId } from 'mongoose'
+import mongoose, { MongooseOptions } from 'mongoose'
 import { inject, injectable } from 'inversify'
-import { TYPES } from '../../common/schemes/di-types'
+import { TYPES } from '@/common/schemes/di-types'
 import { ILogger } from '@/types/utils'
 import { IConfig, IDb } from '@/types'
 
