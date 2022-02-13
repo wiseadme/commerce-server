@@ -12,7 +12,7 @@ paths:
               $ref: '#/components/schemas/postBody'
       responses:
         201:
-          description: new category created
+          description: 'new category created'
   /v1/category/{id}:
     get:
       summary: 'get categories'

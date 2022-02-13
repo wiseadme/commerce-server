@@ -9,7 +9,7 @@ export class ErrorRouteMiddleware {
   ) {
   }
 
-  execute(err, req, res, next) {
+  handler(err, req, res, next) {
     res?.status(err.status).json(err)
   }
 }

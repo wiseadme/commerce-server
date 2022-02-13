@@ -29,18 +29,16 @@ class App {
 
   private middleWares(middleWares: Array<any>){
     middleWares.forEach(middleWare => {
-      this.app.use(middleWare.execute.bind(middleWare));
+      this.app.use(middleWare.handler.bind(middleWare));
     });
   }
 
   private routes(controllers: Array<IController>){
-    // this.app.use(swaggerMiddleware.path, swaggerMiddleware.router);
-
     controllers.forEach(controller => {
       this.app.use(controller.path, controller.router)
     });
 
-    this.app.use(this.errorRouteMiddleware.execute as any);
+    this.app.use(this.errorRouteMiddleware.handler as any);
   }
 
   public listen(){
