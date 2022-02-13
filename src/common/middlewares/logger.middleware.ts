@@ -11,7 +11,7 @@ export class LoggerMiddleware implements IMiddleware{
   ) {
   }
 
-  handler(req, res, next) {
+  execute(req, res, next) {
     this.logger.info('request:', req.method, req.path)
     next()
   }

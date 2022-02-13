@@ -10,6 +10,7 @@ export interface IConfig {
   port: number
   dbUri: string
   secret: string
+  uploadsDir: string
 }
 
 export interface IDb {

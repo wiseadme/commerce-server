@@ -1,13 +1,13 @@
 import express, { Errback, NextFunction, Request, Response } from 'express'
 
 export interface IMiddleware {
-  handler: (req: Request, res: Response, next: NextFunction) => void
+  execute: (req: Request, res: Response, next: NextFunction) => void
 }
 
 export interface IErrorRouteMiddleware {
-  handler: (err: Errback, req: Request, res: Response, next: NextFunction) => void
+  execute: (err: Errback, req: Request, res: Response, next: NextFunction) => void
 }
 
 export interface IExpressMiddleware {
-  handler: ReturnType<typeof express.json>
+  execute: ReturnType<typeof express.json>
 }

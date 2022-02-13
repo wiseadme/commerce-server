@@ -29,7 +29,7 @@ class App {
 
   private middleWares(middleWares: Array<any>){
     middleWares.forEach(middleWare => {
-      this.app.use(middleWare.handler.bind(middleWare));
+      this.app.use(middleWare.execute.bind(middleWare));
     });
   }
 
@@ -38,7 +38,7 @@ class App {
       this.app.use(controller.path, controller.router)
     });
 
-    this.app.use(this.errorRouteMiddleware.handler as any);
+    this.app.use(this.errorRouteMiddleware.execute as any);
   }
 
   public listen(){

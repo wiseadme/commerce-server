@@ -11,7 +11,8 @@ dotenv.config({
 
 @injectable()
 export class Config implements IConfig {
-  port: number = Number(process.env.PORT!)
-  dbUri: string = process.env.MONGO_URI!
-  secret: string = process.env.SECRET_KEY!
+  port = Number(process.env.PORT!)
+  dbUri = process.env.MONGO_URI!
+  secret = process.env.SECRET_KEY!
+  uploadsDir = process.env.UPLOADS_DIR!
 }

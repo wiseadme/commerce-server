@@ -4,5 +4,5 @@ import { injectable } from 'inversify'
 
 @injectable()
 export class UrlEncodedMiddleware implements IExpressMiddleware {
-  handler: ReturnType<typeof express.urlencoded> = express.urlencoded({ extended: true })
+  execute: ReturnType<typeof express.urlencoded> = express.urlencoded({ extended: true })
 }
