@@ -6,9 +6,6 @@ import { IConfig, IController } from '@/types';
 import { IErrorRouteMiddleware, IMiddleware } from '@/types/middlewares';
 import { ILogger } from '@/types/utils';
 
-import swaggerUi from 'swagger-ui-express';
-import { swaggerDocs } from '@swagger/swagger.docs';
-
 @injectable()
 class App {
   public app: Application;
@@ -37,8 +34,12 @@ class App {
   }
 
   private routes(controllers: Array<IController>){
-    this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
-    controllers.forEach(controller => this.app.use(controller.path, controller.router));
+    // this.app.use(swaggerMiddleware.path, swaggerMiddleware.router);
+
+    controllers.forEach(controller => {
+      this.app.use(controller.path, controller.router)
+    });
+
     this.app.use(this.errorRouteMiddleware.execute as any);
   }
 

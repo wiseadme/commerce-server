@@ -30,7 +30,7 @@ import { ICategoryRepository, IProductRepository } from '@/types/repositories';
 import { ILogger } from '@/types/utils';
 import { IController, IConfig, IDb } from '@/types';
 import { IMiddleware, IErrorRouteMiddleware, IExpressMiddleware } from '@/types/middlewares';
-
+import { SwaggerController } from '@swagger/controller/swagger.controller';
 
 
 export const container = new Container();
@@ -48,6 +48,7 @@ container.bind<ICategoryService>(TYPES.SERVICES.ICategoryService).to(CategorySer
 container.bind <IProductService>(TYPES.SERVICES.IProductService).to(ProductService);
 
 // Controllers
+container.bind<IController>(TYPES.CONTROLLERS.IController).to(SwaggerController);
 container.bind<IController>(TYPES.CONTROLLERS.IController).to(CategoryController);
 container.bind<IController>(TYPES.CONTROLLERS.IController).to(ProductController);
 
