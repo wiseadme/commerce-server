@@ -36,7 +36,6 @@ export class CategoryController extends BaseController implements IController {
   }
 
   async createCategory({ body, method }: Request<{}, {}, ICategory>, res: Response) {
-    console.log(body, 'create category');
     try {
       const category = await this.service.create(body);
       this.send(res, method, category, this.path);

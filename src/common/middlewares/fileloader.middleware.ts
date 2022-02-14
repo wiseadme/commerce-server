@@ -1,10 +1,14 @@
 import multer, { Multer, Options } from 'multer';
 import { injectable } from 'inversify';
 import { IFileLoaderMiddleware } from '@/types/middlewares';
+import { Config } from '@/app/config';
 import path from 'path';
 
 type Maybe<T> = T | null
 
+const config = new Config();
+
+@injectable()
 class FileLoaderOptions {
   storage: Maybe<Options['storage']>;
   fileFilter: Maybe<Options['fileFilter']>;
@@ -23,7 +27,7 @@ class FileLoaderOptions {
   addOptionsStorage(){
     this.storage = multer.diskStorage({
       destination(req, file, cb){
-        cb(null, __dirname + '/uploads');
+        cb(null, config.uploadsDir);
       },
       filename(req, file, cb){
         cb(null, `${ file.originalname }`);
@@ -62,3 +66,4 @@ export class FileLoaderMiddleware implements IFileLoaderMiddleware {
     return this.plugin.array(fieldName, count);
   }
 }
+
