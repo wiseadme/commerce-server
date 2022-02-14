@@ -13,6 +13,7 @@ import { ProductService } from '@/modules/product/service/product.service';
 // Controllers
 import { CategoryController } from '@/modules/category/controller/category.controller';
 import { ProductController } from '@/modules/product/controller/product.controller';
+import { SwaggerController } from '@swagger/controller/swagger.controller';
 
 // Repositories
 import { CategoryRepository } from '@/modules/category/repository/category.repository';
@@ -23,14 +24,16 @@ import { JsonMiddleware } from '@/common/middlewares/json.middleware';
 import { UrlEncodedMiddleware } from '@/common/middlewares/urlencoded.middleware';
 import { LoggerMiddleware } from '../middlewares/logger.middleware';
 import { ErrorRouteMiddleware } from '../middlewares/error.route.middleware';
+import { FileLoaderMiddleware } from '@/common/middlewares/fileloader.middleware';
 
 // Types
 import { ICategoryService, IProductService } from '@/types/services';
 import { ICategoryRepository, IProductRepository } from '@/types/repositories';
 import { ILogger } from '@/types/utils';
 import { IController, IConfig, IDb } from '@/types';
-import { IMiddleware, IErrorRouteMiddleware, IExpressMiddleware } from '@/types/middlewares';
-import { SwaggerController } from '@swagger/controller/swagger.controller';
+import { IMiddleware, IErrorRouteMiddleware, IExpressMiddleware, IFileLoaderMiddleware } from '@/types/middlewares';
+
+
 
 
 export const container = new Container();
@@ -57,6 +60,7 @@ container.bind<IExpressMiddleware>(TYPES.MIDDLEWARES.IMiddleware).to(JsonMiddlew
 container.bind<IExpressMiddleware>(TYPES.MIDDLEWARES.IMiddleware).to(UrlEncodedMiddleware);
 container.bind<IMiddleware>(TYPES.MIDDLEWARES.IMiddleware).to(LoggerMiddleware);
 container.bind<IErrorRouteMiddleware>(TYPES.MIDDLEWARES.IErrorRouteMiddleware).to(ErrorRouteMiddleware);
+container.bind<IFileLoaderMiddleware>(TYPES.MIDDLEWARES.IFileLoaderMiddleware).to(FileLoaderMiddleware)
 
 // Repositories
 container.bind<ICategoryRepository>(TYPES.REPOSITORIES.CategoryRepository).to(CategoryRepository);

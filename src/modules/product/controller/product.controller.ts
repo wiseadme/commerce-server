@@ -19,7 +19,7 @@ export class ProductController extends BaseController implements IController {
 
   constructor(
     @inject(TYPES.UTILS.ILogger) private logger: ILogger,
-    @inject(TYPES.SERVICES.IProductService) private service: IProductService
+    @inject(TYPES.SERVICES.IProductService) private service: IProductService,
   ){
     super();
     this.initRoutes();

@@ -11,3 +11,8 @@ export interface IErrorRouteMiddleware {
 export interface IExpressMiddleware {
   execute: ReturnType<typeof express.json>
 }
+
+export interface IFileLoaderMiddleware {
+  loadSingle: (fieldName: string) => any
+  loadArray: (fieldName: string, count: number) => any
+}
