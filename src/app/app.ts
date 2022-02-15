@@ -2,9 +2,10 @@ import express, { Application } from 'express';
 import { inject, injectable, multiInject } from 'inversify';
 import { DB } from './db';
 import { TYPES } from '@/common/schemes/di-types';
-import { IConfig, IController } from '@/types';
+import { IController } from '@/types';
 import { IErrorRouteMiddleware, IMiddleware } from '@/types/middlewares';
 import { ILogger } from '@/types/utils';
+import config from './config'
 
 @injectable()
 class App {
@@ -14,13 +15,12 @@ class App {
   constructor(
     @inject(TYPES.DB) private db: DB,
     @inject(TYPES.UTILS.ILogger) private logger: ILogger,
-    @inject(TYPES.CONFIG) private config: IConfig,
     @inject(TYPES.MIDDLEWARES.IErrorRouteMiddleware) private errorRouteMiddleware: IErrorRouteMiddleware,
     @multiInject(TYPES.CONTROLLERS.IController) private routesArray: IController[],
     @multiInject(TYPES.MIDDLEWARES.IMiddleware) private middlewaresArray: IMiddleware[],
   ){
     this.app = express();
-    this.port = this.config.port;
+    this.port = config.port;
 
     this.middleWares(middlewaresArray);
     this.routes(routesArray);
