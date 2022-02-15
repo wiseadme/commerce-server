@@ -11,7 +11,7 @@ class FileLoaderOptions {
   fileFilter: Maybe<Options['fileFilter']>;
   limits: Maybe<Options['limits']>;
 
-  constructor() {
+  constructor(){
     this.storage = null;
     this.fileFilter = null;
     this.limits = null;
@@ -21,18 +21,19 @@ class FileLoaderOptions {
     this.addLimits();
   }
 
-  addOptionsStorage() {
+  addOptionsStorage(){
     this.storage = multer.diskStorage({
-      destination(req, file, cb) {
+      destination(req, file, cb){
         cb(null, config.uploadsDir);
       },
-      filename(req, file, cb) {
-        cb(null, `${ file.originalname }`);
+      filename(req, file, cb){
+        const { fileName, timestamp } = req.query;
+        cb(null, `${ timestamp }|${ fileName }`);
       }
     });
   }
 
-  addFileFilter() {
+  addFileFilter(){
     this.fileFilter = (req, file, cb) => {
       if (file.mimetype === 'image/png' || file.mimetype === 'image/jpeg') {
         cb(null, true);
@@ -42,7 +43,7 @@ class FileLoaderOptions {
     };
   }
 
-  addLimits() {
+  addLimits(){
     this.limits = { fileSize: 1024 * 1024 * 3 };
   }
 }
@@ -51,15 +52,15 @@ class FileLoaderOptions {
 export class FileLoaderMiddleware implements IFileLoaderMiddleware {
   plugin: Multer;
 
-  constructor() {
+  constructor(){
     this.plugin = multer(new FileLoaderOptions() as Options);
   }
 
-  loadSingle(fieldName) {
+  loadSingle(fieldName){
     return this.plugin.single(fieldName);
   }
 
-  loadArray(fieldName, count) {
+  loadArray(fieldName, count){
     return this.plugin.array(fieldName, count);
   }
 }
