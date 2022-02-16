@@ -2,41 +2,43 @@ import { Request, Response, Router } from 'express';
 import { inject, injectable } from 'inversify';
 import { TYPES } from '@/common/schemes/di-types';
 import { ILogger } from '@/types/utils';
-import { IFileLoaderMiddleware } from '@/types/middlewares';
+import { IController } from '@/types';
+import { BaseController } from '@/common/controller/base.controller';
+import { IFilesService } from '@/types/services';
 
 @injectable()
-export class FilesController {
+export class FilesController extends BaseController implements IController {
   path = '/v1/assets';
   router = Router();
 
   constructor(
     @inject(TYPES.UTILS.ILogger) private logger: ILogger,
-    @inject(TYPES.MIDDLEWARES.IFileLoaderMiddleware) private fileLoader: IFileLoaderMiddleware
+    @inject(TYPES.SERVICES.IFilesService) private service: IFilesService
   ){
+    super();
     this.initRoutes();
   }
 
   initRoutes(){
     this.router.post('/', this.uploadImage.bind(this));
-    this.router.delete('/', this.deleteImage.bind(this));
+    this.router.delete('/:filename', this.deleteImage.bind(this));
   }
 
-  uploadImage(req: Request, res: Response){
-    const upload = this.fileLoader.loadSingle('image');
-    const timestamp = String(Date.now());
-
-    req.query.timestamp = timestamp;
-
-    upload(req, res, err => console.log(err));
-
-    res.status(200).json({
-      ok: true,
-      status: 200,
-      url: `/assets/${ timestamp }|${ req.query.fileName }`
-    });
+  async uploadImage(req: Request, res: Response){
+    try {
+      const data = await this.service.saveFile(req, res);
+      this.send(res, req.method, data, this.path);
+    } catch (err) {
+      this.error(req.method, err, this.path);
+    }
   }
 
-  deleteImage(req: Request, res: Response){
-
+  async deleteImage({ params, method }: Request, res: Response){
+    try {
+      const result = await this.service.deleteFile(params.filename);
+      this.send(res, method, result, this.path);
+    } catch (err) {
+      this.error(method, err, this.path);
+    }
   }
 }

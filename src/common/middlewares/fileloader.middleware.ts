@@ -2,7 +2,6 @@ import multer, { Multer, Options } from 'multer';
 import { injectable } from 'inversify';
 import { IFileLoaderMiddleware } from '@/types/middlewares';
 import config from '@/app/config';
-import path from 'path';
 
 type Maybe<T> = T | null
 

@@ -5,6 +5,8 @@ export interface IBaseRepository {
   validateId(id: string): boolean | undefined;
 }
 
+export type FileResponse = { url: string }
+
 export interface ICategoryRepository {
   create: (category: ICategory) => Promise<Document>;
   read: (query: any) => Promise<Array<ICategory & Document>>;
@@ -15,4 +17,9 @@ export interface ICategoryRepository {
 export interface IProductRepository {
   create: (product: IProduct) => Promise<Document>;
   read: (query: any) => Promise<Array<IProduct & Document>>
+}
+
+export interface IFilesRepository {
+  save: (req: Request, res: Response) => Promise<FileResponse>
+  delete: (fileName: string) => Promise<boolean>
 }

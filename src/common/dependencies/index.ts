@@ -9,15 +9,18 @@ import { Container } from 'inversify';
 import { LoggerService } from '../services/logger/logger.service';
 import { CategoryService } from '@/modules/category/service/category.service';
 import { ProductService } from '@/modules/product/service/product.service';
+import { FilesService } from '@/modules/files/service/files.service';
 
 // Controllers
 import { CategoryController } from '@/modules/category/controller/category.controller';
 import { ProductController } from '@/modules/product/controller/product.controller';
+import { FilesController } from '@/modules/files/controller/files.controller';
 import { SwaggerController } from '@swagger/controller/swagger.controller';
 
 // Repositories
 import { CategoryRepository } from '@/modules/category/repository/category.repository';
 import { ProductRepository } from '@/modules/product/repository/product.repository';
+import { FilesRepository } from '@/modules/files/repository/files.repository';
 
 // Middlewares
 import { JsonMiddleware } from '@/common/middlewares/json.middleware';
@@ -27,12 +30,14 @@ import { ErrorRouteMiddleware } from '../middlewares/error.route.middleware';
 import { FileLoaderMiddleware } from '@/common/middlewares/fileloader.middleware';
 
 // Types
-import { ICategoryService, IProductService } from '@/types/services';
-import { ICategoryRepository, IProductRepository } from '@/types/repositories';
+import { ICategoryService, IProductService, IFilesService } from '@/types/services';
+import { ICategoryRepository, IFilesRepository, IProductRepository } from '@/types/repositories';
 import { ILogger } from '@/types/utils';
 import { IController, IConfig, IDb } from '@/types';
 import { IMiddleware, IErrorRouteMiddleware, IExpressMiddleware, IFileLoaderMiddleware } from '@/types/middlewares';
-import { FilesController } from '@/modules/files/controller/files.controller';
+
+
+
 
 export const container = new Container();
 
@@ -47,6 +52,7 @@ container.bind<ILogger>(TYPES.UTILS.ILogger).to(LoggerService);
 // Services
 container.bind<ICategoryService>(TYPES.SERVICES.ICategoryService).to(CategoryService);
 container.bind <IProductService>(TYPES.SERVICES.IProductService).to(ProductService);
+container.bind<IFilesService>(TYPES.SERVICES.IFilesService).to(FilesService);
 
 // Controllers
 container.bind<IController>(TYPES.CONTROLLERS.IController).to(SwaggerController);
@@ -59,8 +65,9 @@ container.bind<IExpressMiddleware>(TYPES.MIDDLEWARES.IMiddleware).to(JsonMiddlew
 container.bind<IExpressMiddleware>(TYPES.MIDDLEWARES.IMiddleware).to(UrlEncodedMiddleware);
 container.bind<IMiddleware>(TYPES.MIDDLEWARES.IMiddleware).to(LoggerMiddleware);
 container.bind<IErrorRouteMiddleware>(TYPES.MIDDLEWARES.IErrorRouteMiddleware).to(ErrorRouteMiddleware);
-container.bind<IFileLoaderMiddleware>(TYPES.MIDDLEWARES.IFileLoaderMiddleware).to(FileLoaderMiddleware)
+container.bind<IFileLoaderMiddleware>(TYPES.MIDDLEWARES.IFileLoaderMiddleware).to(FileLoaderMiddleware);
 
 // Repositories
 container.bind<ICategoryRepository>(TYPES.REPOSITORIES.CategoryRepository).to(CategoryRepository);
 container.bind<IProductRepository>(TYPES.REPOSITORIES.ProductRepository).to(ProductRepository);
+container.bind<IFilesRepository>(TYPES.REPOSITORIES.FilesRepository).to(FilesRepository);
