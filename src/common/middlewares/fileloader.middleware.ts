@@ -1,7 +1,7 @@
 import multer, { Multer, Options } from 'multer';
 import { injectable } from 'inversify';
 import { IFileLoaderMiddleware } from '@/types/middlewares';
-import config from '@/app/config';
+import config from '@app/config';
 
 type Maybe<T> = T | null
 

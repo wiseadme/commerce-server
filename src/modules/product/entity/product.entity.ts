@@ -1,4 +1,4 @@
-import { translator } from '@/common/utils/translator';
+import { translator } from '@common/utils/translator';
 import { IProduct } from '@/types/models';
 
 export class Product {

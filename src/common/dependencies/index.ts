@@ -1,33 +1,33 @@
 import 'reflect-metadata';
-import App from '@/app/app';
-import { DB } from '@/app/db';
-import { Config } from '@/app/config';
+import App from '@app/app';
+import { DB } from '@app/db';
+import { Config } from '@app/config';
 import { TYPES } from '../schemes/di-types';
 import { Container } from 'inversify';
 
 // Services
 import { LoggerService } from '../services/logger/logger.service';
-import { CategoryService } from '@/modules/category/service/category.service';
-import { ProductService } from '@/modules/product/service/product.service';
-import { FilesService } from '@/modules/files/service/files.service';
+import { CategoryService } from '@modules/category/service/category.service';
+import { ProductService } from '@modules/product/service/product.service';
+import { FilesService } from '@modules/files/service/files.service';
 
 // Controllers
-import { CategoryController } from '@/modules/category/controller/category.controller';
-import { ProductController } from '@/modules/product/controller/product.controller';
-import { FilesController } from '@/modules/files/controller/files.controller';
+import { CategoryController } from '@modules/category/controller/category.controller';
+import { ProductController } from '@modules/product/controller/product.controller';
+import { FilesController } from '@modules/files/controller/files.controller';
 import { SwaggerController } from '@swagger/controller/swagger.controller';
 
 // Repositories
-import { CategoryRepository } from '@/modules/category/repository/category.repository';
-import { ProductRepository } from '@/modules/product/repository/product.repository';
-import { FilesRepository } from '@/modules/files/repository/files.repository';
+import { CategoryRepository } from '@modules/category/repository/category.repository';
+import { ProductRepository } from '@modules/product/repository/product.repository';
+import { FilesRepository } from '@modules/files/repository/files.repository';
 
 // Middlewares
-import { JsonMiddleware } from '@/common/middlewares/json.middleware';
-import { UrlEncodedMiddleware } from '@/common/middlewares/urlencoded.middleware';
+import { JsonMiddleware } from '@common/middlewares/json.middleware';
+import { UrlEncodedMiddleware } from '@common/middlewares/urlencoded.middleware';
 import { LoggerMiddleware } from '../middlewares/logger.middleware';
 import { ErrorRouteMiddleware } from '../middlewares/error.route.middleware';
-import { FileLoaderMiddleware } from '@/common/middlewares/fileloader.middleware';
+import { FileLoaderMiddleware } from '@common/middlewares/fileloader.middleware';
 
 // Types
 import { ICategoryService, IProductService, IFilesService } from '@/types/services';
@@ -35,9 +35,6 @@ import { ICategoryRepository, IFilesRepository, IProductRepository } from '@/typ
 import { ILogger } from '@/types/utils';
 import { IController, IConfig, IDb } from '@/types';
 import { IMiddleware, IErrorRouteMiddleware, IExpressMiddleware, IFileLoaderMiddleware } from '@/types/middlewares';
-
-
-
 
 export const container = new Container();
 

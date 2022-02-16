@@ -1,9 +1,10 @@
 import { Request, Response, Router } from 'express';
 import { inject, injectable } from 'inversify';
-import { TYPES } from '@/common/schemes/di-types';
+import { TYPES } from '@common/schemes/di-types';
+import { BaseController } from '@common/controller/base.controller';
+// Types
 import { ILogger } from '@/types/utils';
 import { IController } from '@/types';
-import { BaseController } from '@/common/controller/base.controller';
 import { IFilesService } from '@/types/services';
 
 @injectable()

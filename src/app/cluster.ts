@@ -1,3 +1,4 @@
+import 'module-alias/register';
 import cluster from 'cluster';
 import { server } from './server';
 import consola from 'consola';

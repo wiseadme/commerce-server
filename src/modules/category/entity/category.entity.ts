@@ -1,5 +1,5 @@
 import { ICategory, ISEOType } from '@/types/models';
-import { translator } from '@/common/utils/translator';
+import { translator } from '@common/utils/translator';
 
 export class Category {
 

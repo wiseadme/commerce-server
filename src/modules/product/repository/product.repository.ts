@@ -1,11 +1,12 @@
 import mongoose, { Document } from 'mongoose';
-import { IProductRepository } from '@/types/repositories';
 import { inject, injectable } from 'inversify';
-import { TYPES } from '@/common/schemes/di-types';
+import { TYPES } from '@common/schemes/di-types';
+import { ProductModel } from '@modules/product/model/product.model';
+import { validateId } from '@common/utils/mongoose-validate-id';
+// Types
+import { IProductRepository } from '@/types/repositories';
 import { ILogger } from '@/types/utils';
 import { IProduct } from '@/types/models';
-import { ProductModel } from '@/modules/product/model/product.model';
-import { validateId } from '@/common/utils/mongoose-validate-id';
 
 @injectable()
 export class ProductRepository implements IProductRepository {

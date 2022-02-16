@@ -3,7 +3,7 @@ import { Router, Request, Response } from 'express';
 import expressAsyncHandler from 'express-async-handler';
 import { injectable, inject } from 'inversify';
 
-import { BaseController } from '@/common/controller/base.controller';
+import { BaseController } from '@common/controller/base.controller';
 
 // Types
 import { IController } from '@/types';
@@ -12,7 +12,7 @@ import { ILogger } from '@/types/utils';
 import { ICategoryService } from '@/types/services';
 
 // Schemes
-import { TYPES } from '@/common/schemes/di-types';
+import { TYPES } from '@common/schemes/di-types';
 import { Document } from 'mongoose';
 
 @injectable()

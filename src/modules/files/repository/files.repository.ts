@@ -2,9 +2,9 @@ import * as fs from 'fs/promises';
 
 import { IFilesRepository, FileResponse } from '@/types/repositories';
 import { inject, injectable } from 'inversify';
-import { TYPES } from '@/common/schemes/di-types';
+import { TYPES } from '@common/schemes/di-types';
 import { IFileLoaderMiddleware } from '@/types/middlewares';
-import config from '@/app/config';
+import config from '@app/config';
 
 @injectable()
 export class FilesRepository implements IFilesRepository {

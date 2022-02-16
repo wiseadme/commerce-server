@@ -3,7 +3,7 @@ import { inject, injectable } from 'inversify';
 import swaggerUi from 'swagger-ui-express';
 import swaggerJsDoc, { Options } from 'swagger-jsdoc';
 
-import { TYPES } from '@/common/schemes/di-types';
+import { TYPES } from '@common/schemes/di-types';
 import { IController } from '@/types';
 import { ILogger } from '@/types/utils';
 

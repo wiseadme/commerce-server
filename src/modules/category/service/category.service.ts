@@ -5,7 +5,7 @@ import { inject, injectable } from 'inversify';
 import { Category } from '../entity/category.entity';
 
 // Schemes
-import { TYPES } from '@/common/schemes/di-types';
+import { TYPES } from '@common/schemes/di-types';
 
 // Types
 import { ICategory } from '@/types/models';

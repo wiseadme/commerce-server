@@ -1,8 +1,8 @@
 import { inject, injectable } from 'inversify';
-import { TYPES } from '@/common/schemes/di-types';
+import { TYPES } from '@common/schemes/di-types';
 
 // Entity
-import { Product } from '@/modules/product/entity/product.entity';
+import { Product } from '@modules/product/entity/product.entity';
 
 // Types
 import { ILogger } from '@/types/utils';
