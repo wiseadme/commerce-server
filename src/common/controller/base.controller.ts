@@ -15,7 +15,7 @@ export abstract class BaseController implements IBaseController {
     });
   }
 
-  error(method: string, err: any, baseUrl: string): Promise<any> {
+  error(method: string, err: any, baseUrl: string) {
     BaseController.logger.error(
       err.status || 500,
       method,
