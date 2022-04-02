@@ -38,9 +38,9 @@
     "swagger-ui-express": "^4.3.0"
   },
   "_moduleAliases": {
-    "@common": "dist/src/common",
-    "@app": "dist/src/app",
-    "@modules": "dist/src/modules",
-    "@swagger": "dist/swagger"
+    "@common": "src/common",
+    "@app": "src/app",
+    "@modules": "src/modules",
+    "@swagger": "swagger"
   }
 }

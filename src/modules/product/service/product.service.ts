@@ -1,28 +1,31 @@
-import { inject, injectable } from 'inversify';
-import { TYPES } from '@common/schemes/di-types';
+import { inject, injectable } from 'inversify'
+import { TYPES } from '@common/schemes/di-types'
 
 // Entity
-import { Product } from '@modules/product/entity/product.entity';
+import { Product } from '@modules/product/entity/product.entity'
 
 // Types
-import { ILogger } from '@/types/utils';
-import { IProductRepository } from '@/types/repositories';
-import { IProductService } from '@/types/services';
-import { IProduct } from '@/types/models';
+import { ILogger } from '@/types/utils'
+import { IProductRepository } from '@/types/repositories'
+import { IProductService } from '@/types/services'
+import { IProduct } from '@/types/models'
 
 @injectable()
 export class ProductService implements IProductService {
   constructor(
     @inject(TYPES.UTILS.ILogger) private logger: ILogger,
     @inject(TYPES.REPOSITORIES.ProductRepository) private repository: IProductRepository,
-  ) {
+  ){
   }
 
-  async create(product: IProduct) {
-    return await this.repository.create(Product.create(product));
+  async create(product: IProduct){
+    return await this.repository.create(Product.create(product))
   }
 
-  async read(query) {
-    return await this.repository.read(query)
+  async read(query){
+    const { id, category, page, count } = query
+    const params = id ? id : { category, page, count }
+
+    return await this.repository.read(params)
   }
 }

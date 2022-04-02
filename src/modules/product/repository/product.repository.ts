@@ -1,12 +1,12 @@
-import mongoose, { Document } from 'mongoose';
-import { inject, injectable } from 'inversify';
-import { TYPES } from '@common/schemes/di-types';
-import { ProductModel } from '@modules/product/model/product.model';
-import { validateId } from '@common/utils/mongoose-validate-id';
+import mongoose, { Document } from 'mongoose'
+import { inject, injectable } from 'inversify'
+import { TYPES } from '@common/schemes/di-types'
+import { ProductModel } from '@modules/product/model/product.model'
+import { validateId } from '@common/utils/mongoose-validate-id'
 // Types
-import { IProductRepository } from '@/types/repositories';
-import { ILogger } from '@/types/utils';
-import { IProduct } from '@/types/models';
+import { IProductRepository } from '@/types/repositories'
+import { ILogger } from '@/types/utils'
+import { IProduct } from '@/types/models'
 
 @injectable()
 export class ProductRepository implements IProductRepository {
@@ -25,13 +25,21 @@ export class ProductRepository implements IProductRepository {
       variants: product.variants,
       assets: product.assets,
       seo: product.seo
-    }).save();
+    }).save()
   }
 
-  async read({ id, page, count }): Promise<Array<IProduct & Document>>{
-    id && validateId(id);
-    const params = id ? { _id: id } : { page, count };
+  async read(params): Promise<Array<IProduct & Document>>{
 
-    return ProductModel.find(params);
+    if (typeof params === 'string') {
+      params && validateId(params)
+      return ProductModel.find({ _id: params })
+    }
+
+    const { category, page, count } = params
+
+    return ProductModel
+      .find({ categories: { $in: category } })
+      .skip((page * count) - count)
+      .limit(count)
   }
 }
