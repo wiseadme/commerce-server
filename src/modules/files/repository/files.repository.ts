@@ -1,10 +1,10 @@
-import * as fs from 'fs/promises';
+import * as fs from 'fs/promises'
 
-import { IFilesRepository, FileResponse } from '@/types/repositories';
-import { inject, injectable } from 'inversify';
-import { TYPES } from '@common/schemes/di-types';
-import { IFileLoaderMiddleware } from '@/types/middlewares';
-import config from '@app/config';
+import { IFilesRepository, FileResponse } from '@/types/repositories'
+import { inject, injectable } from 'inversify'
+import { TYPES } from '@common/schemes/di-types'
+import { IFileLoaderMiddleware } from '@/types/middlewares'
+import config from '@app/config'
 
 @injectable()
 export class FilesRepository implements IFilesRepository {
@@ -15,22 +15,22 @@ export class FilesRepository implements IFilesRepository {
 
   save(req, res): Promise<FileResponse>{
     return new Promise((resolve, reject) => {
-      const upload = this.fileLoader.loadSingle('image');
-      const timestamp = Date.now();
+      const upload = this.fileLoader.loadSingle('image')
+      const timestamp = Date.now()
 
-      req.query.timestamp = timestamp;
-      upload(req, res, err => reject(err));
+      req.query.timestamp = timestamp
+      upload(req, res, err => reject(err))
 
-      resolve({ url: `/assets/${ timestamp }|${ req.query.fileName }` });
-    });
+      resolve({ url: `/uploads/${ timestamp }|${ req.query.fileName }` })
+    })
   }
 
   async delete(fileName){
     try {
-      await fs.unlink(`${ config.uploadsDir }/${ fileName }`);
-      return true;
+      await fs.unlink(`${ config.uploadsDir }/${ fileName }`)
+      return true
     } catch (err) {
-      return false;
+      return false
     }
   }
 }
