@@ -65,6 +65,6 @@ export class Product {
   }
 
   static update(updates){
-
+    return updates
   }
 }

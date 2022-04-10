@@ -42,4 +42,14 @@ export class ProductRepository implements IProductRepository {
       .skip((page * count) - count)
       .limit(count)
   }
+
+  async update($set: Partial<IProduct & Document>): Promise<{ updated: Document<IProduct> }>{
+    const updated = await ProductModel.findByIdAndUpdate(
+      { _id: $set.id },
+      { $set },
+      { new: true }
+    ) as Document<IProduct>
+
+    return { updated }
+  }
 }

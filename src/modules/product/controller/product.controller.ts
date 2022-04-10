@@ -47,4 +47,12 @@ export class ProductController extends BaseController implements IController {
       return this.error(method, err, this.path)
     }
   }
+
+  async updateProduct({ query, method }: Request<{}, {}, Partial<IProduct>>, res: Response){
+    try {
+
+    } catch (err) {
+
+    }
+  }
 }

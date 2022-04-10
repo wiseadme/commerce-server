@@ -9,6 +9,7 @@ import { ILogger } from '@/types/utils'
 import { IProductRepository } from '@/types/repositories'
 import { IProductService } from '@/types/services'
 import { IProduct } from '@/types/models'
+import { Document } from 'mongoose'
 
 @injectable()
 export class ProductService implements IProductService {
@@ -27,5 +28,9 @@ export class ProductService implements IProductService {
     const params = id ? id : { category, page, count }
 
     return await this.repository.read(params)
+  }
+
+  async update(updates: Partial<IProduct & Document>) {
+    return this.repository.update(Product.update(updates))
   }
 }

@@ -1,5 +1,5 @@
-import { ICategory, IProduct } from './models';
-import { Document } from 'mongoose';
+import { ICategory, IProduct } from './models'
+import { Document } from 'mongoose'
 
 export interface IBaseRepository {
   validateId(id: string): boolean | undefined;
@@ -16,7 +16,8 @@ export interface ICategoryRepository {
 
 export interface IProductRepository {
   create: (product: IProduct) => Promise<Document>;
-  read: (query: any) => Promise<Array<IProduct & Document>>
+  read: (query: any) => Promise<Array<IProduct & Document>>,
+  update: (updates: Partial<IProduct>) => Promise<{ updated: Document<IProduct> }>
 }
 
 export interface IFilesRepository {
