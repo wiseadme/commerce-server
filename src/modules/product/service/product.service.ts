@@ -30,7 +30,7 @@ export class ProductService implements IProductService {
     return await this.repository.read(params)
   }
 
-  async update(updates: Partial<IProduct & Document>) {
-    return this.repository.update(Product.update(updates))
+  async update(updates: Partial<Document<IProduct>>) {
+    return await this.repository.update(Product.update(updates))
   }
 }

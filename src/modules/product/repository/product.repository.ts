@@ -29,23 +29,24 @@ export class ProductRepository implements IProductRepository {
   }
 
   async read(params): Promise<Array<IProduct & Document>>{
+    if (params.category) {
+      const { category, page, count } = params
 
-    if (typeof params === 'string') {
-      params && validateId(params)
-      return ProductModel.find({ _id: params })
+      return ProductModel
+        .find({ categories: { $in: category } })
+        .skip((page * count) - count)
+        .limit(count)
     }
 
-    const { category, page, count } = params
-
-    return ProductModel
-      .find({ categories: { $in: category } })
-      .skip((page * count) - count)
-      .limit(count)
+    params && validateId(params)
+    return ProductModel.find({ _id: params })
   }
 
-  async update($set: Partial<IProduct & Document>): Promise<{ updated: Document<IProduct> }>{
+  async update($set: Partial<Document<IProduct>>): Promise<{ updated: Document<IProduct> }>{
+    validateId($set._id)
+
     const updated = await ProductModel.findByIdAndUpdate(
-      { _id: $set.id },
+      { _id: $set._id },
       { $set },
       { new: true }
     ) as Document<IProduct>

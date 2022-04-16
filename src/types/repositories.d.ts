@@ -17,7 +17,7 @@ export interface ICategoryRepository {
 export interface IProductRepository {
   create: (product: IProduct) => Promise<Document>;
   read: (query: any) => Promise<Array<IProduct & Document>>,
-  update: (updates: Partial<IProduct>) => Promise<{ updated: Document<IProduct> }>
+  update: (updates: Partial<Document<IProduct>>) => Promise<{ updated: Document<IProduct> }>
 }
 
 export interface IFilesRepository {

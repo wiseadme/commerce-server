@@ -39,6 +39,7 @@ const ProductSchema = new Schema<IProduct & Document>({
   ],
   variants: [
     {
+      _id: false,
       group: String,
       options: [
         {
@@ -61,7 +62,8 @@ const ProductSchema = new Schema<IProduct & Document>({
           image: {
             type: String,
             default: null
-          }
+          },
+          _id: false,
         }
       ]
     }

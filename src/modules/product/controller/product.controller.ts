@@ -11,6 +11,7 @@ import { IController } from '@/types'
 import { IProduct } from '@/types/models'
 import { IProductService } from '@/types/services'
 import { ProductQuery } from '@/types/types'
+import exp from 'constants'
 
 @injectable()
 export class ProductController extends BaseController implements IController {
@@ -28,6 +29,7 @@ export class ProductController extends BaseController implements IController {
   public initRoutes(){
     this.router.post('/', expressAsyncHandler(this.createProduct.bind(this)))
     this.router.get('/', expressAsyncHandler(this.getProducts.bind(this)))
+    this.router.patch('/', expressAsyncHandler(this.updateProduct.bind(this)))
   }
 
   async createProduct({ body, method }: Request<{}, {}, IProduct>, res: Response){
@@ -48,11 +50,12 @@ export class ProductController extends BaseController implements IController {
     }
   }
 
-  async updateProduct({ query, method }: Request<{}, {}, Partial<IProduct>>, res: Response){
+  async updateProduct({ body, method }: Request<{}, {}, Partial<IProduct>>, res: Response){
     try {
-
+      const { updated } = await this.service.update(body)
+      this.send(res, method, updated, this.path)
     } catch (err) {
-
+      return this.error(method, err, this.path)
     }
   }
 }
