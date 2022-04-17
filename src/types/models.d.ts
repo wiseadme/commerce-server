@@ -1,3 +1,10 @@
+import { Document } from 'mongoose'
+
+interface IModelRef<T> {
+  _id: Document<T>['_id']
+  ref: Document<T>['modelName']
+}
+
 export interface ICategory {
   title: string
   image?: string
@@ -23,22 +30,25 @@ export interface IProduct {
   price: number
   image?: string
   url?: string
-  categories: string[]
+  categories: IModelRef<ICategory>[]
   seo?: IProductSEO
   assets: IAssetItem[]
   variants: IVariant[]
 }
 
 export interface IVariant {
-  group: string
-  options: IVariantOptions[] | []
+  group: string,
+  product: IModelRef<IProduct>
+  options: IModelRef<IVariantOptions>[]
 }
 
 export interface IVariantOptions {
+  name: string
+  meta?: string
   price?: number
   quantity?: number
   sku?: string
-  image?: string
+  assets: string[]
 }
 
 export interface IAssetItem {

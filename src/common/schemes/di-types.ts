@@ -5,7 +5,8 @@ export const TYPES = {
   SERVICES: {
     ICategoryService: Symbol.for('ICategoryService'),
     IProductService: Symbol.for('IProductService'),
-    IFilesService: Symbol.for('IFilesService')
+    IFilesService: Symbol.for('IFilesService'),
+    IVariantService: Symbol.for('IVariantService')
   },
   CONTROLLERS: {
     IController: Symbol.for('IController'),
@@ -20,7 +21,8 @@ export const TYPES = {
   REPOSITORIES: {
     CategoryRepository: Symbol.for('CategoryRepository'),
     ProductRepository: Symbol.for('ProductRepository'),
-    FilesRepository: Symbol.for('FilesRepository')
+    FilesRepository: Symbol.for('FilesRepository'),
+    VariantRepository: Symbol.for('VariantRepository')
   },
   MIDDLEWARES: {
     IMiddleware: Symbol.for('IMiddleware'),

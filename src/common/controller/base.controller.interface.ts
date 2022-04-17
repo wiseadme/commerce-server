@@ -1,7 +1,6 @@
-import { Response } from 'express';
-
+import { SendOptions, ErrorOptions } from '@/types'
 
 export interface IBaseController {
-  send: (res: Response, method, payload: any, baseUrl: string) => void,
-  error: (method: string, err: any, baseUrl: string) => Promise<any>
+  send: (options: SendOptions) => void,
+  error: (options: ErrorOptions) => Promise<any>
 }

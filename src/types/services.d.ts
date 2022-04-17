@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 import { Document } from 'mongoose'
-import { ICategory, IProduct } from './models'
+import { ICategory, IProduct, IVariant } from './models'
 
 export interface ICategoryService {
   create: (category: ICategory) => Promise<Document<ICategory>>;
@@ -13,6 +13,10 @@ export interface IProductService {
   create: (product: IProduct) => Promise<Document<IProduct>>
   read: (query: Partial<IProduct> & { id?: string }) => Promise<Array<Document<IProduct>>>,
   update: (update: Partial<IProduct> & { id?: string }) => Promise<{ updated: Document<IProduct> }>
+}
+
+export interface IVariantService {
+  create: (variant: IVariant) => Promise<Document<IVariant>>
 }
 
 export interface IFilesService {

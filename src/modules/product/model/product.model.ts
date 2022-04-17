@@ -5,7 +5,8 @@ const ProductSchema = new Schema<IProduct & Document>({
   _id: Schema.Types.ObjectId,
   name: {
     type: String,
-    required: true
+    required: true,
+    index: true
   },
   description: {
     type: String,
@@ -16,7 +17,10 @@ const ProductSchema = new Schema<IProduct & Document>({
     default: 0
   },
   categories: {
-    type: [ String ],
+    type: [ {
+      type: Schema.Types.ObjectId,
+      ref: 'Category'
+    } ],
     required: true
   },
   image: {
@@ -39,33 +43,8 @@ const ProductSchema = new Schema<IProduct & Document>({
   ],
   variants: [
     {
-      _id: false,
-      group: String,
-      options: [
-        {
-          value: {
-            type: String,
-            required: true
-          },
-          price: {
-            type: Number,
-            default: 0
-          },
-          quantity: {
-            type: Number,
-            default: 0
-          },
-          sku: {
-            type: String,
-            default: null
-          },
-          image: {
-            type: String,
-            default: null
-          },
-          _id: false,
-        }
-      ]
+      type: Schema.Types.ObjectId,
+      ref: 'Variant',
     }
   ],
 }, {

@@ -1,4 +1,24 @@
-import { Router } from 'express'
+import { Response, Router } from 'express'
+
+export enum Method {
+  GET = 'GET',
+  POST = 'POST',
+  PATCH = 'PATCH',
+  DELETE = 'DELETE'
+}
+
+export type SendOptions = {
+  response: Response,
+  method: string
+  data: any
+  url: string
+}
+
+export type ErrorOptions = {
+  method: string
+  error: any
+  url: string
+}
 
 export interface IController {
   path: string

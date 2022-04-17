@@ -11,7 +11,6 @@ import { IController } from '@/types'
 import { IProduct } from '@/types/models'
 import { IProductService } from '@/types/services'
 import { ProductQuery } from '@/types/types'
-import exp from 'constants'
 
 @injectable()
 export class ProductController extends BaseController implements IController {
@@ -35,27 +34,57 @@ export class ProductController extends BaseController implements IController {
   async createProduct({ body, method }: Request<{}, {}, IProduct>, res: Response){
     try {
       const product = await this.service.create(body)
-      this.send(res, method, product, this.path)
+
+      this.send({
+        response: res,
+        data: product,
+        url: this.path,
+        method
+      })
     } catch (err) {
-      return this.error(method, err, this.path)
+      return this.error({
+        error: err,
+        url: this.path,
+        method
+      })
     }
   }
 
   async getProducts({ query, method }: Request<{}, {}, ProductQuery>, res: Response){
     try {
       const products = await this.service.read(query)
-      this.send(res, method, products, this.path)
+
+      this.send({
+        response: res,
+        data: products,
+        url: this.path,
+        method
+      })
     } catch (err) {
-      return this.error(method, err, this.path)
+      return this.error({
+        error: err,
+        url: this.path,
+        method
+      })
     }
   }
 
   async updateProduct({ body, method }: Request<{}, {}, Partial<IProduct>>, res: Response){
     try {
       const { updated } = await this.service.update(body)
-      this.send(res, method, updated, this.path)
+
+      this.send({
+        response: res,
+        data: updated,
+        url: this.path,
+        method
+      })
     } catch (err) {
-      return this.error(method, err, this.path)
+      return this.error({
+        error: err,
+        url: this.path,
+        method
+      })
     }
   }
 }

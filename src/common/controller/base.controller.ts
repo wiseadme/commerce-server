@@ -1,32 +1,33 @@
-import { Response } from 'express';
-import { IBaseController } from './base.controller.interface';
-import { injectable } from 'inversify';
-import { LoggerService } from '@common/services/logger/logger.service';
+import { Response } from 'express'
+import { IBaseController } from './base.controller.interface'
+import { injectable } from 'inversify'
+import { LoggerService } from '@common/services/logger/logger.service'
+import { ErrorOptions, SendOptions } from '@/types'
 
 @injectable()
 export abstract class BaseController implements IBaseController {
-  static logger = new LoggerService();
+  static logger = new LoggerService()
 
-  send(res: Response, method: string, payload: any, baseUrl: string) {
-    BaseController.logger.success('response:', method, 200, baseUrl, 'success');
-    res.status(200).json({
+  send({ response, data, method, url }: SendOptions){
+    BaseController.logger.success('response:', method, 200, url, 'success')
+    response.status(200).json({
       ok: true,
-      data: payload
-    });
+      data
+    })
   }
 
-  error(method: string, err: any, baseUrl: string) {
+  error({ method, error, url }: ErrorOptions){
     BaseController.logger.error(
-      err.status || 500,
+      error.status || 500,
       method,
-      baseUrl,
-      err.message || err
-    );
+      url,
+      error.message || error
+    )
 
     return Promise.reject({
       ok: false,
-      status: err.status || 500,
-      message: err.message || err
-    });
+      status: error.status || 500,
+      message: error.message || error
+    })
   }
 }
