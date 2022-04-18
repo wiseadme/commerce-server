@@ -11,8 +11,19 @@ export class Product {
   private readonly _seo: IProduct['seo']
   private readonly _assets: IProduct['assets']
   private readonly _variants: IProduct['variants']
+  private readonly _attributes: IProduct['attributes']
 
-  constructor({ name, price, description, image, assets, seo, variants, categories }: IProduct){
+  constructor({
+    name,
+    price,
+    description,
+    image,
+    assets,
+    seo,
+    variants,
+    categories,
+    attributes
+  }: IProduct){
     this._name = name
     this._price = price
     this._description = description
@@ -22,6 +33,7 @@ export class Product {
     this._assets = assets
     this._variants = variants
     this._categories = categories
+    this._attributes = attributes
   }
 
   get name(){
@@ -54,6 +66,10 @@ export class Product {
 
   get seo(){
     return this._seo
+  }
+
+  get attributes(){
+    return this._attributes
   }
 
   get url(){

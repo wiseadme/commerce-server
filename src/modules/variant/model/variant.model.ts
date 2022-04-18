@@ -11,12 +11,24 @@ const VariantSchema = new Schema<IVariant & Document>({
     type: Schema.Types.ObjectId,
     ref: 'Product'
   },
-  // options: [
-  //   {
-  //     type: Schema.Types.ObjectId,
-  //     ref: 'Option'
-  //   }
-  // ]
+  options: [
+    {
+      sku: String,
+      name: {
+        type: String,
+        required: true
+      },
+      price: {
+        type: Number,
+        default: 0
+      },
+      image: String,
+      assets: {
+        type: Array,
+        default: null
+      }
+    }
+  ]
 }, {
   timestamps: true
 })

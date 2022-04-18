@@ -33,7 +33,14 @@ export interface IProduct {
   categories: IModelRef<ICategory>[]
   seo?: IProductSEO
   assets: IAssetItem[]
-  variants: IVariant[]
+  variants: IVariant[],
+  attributes: IAttribute[]
+}
+
+interface IAttribute {
+  meta: string
+  name: string
+  value: string
 }
 
 export interface IVariant {

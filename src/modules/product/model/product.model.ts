@@ -8,10 +8,6 @@ const ProductSchema = new Schema<IProduct & Document>({
     required: true,
     index: true
   },
-  description: {
-    type: String,
-    required: true
-  },
   price: {
     type: Number,
     default: 0
@@ -29,24 +25,36 @@ const ProductSchema = new Schema<IProduct & Document>({
   },
   seo: {
     type: {
+      _id: false,
       title: String,
       description: String,
       keywords: String
     },
     default: null
   },
-  assets: [
-    {
+  attributes: {
+    type: [ {
+      meta: String,
+      name: String,
+      value: String,
+      _id: false,
+    } ],
+    default: []
+  },
+  assets: {
+    type: [ {
       url: String,
       type: String
-    }
-  ],
-  variants: [
-    {
+    } ],
+    default: []
+  },
+  variants: {
+    type: [ {
       type: Schema.Types.ObjectId,
       ref: 'Variant',
-    }
-  ],
+    } ],
+    default: []
+  },
 }, {
   timestamps: true
 })

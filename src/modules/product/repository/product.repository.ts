@@ -14,7 +14,7 @@ export class ProductRepository implements IProductRepository {
   }
 
   async create(product: IProduct){
-    return new ProductModel({
+    return (await new ProductModel({
       _id: new mongoose.Types.ObjectId(),
       name: product.name,
       price: product.price,
@@ -23,9 +23,10 @@ export class ProductRepository implements IProductRepository {
       url: product.url,
       categories: product.categories,
       variants: product.variants,
+      attributes: product.attributes,
       assets: product.assets,
       seo: product.seo
-    }).save()
+    }).save()).populate('categories')
   }
 
   async read(params): Promise<Array<IProduct & Document>>{
@@ -34,12 +35,13 @@ export class ProductRepository implements IProductRepository {
 
       return ProductModel
         .find({ categories: { $in: category } })
+        .populate(['categories', 'variants'])
         .skip((page * count) - count)
         .limit(count)
     }
 
     params && validateId(params)
-    return ProductModel.find({ _id: params })
+    return ProductModel.find({ _id: params }).populate(['categories', 'variants'])
   }
 
   async update($set: Partial<Document<IProduct>>): Promise<{ updated: Document<IProduct> }>{
