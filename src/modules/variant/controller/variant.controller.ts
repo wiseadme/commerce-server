@@ -73,6 +73,7 @@ export class VariantController extends BaseController implements IController {
   async updateVariant({ body, method }: Request<{}, {}, Partial<IVariant>>, res: Response){
     try {
       const { updated } = await this.service.update(body)
+
       this.send({
         response: res,
         data: updated,
@@ -91,6 +92,7 @@ export class VariantController extends BaseController implements IController {
   async deleteVariant({ query, method }: Request<{}, {}, {}, { id: string }>, res: Response){
     try {
       await this.service.delete(query.id)
+
       this.send({
         response: res,
         data: true,

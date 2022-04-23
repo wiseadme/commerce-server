@@ -25,4 +25,8 @@ export class VariantService implements IVariantService {
   async update(updates: Partial<IVariant & Document>){
     return this.repository.update(updates)
   }
+
+  async delete(id: string){
+    return await this.repository.delete(id)
+  }
 }
