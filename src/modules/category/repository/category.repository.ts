@@ -49,6 +49,8 @@ export class CategoryRepository implements ICategoryRepository {
   }
 
   async delete(id){
+    validateId(id)
+
     return !!await CategoryModel.findByIdAndDelete({ _id: id })
   }
 }

@@ -76,6 +76,8 @@ export class ProductRepository implements IProductRepository {
   }
 
   async delete(id){
+    validateId(id)
+
     return !!await ProductModel.findOneAndDelete({ _id: id })
   }
 }

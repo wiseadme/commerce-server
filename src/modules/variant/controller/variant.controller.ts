@@ -29,6 +29,7 @@ export class VariantController extends BaseController implements IController {
     this.router.post('/', expressAsyncHandler(this.createVariant.bind(this)))
     this.router.get('/', expressAsyncHandler(this.getVariants.bind(this)))
     this.router.patch('/', expressAsyncHandler(this.updateVariant.bind(this)))
+    this.router.delete('/', expressAsyncHandler(this.deleteVariant.bind(this)))
   }
 
   async createVariant({ body, method }: Request<{}, {}, IVariant>, res: Response){
@@ -75,6 +76,24 @@ export class VariantController extends BaseController implements IController {
       this.send({
         response: res,
         data: updated,
+        url: this.path,
+        method
+      })
+    } catch (err) {
+      return this.error({
+        error: err,
+        url: this.path,
+        method
+      })
+    }
+  }
+
+  async deleteVariant({ query, method }: Request<{}, {}, {}, { id: string }>, res: Response){
+    try {
+      await this.service.delete(query.id)
+      this.send({
+        response: res,
+        data: true,
         url: this.path,
         method
       })

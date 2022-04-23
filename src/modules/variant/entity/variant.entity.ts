@@ -1,5 +1,4 @@
-import { IModelRef, IVariant, IVariantOptions } from '@/types/models'
-import { Maybe } from '@/types/types'
+import { IVariant } from '@/types/models'
 
 export class Variant {
   private readonly _group: string

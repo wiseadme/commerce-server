@@ -40,4 +40,10 @@ export class VariantRepository implements IVariantRepository {
 
     return { updated }
   }
+
+  async delete(id: string){
+    validateId(id)
+
+    return !!await VariantModel.findOneAndDelete({ _id: id })
+  }
 }
