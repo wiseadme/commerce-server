@@ -23,9 +23,21 @@ export class VariantRepository implements IVariantRepository {
     }).save()
   }
 
-  async read(productId: string): Promise<Array<Document & IVariant>>{
+  async read(productId: string){
     validateId(productId)
 
     return VariantModel.find({ product: productId })
+  }
+
+  async update($set: Partial<Document<IVariant>>){
+    validateId($set.id)
+
+    const updated = await VariantModel.findByIdAndUpdate(
+      { _id: $set._id },
+      { $set },
+      { new: true }
+    ) as Document<IVariant>
+
+    return { updated }
   }
 }

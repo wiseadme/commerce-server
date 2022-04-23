@@ -4,6 +4,7 @@ import { TYPES } from '@common/schemes/di-types'
 import { ILogger } from '@/types/utils'
 import { IVariant } from '@/types/models'
 import { IVariantRepository } from '@/types/repositories'
+import { Document } from 'mongoose'
 
 @injectable()
 export class VariantService implements IVariantService {
@@ -19,5 +20,9 @@ export class VariantService implements IVariantService {
 
   async read(productId: string){
     return await this.repository.read(productId)
+  }
+
+  async update(updates: Partial<IVariant & Document>){
+    return this.repository.update(updates)
   }
 }

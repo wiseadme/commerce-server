@@ -7,6 +7,7 @@ import { validateId } from '@common/utils/mongoose-validate-id'
 import { IProductRepository } from '@/types/repositories'
 import { ILogger } from '@/types/utils'
 import { IProduct } from '@/types/models'
+import { ProductQuery } from '@/types/types'
 
 @injectable()
 export class ProductRepository implements IProductRepository {
@@ -29,11 +30,19 @@ export class ProductRepository implements IProductRepository {
     }).save()).populate('categories')
   }
 
-  async read(params): Promise<Array<IProduct & Document>>{
-    let search
-    const { category, page = 1, count = 20 } = params
+  async read(params: string | ProductQuery){
+    const DEFAULT_COUNT = 20
+    const DEFAULT_PAGE = 1
 
     if (typeof params === 'object') {
+      let search
+
+      const {
+        category,
+        page = DEFAULT_PAGE,
+        count = DEFAULT_COUNT
+      } = params as ProductQuery
+
       if (params.category) {
         search = { categories: { $in: category } }
       }
@@ -50,10 +59,11 @@ export class ProductRepository implements IProductRepository {
     }
 
     params && validateId(params)
+
     return ProductModel.find({ _id: params }).populate([ 'categories', 'variants' ])
   }
 
-  async update($set: Partial<Document<IProduct>>): Promise<{ updated: Document<IProduct> }>{
+  async update($set: Partial<Document<IProduct>>){
     validateId($set._id)
 
     const updated = await ProductModel.findByIdAndUpdate(

@@ -70,7 +70,7 @@ export class ProductController extends BaseController implements IController {
     }
   }
 
-  async updateProduct({ body, method }: Request<{}, {}, Partial<IProduct>>, res: Response){
+  async updateProduct({ body, method }: Request<{}, {}, Partial<IProduct & Document>>, res: Response){
     try {
       const { updated } = await this.service.update(body)
 
