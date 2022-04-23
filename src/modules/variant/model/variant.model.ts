@@ -1,15 +1,15 @@
 import { model, Schema, Document } from 'mongoose'
 import { IVariant } from '@/types/models'
 
-const VariantSchema = new Schema<IVariant & Document>({
+const VariantSchema = new Schema<Document & IVariant>({
   _id: Schema.Types.ObjectId,
   group: {
     type: String,
     required: true
   },
   product: {
-    type: Schema.Types.ObjectId,
-    ref: 'Product'
+    type: String,
+    required: true
   },
   options: [
     {

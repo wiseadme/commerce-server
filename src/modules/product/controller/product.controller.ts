@@ -50,7 +50,7 @@ export class ProductController extends BaseController implements IController {
     }
   }
 
-  async getProducts({ query, method }: Request<{}, {}, ProductQuery>, res: Response){
+  async getProducts({ query, method }: Request<{}, {}, {}, ProductQuery>, res: Response){
     try {
       const products = await this.service.read(query)
 

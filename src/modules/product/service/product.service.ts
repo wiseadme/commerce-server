@@ -24,13 +24,15 @@ export class ProductService implements IProductService {
   }
 
   async read(query){
-    const { id, category, page, count } = query
-    const params = id ? id : { category, page, count }
+    const { id, category, name, page, count } = query
+    const searchKey = name ? 'name' : category ? 'category' : null
+
+    const params = id ? id : { page, count, [searchKey!]: query[searchKey!] }
 
     return await this.repository.read(params)
   }
 
-  async update(updates: Partial<Document<IProduct>>) {
+  async update(updates: Partial<Document<IProduct>>){
     return await this.repository.update(Product.update(updates))
   }
 }

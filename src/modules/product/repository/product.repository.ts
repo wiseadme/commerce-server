@@ -30,18 +30,27 @@ export class ProductRepository implements IProductRepository {
   }
 
   async read(params): Promise<Array<IProduct & Document>>{
-    if (params.category) {
-      const { category, page, count } = params
+    let search
+    const { category, page = 1, count = 20 } = params
+
+    if (typeof params === 'object') {
+      if (params.category) {
+        search = { categories: { $in: category } }
+      }
+
+      if (params.name) {
+        search = { 'name': { '$regex': `.*${ params.name }*.`, '$options': 'i' } }
+      }
 
       return ProductModel
-        .find({ categories: { $in: category } })
-        .populate(['categories', 'variants'])
+        .find(search)
+        .populate([ 'categories', 'variants' ])
         .skip((page * count) - count)
         .limit(count)
     }
 
     params && validateId(params)
-    return ProductModel.find({ _id: params }).populate(['categories', 'variants'])
+    return ProductModel.find({ _id: params }).populate([ 'categories', 'variants' ])
   }
 
   async update($set: Partial<Document<IProduct>>): Promise<{ updated: Document<IProduct> }>{

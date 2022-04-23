@@ -4,11 +4,13 @@ import expressAsyncHandler from 'express-async-handler'
 
 import { TYPES } from '@common/schemes/di-types'
 import { BaseController } from '@common/controller/base.controller'
+import { Variant } from '../entity/variant.entity'
 
 import { IController } from '@/types'
 import { ILogger } from '@/types/utils'
 import { IVariant } from '@/types/models'
 import { IVariantService } from '@/types/services'
+import { VariantQuery } from '@/types/types'
 
 @injectable()
 export class VariantController extends BaseController implements IController {
@@ -25,15 +27,35 @@ export class VariantController extends BaseController implements IController {
 
   initRoutes(){
     this.router.post('/', expressAsyncHandler(this.createVariant.bind(this)))
+    this.router.get('/', expressAsyncHandler(this.getVariants.bind(this)))
   }
 
   async createVariant({ body, method }: Request<{}, {}, IVariant>, res: Response){
     try {
-      const variant = await this.service.create(body)
+      const variant = await this.service.create(Variant.create(body))
 
       this.send({
         response: res,
         data: variant,
+        url: this.path,
+        method
+      })
+    } catch (err) {
+      return this.error({
+        error: err,
+        url: this.path,
+        method
+      })
+    }
+  }
+
+  async getVariants({ query, method }: Request<{}, {}, {}, VariantQuery>, res: Response){
+    try {
+      const variants = await this.service.read(query.productId)
+
+      this.send({
+        response: res,
+        data: variants,
         url: this.path,
         method
       })

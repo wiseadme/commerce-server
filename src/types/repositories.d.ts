@@ -1,5 +1,6 @@
 import { ICategory, IProduct, IVariant } from './models'
 import { Document } from 'mongoose'
+import { ProductQuery } from '@/types/types'
 
 export interface IBaseRepository {
   validateId(id: string): boolean | undefined
@@ -16,12 +17,13 @@ export interface ICategoryRepository {
 
 export interface IProductRepository {
   create: (product: IProduct) => Promise<Document>
-  read: (query: any) => Promise<Array<IProduct & Document>>
+  read: (query: ProductQuery) => Promise<Array<IProduct & Document>>
   update: (updates: Partial<Document<IProduct>>) => Promise<{ updated: Document<IProduct> }>
 }
 
 export interface IVariantRepository {
   create: (variant: IVariant) => Promise<Document>
+  read: (productId: string) => Promise<Array<Document & IVariant>>
 }
 
 export interface IFilesRepository {

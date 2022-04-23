@@ -1,7 +1,7 @@
-import { Document } from 'mongoose'
+import { Document, RefType } from 'mongoose'
 
 interface IModelRef<T> {
-  _id: Document<T>['_id']
+  _id: string
   ref: Document<T>['modelName']
 }
 
@@ -30,7 +30,7 @@ export interface IProduct {
   price: number
   image?: string
   url?: string
-  categories: IModelRef<ICategory>[]
+  categories: RefType[]
   seo?: IProductSEO
   assets: IAssetItem[]
   variants: IVariant[],
@@ -45,11 +45,12 @@ interface IAttribute {
 
 export interface IVariant {
   group: string,
-  product: IModelRef<IProduct>
-  options: IModelRef<IVariantOptions>[]
+  product: string
+  options: any[]
 }
 
 export interface IVariantOptions {
+  variantId: string
   name: string
   meta?: string
   price?: number
