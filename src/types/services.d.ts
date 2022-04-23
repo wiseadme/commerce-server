@@ -14,6 +14,7 @@ export interface IProductService {
   create: (product: IProduct) => Promise<Document<IProduct>>
   read: (query: ProductQuery) => Promise<Array<Document<IProduct>>>,
   update: (update: Partial<IProduct> & { id?: string }) => Promise<{ updated: Document<IProduct> }>
+  delete: (id: string) => Promise<boolean>
 }
 
 export interface IVariantService {

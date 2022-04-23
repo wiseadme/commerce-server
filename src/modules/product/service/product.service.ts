@@ -35,4 +35,8 @@ export class ProductService implements IProductService {
   async update(updates: Partial<Document<IProduct>>){
     return await this.repository.update(Product.update(updates))
   }
+
+  async delete(id){
+    return await this.repository.delete(id)
+  }
 }

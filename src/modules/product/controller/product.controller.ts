@@ -29,6 +29,7 @@ export class ProductController extends BaseController implements IController {
     this.router.post('/', expressAsyncHandler(this.createProduct.bind(this)))
     this.router.get('/', expressAsyncHandler(this.getProducts.bind(this)))
     this.router.patch('/', expressAsyncHandler(this.updateProduct.bind(this)))
+    this.router.delete('/', expressAsyncHandler(this.deleteProduct.bind(this)))
   }
 
   async createProduct({ body, method }: Request<{}, {}, IProduct>, res: Response){
@@ -83,6 +84,25 @@ export class ProductController extends BaseController implements IController {
       return this.error({
         error: err,
         url: this.path,
+        method
+      })
+    }
+  }
+
+  async deleteProduct({ query, method, path }: Request<{}, {}, {}, { id: string }>, res: Response){
+    try {
+      await this.service.delete(query.id)
+
+      this.send({
+        response: res,
+        data: true,
+        url: this.path + path,
+        method
+      })
+    } catch (err) {
+      return this.error({
+        error: err,
+        url: this.path + path,
         method
       })
     }
