@@ -13,7 +13,7 @@ export class CategoryRepository implements ICategoryRepository {
   }
 
   async create(category: ICategory) {
-    const created = await new CategoryModel({
+    return await new CategoryModel({
       _id: new mongoose.Types.ObjectId(),
       title: category.title,
       url: category.url,
@@ -23,14 +23,6 @@ export class CategoryRepository implements ICategoryRepository {
       parent: category.parent || null,
       children: category.children || []
     }).save()
-
-    if (created.parent) {
-      const parent = await CategoryModel.findById(category.parent)
-      parent!.children.push(created._id as any)
-      parent!.save()
-    }
-
-    return created
   }
 
   async read<T extends { id?: string }>({ id }: T) {
@@ -39,8 +31,8 @@ export class CategoryRepository implements ICategoryRepository {
     const params = id ? { _id: id } : {}
     const categories = await CategoryModel
       .find(params)
-      .populate('parent', [ 'title' ])
-      .populate('children', [ 'title' ])
+      .populate('parent', [ 'title', 'url' ])
+      .populate('children', [ 'title', 'url' ])
 
     if (id && !categories.length) {
       throw ({ status: 404, message: 'not found' })
@@ -56,7 +48,9 @@ export class CategoryRepository implements ICategoryRepository {
       { _id: $set._id },
       { $set },
       { new: true }
-    ) as Document<ICategory>
+    )
+      .populate('parent', [ 'title', 'url' ])
+      .populate('children', [ 'title', 'url' ]) as Document<ICategory>
 
     return { updated }
   }
