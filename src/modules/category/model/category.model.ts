@@ -1,5 +1,5 @@
-import { Document, model, Schema } from 'mongoose';
-import { ICategory } from '@/types/models';
+import { Document, model, Schema } from 'mongoose'
+import { ICategory } from '@/types/models'
 
 const CategorySchema: Schema = new Schema<ICategory & Document>({
   _id: Schema.Types.ObjectId,
@@ -8,7 +8,10 @@ const CategorySchema: Schema = new Schema<ICategory & Document>({
     required: true,
     unique: true
   },
-  url: String,
+  url: {
+    type: String,
+    unique: true
+  },
   image: String,
   seo: {
     title: String,
@@ -23,9 +26,14 @@ const CategorySchema: Schema = new Schema<ICategory & Document>({
   order: {
     type: Number,
     default: 0
-  }
+  },
+  children: [ {
+    type: Schema.Types.ObjectId,
+    ref: 'Category',
+    default: null
+  } ]
 }, {
   timestamps: true
-});
+})
 
-export const CategoryModel = model<ICategory>('Category', CategorySchema);
+export const CategoryModel = model<ICategory>('Category', CategorySchema)

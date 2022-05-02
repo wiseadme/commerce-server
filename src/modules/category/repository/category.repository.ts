@@ -9,25 +9,30 @@ import { validateId } from '@common/utils/mongoose-validate-id'
 
 @injectable()
 export class CategoryRepository implements ICategoryRepository {
-  constructor(@inject(TYPES.UTILS.ILogger) private logger: ILogger){
+  constructor(@inject(TYPES.UTILS.ILogger) private logger: ILogger) {
   }
 
-  async create(category: ICategory){
+  async create(category: ICategory) {
     return await new CategoryModel({
       _id: new mongoose.Types.ObjectId(),
       title: category.title,
+      url: category.url,
       order: category.order,
       seo: category.seo,
       image: category.image,
-      parent: category.parent
+      parent: category.parent || null,
+      children: category.children || []
     }).save()
   }
 
-  async read<T extends { id?: string }>({ id }: T){
+  async read<T extends { id?: string }>({ id }: T) {
     id && validateId(id)
 
     const params = id ? { _id: id } : {}
-    const categories = await CategoryModel.find(params).populate('parent', [ 'title' ])
+    const categories = await CategoryModel
+      .find(params)
+      .populate('parent', [ 'title' ])
+      .populate('children', [ 'title' ])
 
     if (id && !categories.length) {
       throw ({ status: 404, message: 'not found' })
@@ -36,7 +41,7 @@ export class CategoryRepository implements ICategoryRepository {
     return categories
   }
 
-  async update($set: Partial<ICategory & Document>){
+  async update($set: Partial<ICategory & Document>) {
     validateId($set._id)
 
     const updated = await CategoryModel.findByIdAndUpdate(
@@ -48,7 +53,7 @@ export class CategoryRepository implements ICategoryRepository {
     return { updated }
   }
 
-  async delete(id){
+  async delete(id) {
     validateId(id)
 
     return !!await CategoryModel.findByIdAndDelete({ _id: id })

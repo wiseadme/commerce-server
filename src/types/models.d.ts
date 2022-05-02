@@ -12,6 +12,7 @@ export interface ICategory {
   url?: string
   parent?: string
   order?: number
+  children: string[]
 }
 
 export interface ISEOType {
