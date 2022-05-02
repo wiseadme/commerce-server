@@ -12,7 +12,7 @@ export class Config implements IConfig {
   port = Number(process.env.PORT!)
   dbUri = process.env.MONGO_URI!
   secret = process.env.SECRET_KEY!
-  uploadsDir = `/Users/${process.env.USER}/www/uploads`!
+  uploadsDir = `/home/${process.env.USER}/www/uploads`!
 }
 
 export default new Config()
