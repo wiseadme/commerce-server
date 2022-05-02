@@ -1,4 +1,4 @@
-import { Document, RefType } from 'mongoose'
+import { Document, ObjectId, RefType, Schema } from 'mongoose'
 
 interface IModelRef<T> {
   _id: string

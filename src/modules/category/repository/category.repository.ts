@@ -13,7 +13,7 @@ export class CategoryRepository implements ICategoryRepository {
   }
 
   async create(category: ICategory) {
-    return await new CategoryModel({
+    const created = await new CategoryModel({
       _id: new mongoose.Types.ObjectId(),
       title: category.title,
       url: category.url,
@@ -23,6 +23,14 @@ export class CategoryRepository implements ICategoryRepository {
       parent: category.parent || null,
       children: category.children || []
     }).save()
+
+    if (created.parent) {
+      const parent = await CategoryModel.findById(category.parent)
+      parent!.children.push(created._id as any)
+      parent!.save()
+    }
+
+    return created
   }
 
   async read<T extends { id?: string }>({ id }: T) {

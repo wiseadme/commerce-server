@@ -49,7 +49,7 @@ export class Category {
     return this._children!
   }
 
-  static create(params) {
+  static create(params: ICategory) {
     return new Category(params)
   }
 
