@@ -18,8 +18,12 @@ export class AssetsRepository implements IAssetsRepository {
   save(req, res): Promise<AssetsResponse>{
     return new Promise((resolve, reject) => {
       const upload = this.fileLoader.loadSingle('image')
+
       const assetId = new mongoose.Types.ObjectId()
+
       const { fileName } = req.query
+
+      console.log(req.query, 'assets repository query')
 
       const url = `/uploads/${ assetId.toString() }|${ fileName }`
 
@@ -34,7 +38,6 @@ export class AssetsRepository implements IAssetsRepository {
       })
         .save()
         .then(resolve)
-        .catch(err => console.log(err))
     })
   }
 
@@ -43,7 +46,10 @@ export class AssetsRepository implements IAssetsRepository {
       validateId(id)
       const res = await AssetModel.find({ ownerId: id })
 
-      res.forEach(it => fs.unlink(`${ config.uploadsDir }/${ it._id }|${ it.fileName }`))
+      res.forEach(it =>{
+        fs.unlink(`${ config.uploadsDir }/${ it._id }|${ it.fileName }`)
+        it.deleteOne()
+      })
 
       return true
     } catch (err) {

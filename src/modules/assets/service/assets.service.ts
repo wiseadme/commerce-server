@@ -17,8 +17,4 @@ export class AssetsService implements IAssetsService {
   async deleteFile(fileName){
     return await this.repository.delete(fileName)
   }
-
-  async deleteAllFiles(id: string) {
-
-  }
 }
