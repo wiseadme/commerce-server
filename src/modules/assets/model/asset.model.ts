@@ -11,8 +11,13 @@ const AssetSchema: Schema = new Schema<IAssetItem & Document>({
     type: String,
     required: false
   },
+  fileName: {
+    type: String,
+    required: true
+  },
   ownerId: {
     type: String,
+    required: true
   }
 }, {
   timestamps: true

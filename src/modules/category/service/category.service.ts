@@ -40,7 +40,9 @@ export class CategoryService extends EmitterService implements ICategoryService 
 
   async delete(id: string): Promise<boolean>{
     const res = await this.repository.delete(id)
+
     this.emitter.emit('delete:category', { id })
+
     return res
   }
 }

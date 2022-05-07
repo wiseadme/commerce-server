@@ -31,5 +31,5 @@ export interface IVariantRepository {
 
 export interface IAssetsRepository {
   save: (req: Request, res: Response) => Promise<AssetsResponse>
-  delete: (fileName: string) => Promise<boolean>
+  delete: (fileName: string) => any
 }

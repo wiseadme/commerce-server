@@ -23,18 +23,18 @@ class FileLoaderOptions {
   }
 
   addOptionsStorage(){
-    try {
-      fs.readdirSync(config.uploadsDir)
-    } catch (err) {
-      mkdirp.sync(config.uploadsDir)
-    }
     this.storage = multer.diskStorage({
       destination(req, file, cb){
-        cb(null, config.uploadsDir)
+        try {
+          fs.readdirSync(`${ config.uploadsDir }`)
+        } catch (err) {
+          mkdirp.sync(`${ config.uploadsDir }`)
+        }
+        cb(null, `${ config.uploadsDir }`)
       },
       filename(req, file, cb){
-        const { fileName, timestamp } = req.query
-        cb(null, `${ timestamp }|${ fileName }`)
+        const { fileName, assetId } = req.query
+        cb(null, `${ assetId }|${ fileName }`)
       }
     })
   }

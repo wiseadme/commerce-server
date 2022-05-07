@@ -55,7 +55,7 @@ export class Category {
 
   static update(updates) {
     if (updates.title && !updates.url) updates.url = translator(updates.title)
-    if (updates.seo) updates.seo = JSON.parse(updates.seo)
+    // if (updates.seo) updates.seo = JSON.parse(updates.seo)
     return updates
   }
 }

@@ -5,7 +5,8 @@ import { TYPES } from '@common/schemes/di-types'
 import { IFileLoaderMiddleware } from '@/types/middlewares'
 import { AssetModel } from '@modules/assets/model/asset.model'
 import config from '@app/config'
-import * as mongoose from 'mongoose'
+import mongoose from 'mongoose'
+import { validateId } from '@common/utils/mongoose-validate-id'
 
 @injectable()
 export class AssetsRepository implements IAssetsRepository {
@@ -17,27 +18,37 @@ export class AssetsRepository implements IAssetsRepository {
   save(req, res): Promise<AssetsResponse>{
     return new Promise((resolve, reject) => {
       const upload = this.fileLoader.loadSingle('image')
-      const timestamp = Date.now()
-      const url = `/uploads/${ timestamp }|${ req.query.fileName }`
+      const assetId = new mongoose.Types.ObjectId()
+      const { fileName } = req.query
 
-      req.query.timestamp = timestamp
+      const url = `/uploads/${ assetId.toString() }|${ fileName }`
+
+      req.query.assetId = assetId.toString()
       upload(req, res, err => reject(err))
 
-      const asset = new AssetModel({
-        _id: new mongoose.Types.ObjectId(),
+      new AssetModel({
+        _id: assetId,
+        ownerId: req.query.id,
+        fileName,
         url
       })
-
-      resolve({ url })
+        .save()
+        .then(resolve)
+        .catch(err => console.log(err))
     })
   }
 
-  async delete(fileName){
+  async delete(id){
     try {
-      await fs.unlink(`${ config.uploadsDir }/${ fileName }`)
+      validateId(id)
+      const res = await AssetModel.find({ ownerId: id })
+
+      res.forEach(it => fs.unlink(`${ config.uploadsDir }/${ it._id }|${ it.fileName }`))
+
       return true
     } catch (err) {
-      return false
+      await fs.unlink(`${ config.uploadsDir }/${ id }`)
+      return true
     }
   }
 }

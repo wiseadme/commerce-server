@@ -18,16 +18,16 @@ export abstract class BaseController implements IBaseController {
 
   error({ method, error, url }: ErrorOptions){
     BaseController.logger.error(
-      error.status || 500,
+      error?.status || 500,
       method,
       url,
-      error.message || error
+      error?.message || error
     )
 
     return Promise.reject({
       ok: false,
-      status: error.status || 500,
-      message: error.message || error
+      status: error?.status || 500,
+      message: error?.message || error
     })
   }
 }
