@@ -30,7 +30,8 @@ const CategorySchema: Schema = new Schema<ICategory & Document>({
   children: [ {
     type: Schema.Types.ObjectId,
     ref: 'Category',
-    default: null
+    default: null,
+    _id: false
   } ]
 }, {
   timestamps: true

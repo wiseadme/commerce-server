@@ -1,4 +1,4 @@
-import { Document, ObjectId, RefType, Schema } from 'mongoose'
+import { Document, RefType } from 'mongoose'
 
 interface IModelRef<T> {
   _id: string
@@ -62,5 +62,6 @@ export interface IVariantOptions {
 
 export interface IAssetItem {
   url: string
-  type: string
+  type: string,
+  ownerId: string
 }

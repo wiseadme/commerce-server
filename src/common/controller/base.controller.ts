@@ -1,7 +1,7 @@
 import { Response } from 'express'
 import { IBaseController } from './base.controller.interface'
 import { injectable } from 'inversify'
-import { LoggerService } from '@common/services/logger/logger.service'
+import { LoggerService } from '@common/services/logger.service'
 import { ErrorOptions, SendOptions } from '@/types'
 
 @injectable()

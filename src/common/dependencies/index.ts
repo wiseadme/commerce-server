@@ -6,24 +6,28 @@ import { TYPES } from '../schemes/di-types'
 import { Container } from 'inversify'
 
 // Services
-import { LoggerService } from '../services/logger/logger.service'
+import { LoggerService } from '../services/logger.service'
 import { CategoryService } from '@modules/category/service/category.service'
 import { ProductService } from '@modules/product/service/product.service'
 import { VariantService } from '@modules/variant/service/variant.service'
-import { FilesService } from '@modules/files/service/files.service'
+import { AssetsService } from '@modules/assets/service/assets.service'
+import { EmitterService } from '@common/services/emitter.service'
 // import {Variant}
 
 // Controllers
 import { CategoryController } from '@modules/category/controller/category.controller'
 import { ProductController } from '@modules/product/controller/product.controller'
-import { FilesController } from '@modules/files/controller/files.controller'
+import { AssetsController } from '@modules/assets/controller/assets.controller'
 import { SwaggerController } from '@swagger/controller/swagger.controller'
+
+// Listeners
+import { CategoryEventListeners } from '@modules/category/listeners/category.listeners'
 
 // Repositories
 import { CategoryRepository } from '@modules/category/repository/category.repository'
 import { ProductRepository } from '@modules/product/repository/product.repository'
 import { VariantRepository } from '@modules/variant/repository/variant.repository'
-import { FilesRepository } from '@modules/files/repository/files.repository'
+import { AssetsRepository } from '@modules/assets/repository/assets.repository'
 
 // Middlewares
 import { JsonMiddleware } from '@common/middlewares/json.middleware'
@@ -33,12 +37,15 @@ import { ErrorRouteMiddleware } from '../middlewares/error.route.middleware'
 import { FileLoaderMiddleware } from '@common/middlewares/fileloader.middleware'
 
 // Types
-import { ICategoryService, IProductService, IFilesService, IVariantService } from '@/types/services'
-import { ICategoryRepository, IFilesRepository, IProductRepository, IVariantRepository } from '@/types/repositories'
+import { ICategoryService, IProductService, IAssetsService, IVariantService } from '@/types/services'
+import { ICategoryRepository, IAssetsRepository, IProductRepository, IVariantRepository } from '@/types/repositories'
 import { ILogger } from '@/types/utils'
 import { IController, IConfig, IDb } from '@/types'
 import { IMiddleware, IErrorRouteMiddleware, IExpressMiddleware, IFileLoaderMiddleware } from '@/types/middlewares'
 import { VariantController } from '@modules/variant/controller/variant.controller'
+import { ICategoryEventListeners } from '@/types/listeners'
+import { IEmitterService } from '@/types/listeners'
+
 
 export const container = new Container()
 
@@ -53,15 +60,19 @@ container.bind<ILogger>(TYPES.UTILS.ILogger).to(LoggerService)
 // Services
 container.bind<ICategoryService>(TYPES.SERVICES.ICategoryService).to(CategoryService)
 container.bind <IProductService>(TYPES.SERVICES.IProductService).to(ProductService)
-container.bind<IFilesService>(TYPES.SERVICES.IFilesService).to(FilesService)
+container.bind<IAssetsService>(TYPES.SERVICES.IAssetsService).to(AssetsService)
 container.bind<IVariantService>(TYPES.SERVICES.IVariantService).to(VariantService)
+container.bind<IEmitterService>(TYPES.SERVICES.IEmitterService).to(EmitterService)
 
 // Controllers
 container.bind<IController>(TYPES.CONTROLLERS.IController).to(SwaggerController)
 container.bind<IController>(TYPES.CONTROLLERS.IController).to(CategoryController)
 container.bind<IController>(TYPES.CONTROLLERS.IController).to(ProductController)
 container.bind<IController>(TYPES.CONTROLLERS.IController).to(VariantController)
-container.bind<IController>(TYPES.CONTROLLERS.IController).to(FilesController)
+container.bind<IController>(TYPES.CONTROLLERS.IController).to(AssetsController)
+
+// Listeners
+container.bind<ICategoryEventListeners>(TYPES.LISTENERS.CategoryEventListeners).to(CategoryEventListeners)
 
 // Middlewares
 container.bind<IExpressMiddleware>(TYPES.MIDDLEWARES.IMiddleware).to(JsonMiddleware)
@@ -73,5 +84,5 @@ container.bind<IFileLoaderMiddleware>(TYPES.MIDDLEWARES.IFileLoaderMiddleware).t
 // Repositories
 container.bind<ICategoryRepository>(TYPES.REPOSITORIES.CategoryRepository).to(CategoryRepository)
 container.bind<IProductRepository>(TYPES.REPOSITORIES.ProductRepository).to(ProductRepository)
-container.bind<IFilesRepository>(TYPES.REPOSITORIES.FilesRepository).to(FilesRepository)
+container.bind<IAssetsRepository>(TYPES.REPOSITORIES.AssetsRepository).to(AssetsRepository)
 container.bind<IVariantRepository>(TYPES.REPOSITORIES.VariantRepository).to(VariantRepository)

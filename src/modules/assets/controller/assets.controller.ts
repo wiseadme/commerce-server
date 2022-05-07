@@ -5,16 +5,16 @@ import { BaseController } from '@common/controller/base.controller'
 // Types
 import { ILogger } from '@/types/utils'
 import { IController } from '@/types'
-import { IFilesService } from '@/types/services'
+import { IAssetsService } from '@/types/services'
 
 @injectable()
-export class FilesController extends BaseController implements IController {
+export class AssetsController extends BaseController implements IController {
   path = '/v1/assets'
   router = Router()
 
   constructor(
     @inject(TYPES.UTILS.ILogger) private logger: ILogger,
-    @inject(TYPES.SERVICES.IFilesService) private service: IFilesService
+    @inject(TYPES.SERVICES.IAssetsService) private service: IAssetsService
   ){
     super()
     this.initRoutes()
@@ -44,7 +44,7 @@ export class FilesController extends BaseController implements IController {
     }
   }
 
-  async deleteImage({ params, method }: Request, res: Response){
+  async deleteImage({ body, params, method }: Request, res: Response){
     try {
       const result = await this.service.deleteFile(params.filename)
 

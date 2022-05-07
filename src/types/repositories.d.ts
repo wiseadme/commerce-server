@@ -6,7 +6,7 @@ export interface IBaseRepository {
   validateId(id: string): boolean | undefined
 }
 
-export type FileResponse = { url: string }
+export type AssetsResponse = { url: string }
 
 export interface ICategoryRepository {
   create: (category: ICategory) => Promise<Document>
@@ -29,7 +29,7 @@ export interface IVariantRepository {
   delete: (id: string) => Promise<boolean>
 }
 
-export interface IFilesRepository {
-  save: (req: Request, res: Response) => Promise<FileResponse>
+export interface IAssetsRepository {
+  save: (req: Request, res: Response) => Promise<AssetsResponse>
   delete: (fileName: string) => Promise<boolean>
 }

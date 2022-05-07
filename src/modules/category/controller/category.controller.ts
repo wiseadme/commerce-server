@@ -14,6 +14,7 @@ import { ICategoryService } from '@/types/services'
 // Schemes
 import { TYPES } from '@common/schemes/di-types'
 import { Document } from 'mongoose'
+import { ICategoryEventListeners } from '@/types/listeners'
 
 @injectable()
 export class CategoryController extends BaseController implements IController {
@@ -23,9 +24,11 @@ export class CategoryController extends BaseController implements IController {
   constructor(
     @inject(TYPES.UTILS.ILogger) private logger: ILogger,
     @inject(TYPES.SERVICES.ICategoryService) private service: ICategoryService,
+    @inject(TYPES.LISTENERS.CategoryEventListeners) private listener: ICategoryEventListeners
   ){
     super()
     this.initRoutes()
+    this.listener.onDelete()
   }
 
   public initRoutes(){
@@ -113,6 +116,3 @@ export class CategoryController extends BaseController implements IController {
 }
 
 export default CategoryController
-
-
-
