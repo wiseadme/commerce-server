@@ -7,6 +7,7 @@ import { AssetModel } from '@modules/assets/model/asset.model'
 import config from '@app/config'
 import mongoose from 'mongoose'
 import { validateId } from '@common/utils/mongoose-validate-id'
+import { Request, Response } from 'express'
 
 @injectable()
 export class AssetsRepository implements IAssetsRepository {
@@ -15,7 +16,7 @@ export class AssetsRepository implements IAssetsRepository {
   ){
   }
 
-  save(req, res): Promise<AssetsResponse>{
+  save(req: Request, res: Response): Promise<AssetsResponse>{
     return new Promise((resolve, reject) => {
       const upload = this.fileLoader.loadSingle('image')
 
@@ -23,12 +24,17 @@ export class AssetsRepository implements IAssetsRepository {
 
       const { fileName } = req.query
 
-      console.log(req.query, 'assets repository query')
-
       const url = `/uploads/${ assetId.toString() }|${ fileName }`
 
       req.query.assetId = assetId.toString()
-      upload(req, res, err => reject(err))
+
+      try {
+        upload(req, res, (err, filename) => {
+          console.log(err, filename, 'in upload')
+        })
+      } catch(err) {
+        reject(err)
+      }
 
       new AssetModel({
         _id: assetId,
@@ -41,20 +47,21 @@ export class AssetsRepository implements IAssetsRepository {
     })
   }
 
-  async delete(id){
+  async delete(id: string, fileName?: string){
+    console.log(id, fileName, 'in repo')
     try {
       validateId(id)
       const res = await AssetModel.find({ ownerId: id })
 
-      res.forEach(it =>{
-        fs.unlink(`${ config.uploadsDir }/${ it._id }|${ it.fileName }`)
+      res.forEach(it => {
+        const file = fileName ? fileName : it._id + '|' + it.fileName
+        fs.unlink(`${ config.uploadsDir }/${ file }`)
         it.deleteOne()
       })
 
       return true
     } catch (err) {
-      await fs.unlink(`${ config.uploadsDir }/${ id }`)
-      return true
+      console.log(err)
     }
   }
 }

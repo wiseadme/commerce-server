@@ -1,6 +1,7 @@
 import { ICategory, IProduct, IVariant } from './models'
 import { Document } from 'mongoose'
 import { ProductQuery } from '@/types/types'
+import { Request, Response } from 'express'
 
 export interface IBaseRepository {
   validateId(id: string): boolean | undefined
@@ -31,5 +32,5 @@ export interface IVariantRepository {
 
 export interface IAssetsRepository {
   save: (req: Request, res: Response) => Promise<AssetsResponse>
-  delete: (fileName: string) => any
+  delete: (id: string, fileName?: string) => any
 }

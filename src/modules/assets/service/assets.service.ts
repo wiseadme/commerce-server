@@ -14,7 +14,7 @@ export class AssetsService implements IAssetsService {
     return await this.repository.save(req, res)
   }
 
-  async deleteFile(fileName){
-    return await this.repository.delete(fileName)
+  async deleteFile({ id, fileName }){
+    return await this.repository.delete(id, fileName)
   }
 }

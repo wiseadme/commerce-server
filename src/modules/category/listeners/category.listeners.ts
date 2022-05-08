@@ -13,7 +13,7 @@ export class CategoryEventListeners implements ICategoryEventListeners {
 
   onDelete(){
     this.emitter.on('delete:category', async (data) => {
-      await this.assets.deleteFile(data.id)
+      await this.assets.deleteFile(data)
     })
   }
 }

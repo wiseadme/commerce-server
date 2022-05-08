@@ -2,6 +2,7 @@ import { Request, Response, Router } from 'express'
 import { inject, injectable } from 'inversify'
 import { TYPES } from '@common/schemes/di-types'
 import { BaseController } from '@common/controller/base.controller'
+import expressAsyncHandler from 'express-async-handler'
 // Types
 import { ILogger } from '@/types/utils'
 import { IController } from '@/types'
@@ -21,8 +22,8 @@ export class AssetsController extends BaseController implements IController {
   }
 
   initRoutes(){
-    this.router.post('/', this.uploadImage.bind(this))
-    this.router.delete('/:filename', this.deleteImage.bind(this))
+    this.router.post('/', expressAsyncHandler(this.uploadImage.bind(this)))
+    this.router.delete('/:id/:filename', expressAsyncHandler(this.deleteImage.bind(this)))
   }
 
   async uploadImage(req: Request, res: Response){
@@ -44,9 +45,9 @@ export class AssetsController extends BaseController implements IController {
     }
   }
 
-  async deleteImage({ body, params, method }: Request, res: Response){
+  async deleteImage({ body, params, method }: Request<{ id: string, fileName: string }>, res: Response){
     try {
-      const result = await this.service.deleteFile(params.filename)
+      const result = await this.service.deleteFile(params)
 
       this.send({
         response: res,
