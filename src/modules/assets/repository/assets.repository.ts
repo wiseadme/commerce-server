@@ -47,14 +47,16 @@ export class AssetsRepository implements IAssetsRepository {
     })
   }
 
-  async delete(id: string, fileName?: string){
-    console.log(id, fileName, 'in repo')
+  async delete(id: string, url?: string){
+    console.log(id, url, 'in repo')
+
     try {
       validateId(id)
       const res = await AssetModel.find({ ownerId: id })
 
       res.forEach(it => {
-        const file = fileName ? fileName : it._id + '|' + it.fileName
+        const file = url ? url.split('/')[2] : it._id + '|' + it.fileName
+
         fs.unlink(`${ config.uploadsDir }/${ file }`)
         it.deleteOne()
       })

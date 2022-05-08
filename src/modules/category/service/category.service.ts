@@ -21,7 +21,6 @@ export class CategoryService implements ICategoryService {
     @inject(TYPES.REPOSITORIES.CategoryRepository) private repository: ICategoryRepository,
     @inject(TYPES.SERVICES.IEventBusService) private events: IEventBusService
   ) {
-    this.events.emit('delete:category', { id: 'jjjjj' })
   }
 
   async create(category: ICategory) {

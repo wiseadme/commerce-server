@@ -45,7 +45,7 @@ export class AssetsController extends BaseController implements IController {
     }
   }
 
-  async deleteImage({ body, params, method }: Request<{ id: string, fileName: string }>, res: Response){
+  async deleteImage({ body, params, method }: Request<{ id: string, url: string }>, res: Response){
     try {
       const result = await this.service.deleteFile(params)
 

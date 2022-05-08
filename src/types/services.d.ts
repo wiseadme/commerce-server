@@ -26,7 +26,7 @@ export interface IVariantService {
 
 export interface IAssetsService {
   saveFile: (req: Request, res: Response) => Promise<{ url: string }>
-  deleteFile: (params: { id: string, fileName: string }) => Promise<boolean>
+  deleteFile: (params: { id: string, url: string }) => Promise<boolean>
   // getFile: (url: string) => File
 }
 
