@@ -23,7 +23,7 @@ export class AssetsController extends BaseController implements IController {
 
   initRoutes(){
     this.router.post('/', expressAsyncHandler(this.uploadImage.bind(this)))
-    this.router.delete('/:id/:filename', expressAsyncHandler(this.deleteImage.bind(this)))
+    this.router.delete('/', expressAsyncHandler(this.deleteImage.bind(this)))
   }
 
   async uploadImage(req: Request, res: Response){
@@ -45,9 +45,9 @@ export class AssetsController extends BaseController implements IController {
     }
   }
 
-  async deleteImage({ body, params, method }: Request<{ id: string, url: string }>, res: Response){
+  async deleteImage({ body, query, method }: Request<{}, {}, {}, { id: string, url: string }>, res: Response){
     try {
-      const result = await this.service.deleteFile(params)
+      const result = await this.service.deleteFile(query)
 
       this.send({
         response: res,
