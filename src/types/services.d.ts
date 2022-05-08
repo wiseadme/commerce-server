@@ -29,3 +29,14 @@ export interface IAssetsService {
   deleteFile: (params: { id: string, fileName: string }) => Promise<boolean>
   // getFile: (url: string) => File
 }
+
+export interface IEventBusService {
+  emit: (event: string, data: any) => void
+  on: (event: string, callback: (data: any) => any) => void
+}
+
+export interface ICategoryEventsService {
+  emitDeleteCategory: (data: { id: string }) => void
+  onDelete: () => void
+}
+

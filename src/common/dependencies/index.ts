@@ -11,7 +11,7 @@ import { CategoryService } from '@modules/category/service/category.service'
 import { ProductService } from '@modules/product/service/product.service'
 import { VariantService } from '@modules/variant/service/variant.service'
 import { AssetsService } from '@modules/assets/service/assets.service'
-import { EmitterService } from '@common/services/emitter.service'
+import { EventBusService } from '@common/services/event-bus.service'
 // import {Variant}
 
 // Controllers
@@ -19,9 +19,6 @@ import { CategoryController } from '@modules/category/controller/category.contro
 import { ProductController } from '@modules/product/controller/product.controller'
 import { AssetsController } from '@modules/assets/controller/assets.controller'
 import { SwaggerController } from '@swagger/controller/swagger.controller'
-
-// Listeners
-import { CategoryEventListeners } from '@modules/category/listeners/category.listeners'
 
 // Repositories
 import { CategoryRepository } from '@modules/category/repository/category.repository'
@@ -37,17 +34,22 @@ import { ErrorRouteMiddleware } from '../middlewares/error.route.middleware'
 import { FileLoaderMiddleware } from '@common/middlewares/fileloader.middleware'
 
 // Types
-import { ICategoryService, IProductService, IAssetsService, IVariantService } from '@/types/services'
+import {
+  ICategoryService,
+  IProductService,
+  IAssetsService,
+  IVariantService,
+  ICategoryEventsService
+} from '@/types/services'
 import { ICategoryRepository, IAssetsRepository, IProductRepository, IVariantRepository } from '@/types/repositories'
 import { ILogger } from '@/types/utils'
 import { IController, IConfig, IDb } from '@/types'
 import { IMiddleware, IErrorRouteMiddleware, IExpressMiddleware, IFileLoaderMiddleware } from '@/types/middlewares'
 import { VariantController } from '@modules/variant/controller/variant.controller'
-import { ICategoryEventListeners } from '@/types/listeners'
-import { IEmitterService } from '@/types/listeners'
+import { IEventBusService } from '@/types/services'
 
 
-export const container = new Container()
+export const container = new Container({ skipBaseClassChecks: true })
 
 // Globals
 container.bind<App>(TYPES.APPLICATION).to(App)
@@ -62,7 +64,7 @@ container.bind<ICategoryService>(TYPES.SERVICES.ICategoryService).to(CategorySer
 container.bind <IProductService>(TYPES.SERVICES.IProductService).to(ProductService)
 container.bind<IAssetsService>(TYPES.SERVICES.IAssetsService).to(AssetsService)
 container.bind<IVariantService>(TYPES.SERVICES.IVariantService).to(VariantService)
-container.bind<IEmitterService>(TYPES.SERVICES.IEmitterService).to(EmitterService)
+container.bind<IEventBusService>(TYPES.SERVICES.IEventBusService).to(EventBusService)
 
 // Controllers
 container.bind<IController>(TYPES.CONTROLLERS.IController).to(SwaggerController)
@@ -70,9 +72,6 @@ container.bind<IController>(TYPES.CONTROLLERS.IController).to(CategoryController
 container.bind<IController>(TYPES.CONTROLLERS.IController).to(ProductController)
 container.bind<IController>(TYPES.CONTROLLERS.IController).to(VariantController)
 container.bind<IController>(TYPES.CONTROLLERS.IController).to(AssetsController)
-
-// Listeners
-container.bind<ICategoryEventListeners>(TYPES.LISTENERS.CategoryEventListeners).to(CategoryEventListeners)
 
 // Middlewares
 container.bind<IExpressMiddleware>(TYPES.MIDDLEWARES.IMiddleware).to(JsonMiddleware)

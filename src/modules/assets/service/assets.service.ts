@@ -1,4 +1,4 @@
-import { IAssetsService } from '@/types/services'
+import { IAssetsService, IEventBusService } from '@/types/services'
 import { inject, injectable } from 'inversify'
 import { TYPES } from '@common/schemes/di-types'
 import { IAssetsRepository } from '@/types/repositories'
@@ -6,15 +6,21 @@ import { IAssetsRepository } from '@/types/repositories'
 @injectable()
 export class AssetsService implements IAssetsService {
   constructor(
-    @inject(TYPES.REPOSITORIES.AssetsRepository) private repository: IAssetsRepository
-  ){
+    @inject(TYPES.REPOSITORIES.AssetsRepository) private repository: IAssetsRepository,
+    @inject(TYPES.SERVICES.IEventBusService) private events: IEventBusService
+  ) {
+    this.addEventListeners()
   }
 
-  async saveFile(req, res){
+  async saveFile(req, res) {
     return await this.repository.save(req, res)
   }
 
-  async deleteFile({ id, fileName }){
+  async deleteFile({ id, fileName }) {
     return await this.repository.delete(id, fileName)
+  }
+
+  addEventListeners() {
+    this.events.on('delete:category', this.deleteFile.bind(this))
   }
 }

@@ -1,3 +1,5 @@
+import { ICategoryService } from '@/types/services'
+
 export const TYPES = {
   APPLICATION: Symbol.for('App'),
   DB: Symbol.for('DB'),
@@ -7,7 +9,7 @@ export const TYPES = {
     IProductService: Symbol.for('IProductService'),
     IAssetsService: Symbol.for('IAssetsService'),
     IVariantService: Symbol.for('IVariantService'),
-    IEmitterService: Symbol.for('IEmitterService')
+    IEventBusService: Symbol.for('IEventBusService')
   },
   CONTROLLERS: {
     IController: Symbol.for('IController'),
@@ -24,9 +26,6 @@ export const TYPES = {
     ProductRepository: Symbol.for('ProductRepository'),
     AssetsRepository: Symbol.for('AssetsRepository'),
     VariantRepository: Symbol.for('VariantRepository')
-  },
-  LISTENERS: {
-    CategoryEventListeners: Symbol('CategoryEventListeners')
   },
   MIDDLEWARES: {
     IMiddleware: Symbol.for('IMiddleware'),
