@@ -13,6 +13,7 @@ export class CategoryRepository implements ICategoryRepository {
   }
 
   async create(category: ICategory){
+
     const created = await new CategoryModel({
       _id: new mongoose.Types.ObjectId(),
       title: category.title,
@@ -23,6 +24,14 @@ export class CategoryRepository implements ICategoryRepository {
       parent: category.parent || null,
       children: category.children || []
     }).save()
+
+    if (category.parent) {
+      const parent = await CategoryModel.findById(category.parent)
+
+      await parent!.update({
+        $set: { children: [ ...parent!.children, created._id ] }
+      })
+    }
 
     await Promise.all([
       created.populate('parent'),
@@ -36,6 +45,7 @@ export class CategoryRepository implements ICategoryRepository {
     id && validateId(id)
 
     const params = id ? { _id: id } : {}
+
     const categories = await CategoryModel
       .find(params)
       .populate('parent', [ 'title', 'url' ])

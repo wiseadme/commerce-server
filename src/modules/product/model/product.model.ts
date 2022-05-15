@@ -8,6 +8,10 @@ const ProductSchema = new Schema<IProduct & Document>({
     required: true,
     index: true
   },
+  description: {
+    type: String,
+    required: true
+  },
   price: {
     type: Number,
     default: 0
