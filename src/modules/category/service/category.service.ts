@@ -24,7 +24,18 @@ export class CategoryService implements ICategoryService {
   }
 
   async create(category: ICategory){
-    return await this.repository.create(Category.create(category))
+    const ctg = await this.repository.create(Category.create(category))
+
+    if (category.parent) {
+      const [ parent ] = await this.repository.read({ id: category.parent })
+      const children = [ ...parent!.children, ctg._id ]
+
+      const $set = { _id: parent._id, children }
+
+      await this.repository.update($set)
+    }
+
+    return ctg
   }
 
   async update(update: Partial<Document & ICategory>): Promise<{ updated: Document<ICategory> }>{
@@ -54,7 +65,16 @@ export class CategoryService implements ICategoryService {
   }
 
   async delete(id: string): Promise<boolean>{
+    const [ category ] = await this.repository.read({ id })
     const res = await this.repository.delete(id)
+
+    if (category.parent) {
+      const [ parent ] = await this.repository.read({ id: category.parent })
+      const children = parent!.children.filter((it: any) => it._id.toString() !== category._id)
+      const $set = { _id: parent._id, children }
+      await this.repository.update($set)
+    }
+
     this.events.emit('delete:category', { id })
     return res
   }

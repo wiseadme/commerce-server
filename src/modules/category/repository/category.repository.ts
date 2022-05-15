@@ -25,14 +25,6 @@ export class CategoryRepository implements ICategoryRepository {
       children: category.children || []
     }).save()
 
-    if (category.parent) {
-      const parent = await CategoryModel.findById(category.parent)
-
-      await parent!.update({
-        $set: { children: [ ...parent!.children, created._id ] }
-      })
-    }
-
     await Promise.all([
       created.populate('parent'),
       created.populate('children')
@@ -48,8 +40,8 @@ export class CategoryRepository implements ICategoryRepository {
 
     const categories = await CategoryModel
       .find(params)
-      .populate('parent', [ 'title', 'url' ])
-      .populate('children', [ 'title', 'url' ])
+      .populate('parent', [ 'title', 'url', 'children' ])
+      .populate('children', [ 'title', 'url', 'children' ])
 
     if (id && !categories.length) {
       throw ({ status: 404, message: 'not found' })
