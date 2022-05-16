@@ -45,7 +45,11 @@ export class CategoryService implements ICategoryService {
 
       if (category.parent) {
         const [ prevParent ] = await this.repository.read({ id: category.parent })
-        const children = prevParent!.children.filter((it: any) => it._id.toString() !== update._id)
+
+        const children = prevParent!.children.filter((it) => {
+          return (it as any)._id.toString() !== update._id
+        })
+
         const $set = { _id: prevParent._id, children }
 
         await this.repository.update($set)
@@ -70,8 +74,15 @@ export class CategoryService implements ICategoryService {
 
     if (category.parent) {
       const [ parent ] = await this.repository.read({ id: category.parent })
-      const children = parent!.children.filter((it: any) => it._id.toString() !== category._id)
+
+      // here we add the "any" type to
+      // children, because they are populated
+      const children = parent!.children.filter((it) => {
+        return (it as any)._id.toString() !== category._id
+      })
+
       const $set = { _id: parent._id, children }
+
       await this.repository.update($set)
     }
 

@@ -4,6 +4,8 @@ import { IProduct } from '@/types/models'
 export class Product {
   private readonly _name: string
   private readonly _price: number
+  private readonly _count: number
+  private readonly _unit: string
   private readonly _description: string
   private readonly _image: string
   private readonly _url: string
@@ -12,6 +14,7 @@ export class Product {
   private readonly _assets: IProduct['assets']
   private readonly _variants: IProduct['variants']
   private readonly _attributes: IProduct['attributes']
+  private readonly _isVisible: boolean
 
   constructor({
     name,
@@ -20,12 +23,17 @@ export class Product {
     image,
     assets,
     seo,
+    count,
+    unit,
     variants,
     categories,
-    attributes
+    attributes,
+    isVisible,
   }: IProduct){
     this._name = name
     this._price = price
+    this._count = count
+    this._unit = unit
     this._description = description
     this._image = image || ''
     this._url = translator(name)
@@ -34,6 +42,7 @@ export class Product {
     this._variants = variants
     this._categories = categories
     this._attributes = attributes
+    this._isVisible = isVisible
   }
 
   get name(){
@@ -42,6 +51,14 @@ export class Product {
 
   get price(){
     return this._price
+  }
+
+  get count(){
+    return this._count
+  }
+
+  get unit(){
+    return this._unit
   }
 
   get description(){
@@ -74,6 +91,10 @@ export class Product {
 
   get url(){
     return this._url
+  }
+
+  get isVisible(){
+    return this._isVisible
   }
 
   static create(product): IProduct{

@@ -32,7 +32,11 @@ const CategorySchema: Schema = new Schema<ICategory & Document>({
     ref: 'Category',
     default: null,
     _id: false
-  } ]
+  } ],
+  isVisible: {
+    type: Boolean,
+    default: true
+  },
 }, {
   timestamps: true
 })

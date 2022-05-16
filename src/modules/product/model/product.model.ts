@@ -16,6 +16,14 @@ const ProductSchema = new Schema<IProduct & Document>({
     type: Number,
     default: 0
   },
+  count: {
+    type: Number,
+    default: 0
+  },
+  unit: {
+    type: String,
+    default: ''
+  },
   categories: {
     type: [ {
       type: Schema.Types.ObjectId,
@@ -47,8 +55,8 @@ const ProductSchema = new Schema<IProduct & Document>({
   },
   assets: {
     type: [ {
-      url: String,
-      type: String
+      type: Schema.Types.ObjectId,
+      ref: 'Asset'
     } ],
     default: []
   },
@@ -58,6 +66,10 @@ const ProductSchema = new Schema<IProduct & Document>({
       ref: 'Variant',
     } ],
     default: []
+  },
+  isVisible: {
+    type: Boolean,
+    default: true
   },
 }, {
   timestamps: true

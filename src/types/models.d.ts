@@ -1,4 +1,5 @@
 import { Document, RefType } from 'mongoose'
+import { Maybe } from '@/types/types'
 
 interface IModelRef<T> {
   _id: string
@@ -13,6 +14,7 @@ export interface ICategory {
   parent?: string
   order?: number
   children: string[]
+  isVisible: boolean
 }
 
 export interface ISEOType {
@@ -29,12 +31,15 @@ export interface IProduct {
   name: string
   description: string
   price: number
+  count: number
+  unit: string
   image?: string
   url?: string
+  isVisible: boolean
   categories: RefType[]
   seo?: IProductSEO
   assets: IAssetItem[]
-  variants: IVariant[],
+  variants: IVariant[]
   attributes: IAttribute[]
 }
 
