@@ -87,6 +87,7 @@ export class CategoryService implements ICategoryService {
     }
 
     this.events.emit('delete:category', { id })
+
     return res
   }
 }

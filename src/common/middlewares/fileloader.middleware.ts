@@ -25,15 +25,20 @@ class FileLoaderOptions {
   addOptionsStorage(){
     this.storage = multer.diskStorage({
       destination(req, file, cb){
+        const { ownerDir } = req.query
+
         try {
-          fs.readdirSync(config.uploadsDir)
+          fs.readdirSync(`${ config.uploadsDir }/${ ownerDir }`)
         } catch (err) {
-          mkdirp.sync(config.uploadsDir)
+          mkdirp.sync(`${ config.uploadsDir }/${ ownerDir }`)
         }
-        cb(null, config.uploadsDir)
+
+        cb(null, `${ config.uploadsDir }/${ ownerDir }`)
       },
+
       filename(req, file, cb){
         const { fileName, assetId } = req.query
+
         cb(null, `${ assetId }|${ fileName }`)
       }
     })

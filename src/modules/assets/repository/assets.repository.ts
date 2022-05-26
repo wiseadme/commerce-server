@@ -19,26 +19,27 @@ export class AssetsRepository implements IAssetsRepository {
   save(req: Request, res: Response): Promise<AssetsResponse>{
     return new Promise((resolve, reject) => {
       const upload = this.fileLoader.loadSingle('image')
+      const ownerId = req.query.id as string
+      const ownerDir = ownerId.slice(-4)
 
       const assetId = new mongoose.Types.ObjectId()
 
       const { fileName } = req.query
 
-      const url = `/uploads/${ assetId.toString() }|${ fileName }`
+      const url = `/uploads/${ownerDir}/${ assetId.toString() }|${ fileName }`
 
       req.query.assetId = assetId.toString()
+      req.query.ownerDir = ownerDir
 
       try {
-        upload(req, res, (err, filename) => {
-          console.log(err, filename, 'in upload')
-        })
-      } catch(err) {
+        upload(req, res, (err, filename) => console.log(err, filename))
+      } catch (err) {
         reject(err)
       }
 
       new AssetModel({
         _id: assetId,
-        ownerId: req.query.id,
+        ownerId,
         fileName,
         url
       })
@@ -48,16 +49,16 @@ export class AssetsRepository implements IAssetsRepository {
   }
 
   async delete(id: string, url?: string){
-    console.log(id, url, 'in repo')
 
     try {
       validateId(id)
       const res = await AssetModel.find({ ownerId: id })
+      const ownerDir = id.slice(-4)
 
       res.forEach(it => {
-        const file = url ? url.split('/')[2] : it._id + '|' + it.fileName
+        const file = url ? url.split('/')[3] : it._id + '|' + it.fileName
 
-        fs.unlink(`${ config.uploadsDir }/${ file }`)
+        fs.unlink(`${ config.uploadsDir }/${ownerDir}/${ file }`)
         it.deleteOne()
       })
 
