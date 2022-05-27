@@ -22,6 +22,7 @@ export class ProductRepository implements IProductRepository {
       description: product.description,
       image: product.image,
       url: product.url,
+      count: product.count,
       categories: product.categories,
       variants: product.variants,
       attributes: product.attributes,
@@ -37,11 +38,7 @@ export class ProductRepository implements IProductRepository {
     if (typeof params === 'object') {
       let search
 
-      const {
-        category,
-        page = DEFAULT_PAGE,
-        count = DEFAULT_COUNT
-      } = params as ProductQuery
+      const { category, page = DEFAULT_PAGE, count = DEFAULT_COUNT } = params as ProductQuery
 
       if (params.category) {
         search = { categories: { $in: category } }
