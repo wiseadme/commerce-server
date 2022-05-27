@@ -25,6 +25,7 @@ export class Product {
     seo,
     count,
     unit,
+    url,
     variants,
     categories,
     attributes,
@@ -36,7 +37,7 @@ export class Product {
     this._unit = unit
     this._description = description
     this._image = image || ''
-    this._url = translator(name)
+    this._url = url || translator(name)
     this._seo = seo
     this._assets = assets
     this._variants = variants

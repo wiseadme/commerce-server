@@ -9,6 +9,8 @@ import { ILogger } from '@/types/utils'
 import { IProduct } from '@/types/models'
 import { ProductQuery } from '@/types/types'
 
+import { translator } from '@common/utils/translator'
+
 @injectable()
 export class ProductRepository implements IProductRepository {
   constructor(@inject(TYPES.UTILS.ILogger) private logger: ILogger){
@@ -21,7 +23,7 @@ export class ProductRepository implements IProductRepository {
       price: product.price,
       description: product.description,
       image: product.image,
-      url: product.url,
+      url: product.url!.toLowerCase(),
       count: product.count,
       categories: product.categories,
       variants: product.variants,

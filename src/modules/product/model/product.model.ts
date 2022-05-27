@@ -24,6 +24,10 @@ const ProductSchema = new Schema<IProduct & Document>({
     type: String,
     default: ''
   },
+  url: {
+    type: String,
+    default: ''
+  },
   categories: {
     type: [ {
       type: Schema.Types.ObjectId,
