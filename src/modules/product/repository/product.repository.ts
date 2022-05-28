@@ -23,7 +23,7 @@ export class ProductRepository implements IProductRepository {
       price: product.price,
       description: product.description,
       image: product.image,
-      url: product.url!.toLowerCase(),
+      url: product.url,
       count: product.count,
       categories: product.categories,
       variants: product.variants,

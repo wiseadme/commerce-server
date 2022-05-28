@@ -20,7 +20,7 @@ export class Category {
     this._children = children
     this._isVisible = isVisible
     this._seo = seo
-    this._url = url || translator(this._title)
+    this._url = url || translator(this._title).toLowerCase()
   }
 
   get title(): string{

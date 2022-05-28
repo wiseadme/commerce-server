@@ -37,7 +37,7 @@ export class Product {
     this._unit = unit
     this._description = description
     this._image = image || ''
-    this._url = url || translator(name)
+    this._url = url || translator(name).toLowerCase()
     this._seo = seo
     this._assets = assets
     this._variants = variants
