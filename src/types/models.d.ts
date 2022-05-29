@@ -23,10 +23,6 @@ export interface ISEOType {
   keywords: string
 }
 
-export interface IProductSEO extends ISEOType {
-
-}
-
 export interface IProduct {
   name: string
   description: string
@@ -37,16 +33,16 @@ export interface IProduct {
   url?: string
   isVisible: boolean
   categories: RefType[]
-  seo?: IProductSEO
+  seo?: ISEOType
   assets: IAssetItem[]
   variants: IVariant[]
   attributes: IAttribute[]
 }
 
 interface IAttribute {
-  meta: string
-  name: string
+  key: string
   value: string
+  meta: Maybe<string>
 }
 
 export interface IVariant {

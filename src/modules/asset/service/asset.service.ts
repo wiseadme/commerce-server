@@ -4,7 +4,7 @@ import { TYPES } from '@common/schemes/di-types'
 import { IAssetsRepository } from '@/types/repositories'
 
 @injectable()
-export class AssetsService implements IAssetsService {
+export class AssetService implements IAssetsService {
   constructor(
     @inject(TYPES.REPOSITORIES.AssetsRepository) private repository: IAssetsRepository,
     @inject(TYPES.SERVICES.IEventBusService) private events: IEventBusService

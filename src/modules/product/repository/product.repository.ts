@@ -30,7 +30,7 @@ export class ProductRepository implements IProductRepository {
       attributes: product.attributes,
       assets: product.assets,
       seo: product.seo
-    }).save()).populate('categories')
+    }).save()).populate(['categories', 'assets', 'variants'])
   }
 
   async read(params: string | ProductQuery){
@@ -52,7 +52,7 @@ export class ProductRepository implements IProductRepository {
 
       return ProductModel
         .find(search)
-        .populate([ 'categories', 'variants' ])
+        .populate([ 'categories', 'variants', 'assets' ])
         .skip((page * count) - count)
         .limit(count)
     }
@@ -69,7 +69,9 @@ export class ProductRepository implements IProductRepository {
       { _id: $set._id },
       { $set },
       { new: true }
-    ) as Document<IProduct>
+    ).populate([
+      'assets', 'categories', 'variants'
+    ]) as Document<IProduct>
 
     return { updated }
   }

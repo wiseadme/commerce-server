@@ -9,7 +9,7 @@ import { IController } from '@/types'
 import { IAssetsService } from '@/types/services'
 
 @injectable()
-export class AssetsController extends BaseController implements IController {
+export class AssetController extends BaseController implements IController {
   path = '/v1/assets'
   router = Router()
 

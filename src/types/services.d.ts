@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 import { Document } from 'mongoose'
-import { ICategory, IProduct, IVariant } from './models'
+import { IAttribute, ICategory, IProduct, IVariant } from './models'
 import { ProductQuery } from '@/types/types'
 
 export interface ICategoryService {
@@ -14,6 +14,13 @@ export interface IProductService {
   create: (product: IProduct) => Promise<Document<IProduct>>
   read: (query: ProductQuery) => Promise<Array<Document<IProduct>>>,
   update: (updates: Partial<IProduct & Document>) => Promise<{ updated: Document<IProduct> }>
+  delete: (id: string) => Promise<boolean>
+}
+
+export interface IAttributeService {
+  create: (product: IAttribute) => Promise<Document<IAttribute>>
+  read: () => Promise<Array<Document<IAttribute>>>,
+  update: (updates: Partial<IAttribute & Document>) => Promise<{ updated: Document<IAttribute> }>
   delete: (id: string) => Promise<boolean>
 }
 

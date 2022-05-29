@@ -1,7 +1,7 @@
 import { translator } from '@common/utils/translator'
 import { IProduct } from '@/types/models'
 
-export class Product {
+export class Product implements IProduct {
   private readonly _name: string
   private readonly _price: number
   private readonly _count: number

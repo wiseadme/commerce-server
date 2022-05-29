@@ -3,14 +3,14 @@ import { IAssetsRepository, AssetsResponse } from '@/types/repositories'
 import { inject, injectable } from 'inversify'
 import { TYPES } from '@common/schemes/di-types'
 import { IFileLoaderMiddleware } from '@/types/middlewares'
-import { AssetModel } from '@modules/assets/model/asset.model'
+import { AssetModel } from '@modules/asset/model/asset.model'
 import config from '@app/config'
 import mongoose from 'mongoose'
 import { validateId } from '@common/utils/mongoose-validate-id'
 import { Request, Response } from 'express'
 
 @injectable()
-export class AssetsRepository implements IAssetsRepository {
+export class AssetRepository implements IAssetsRepository {
   constructor(
     @inject(TYPES.MIDDLEWARES.IFileLoaderMiddleware) private fileLoader: IFileLoaderMiddleware
   ){

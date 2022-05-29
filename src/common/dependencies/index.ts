@@ -10,21 +10,21 @@ import { LoggerService } from '../services/logger.service'
 import { CategoryService } from '@modules/category/service/category.service'
 import { ProductService } from '@modules/product/service/product.service'
 import { VariantService } from '@modules/variant/service/variant.service'
-import { AssetsService } from '@modules/assets/service/assets.service'
+import { AssetService } from '@modules/asset/service/asset.service'
 import { EventBusService } from '@common/services/event-bus.service'
 // import {Variant}
 
 // Controllers
 import { CategoryController } from '@modules/category/controller/category.controller'
 import { ProductController } from '@modules/product/controller/product.controller'
-import { AssetsController } from '@modules/assets/controller/assets.controller'
+import { AssetController } from '@modules/asset/controller/asset.controller'
 import { SwaggerController } from '@swagger/controller/swagger.controller'
 
 // Repositories
 import { CategoryRepository } from '@modules/category/repository/category.repository'
 import { ProductRepository } from '@modules/product/repository/product.repository'
 import { VariantRepository } from '@modules/variant/repository/variant.repository'
-import { AssetsRepository } from '@modules/assets/repository/assets.repository'
+import { AssetRepository } from '@modules/asset/repository/asset.repository'
 
 // Middlewares
 import { JsonMiddleware } from '@common/middlewares/json.middleware'
@@ -62,7 +62,7 @@ container.bind<ILogger>(TYPES.UTILS.ILogger).to(LoggerService)
 // Services
 container.bind<ICategoryService>(TYPES.SERVICES.ICategoryService).to(CategoryService)
 container.bind <IProductService>(TYPES.SERVICES.IProductService).to(ProductService)
-container.bind<IAssetsService>(TYPES.SERVICES.IAssetsService).to(AssetsService)
+container.bind<IAssetsService>(TYPES.SERVICES.IAssetsService).to(AssetService)
 container.bind<IVariantService>(TYPES.SERVICES.IVariantService).to(VariantService)
 container.bind<IEventBusService>(TYPES.SERVICES.IEventBusService).to(EventBusService)
 
@@ -71,7 +71,7 @@ container.bind<IController>(TYPES.CONTROLLERS.IController).to(SwaggerController)
 container.bind<IController>(TYPES.CONTROLLERS.IController).to(CategoryController)
 container.bind<IController>(TYPES.CONTROLLERS.IController).to(ProductController)
 container.bind<IController>(TYPES.CONTROLLERS.IController).to(VariantController)
-container.bind<IController>(TYPES.CONTROLLERS.IController).to(AssetsController)
+container.bind<IController>(TYPES.CONTROLLERS.IController).to(AssetController)
 
 // Middlewares
 container.bind<IExpressMiddleware>(TYPES.MIDDLEWARES.IMiddleware).to(JsonMiddleware)
@@ -83,5 +83,5 @@ container.bind<IFileLoaderMiddleware>(TYPES.MIDDLEWARES.IFileLoaderMiddleware).t
 // Repositories
 container.bind<ICategoryRepository>(TYPES.REPOSITORIES.CategoryRepository).to(CategoryRepository)
 container.bind<IProductRepository>(TYPES.REPOSITORIES.ProductRepository).to(ProductRepository)
-container.bind<IAssetsRepository>(TYPES.REPOSITORIES.AssetsRepository).to(AssetsRepository)
+container.bind<IAssetsRepository>(TYPES.REPOSITORIES.AssetsRepository).to(AssetRepository)
 container.bind<IVariantRepository>(TYPES.REPOSITORIES.VariantRepository).to(VariantRepository)

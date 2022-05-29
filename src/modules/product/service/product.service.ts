@@ -32,7 +32,8 @@ export class ProductService implements IProductService {
     return await this.repository.read(params)
   }
 
-  async update(updates: Partial<Document<IProduct>>){
+  async update(updates: Partial<Document & IProduct>){
+    if (updates.assets) updates.image = updates.assets[0].url
     return await this.repository.update(Product.update(updates))
   }
 

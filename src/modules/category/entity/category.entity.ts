@@ -1,7 +1,7 @@
 import { ICategory, ISEOType } from '@/types/models'
 import { translator } from '@common/utils/translator'
 
-export class Category {
+export class Category implements ICategory{
 
   private readonly _url: string
   private readonly _title: string
@@ -55,8 +55,8 @@ export class Category {
     return this._isVisible
   }
 
-  static create(params: ICategory){
-    return new Category(params)
+  static create(category: ICategory){
+    return new Category(category as ICategory)
   }
 
   static update(updates){
