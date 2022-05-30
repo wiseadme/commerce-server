@@ -11,6 +11,7 @@ import { CategoryService } from '@modules/category/service/category.service'
 import { ProductService } from '@modules/product/service/product.service'
 import { VariantService } from '@modules/variant/service/variant.service'
 import { AssetService } from '@modules/asset/service/asset.service'
+import { AttributeService } from '@modules/attribute/service/attribute.service'
 import { EventBusService } from '@common/services/event-bus.service'
 // import {Variant}
 
@@ -18,6 +19,7 @@ import { EventBusService } from '@common/services/event-bus.service'
 import { CategoryController } from '@modules/category/controller/category.controller'
 import { ProductController } from '@modules/product/controller/product.controller'
 import { AssetController } from '@modules/asset/controller/asset.controller'
+import { AttributeController } from '@modules/attribute/controller/attribute.controller'
 import { SwaggerController } from '@swagger/controller/swagger.controller'
 
 // Repositories
@@ -25,6 +27,7 @@ import { CategoryRepository } from '@modules/category/repository/category.reposi
 import { ProductRepository } from '@modules/product/repository/product.repository'
 import { VariantRepository } from '@modules/variant/repository/variant.repository'
 import { AssetRepository } from '@modules/asset/repository/asset.repository'
+
 
 // Middlewares
 import { JsonMiddleware } from '@common/middlewares/json.middleware'
@@ -39,14 +42,21 @@ import {
   IProductService,
   IAssetsService,
   IVariantService,
-  ICategoryEventsService
+  IAttributeService
 } from '@/types/services'
-import { ICategoryRepository, IAssetsRepository, IProductRepository, IVariantRepository } from '@/types/repositories'
+import {
+  ICategoryRepository,
+  IAssetsRepository,
+  IProductRepository,
+  IVariantRepository,
+  IAttributeRepository
+} from '@/types/repositories'
 import { ILogger } from '@/types/utils'
 import { IController, IConfig, IDb } from '@/types'
 import { IMiddleware, IErrorRouteMiddleware, IExpressMiddleware, IFileLoaderMiddleware } from '@/types/middlewares'
 import { VariantController } from '@modules/variant/controller/variant.controller'
 import { IEventBusService } from '@/types/services'
+import { AttributeRepository } from '@modules/attribute/repository/attribute.repository'
 
 
 export const container = new Container({ skipBaseClassChecks: true })
@@ -61,9 +71,10 @@ container.bind<ILogger>(TYPES.UTILS.ILogger).to(LoggerService)
 
 // Services
 container.bind<ICategoryService>(TYPES.SERVICES.ICategoryService).to(CategoryService)
-container.bind <IProductService>(TYPES.SERVICES.IProductService).to(ProductService)
+container.bind<IProductService>(TYPES.SERVICES.IProductService).to(ProductService)
 container.bind<IAssetsService>(TYPES.SERVICES.IAssetsService).to(AssetService)
 container.bind<IVariantService>(TYPES.SERVICES.IVariantService).to(VariantService)
+container.bind<IAttributeService>(TYPES.SERVICES.IAttributeService).to(AttributeService)
 container.bind<IEventBusService>(TYPES.SERVICES.IEventBusService).to(EventBusService)
 
 // Controllers
@@ -71,6 +82,7 @@ container.bind<IController>(TYPES.CONTROLLERS.IController).to(SwaggerController)
 container.bind<IController>(TYPES.CONTROLLERS.IController).to(CategoryController)
 container.bind<IController>(TYPES.CONTROLLERS.IController).to(ProductController)
 container.bind<IController>(TYPES.CONTROLLERS.IController).to(VariantController)
+container.bind<IController>(TYPES.CONTROLLERS.IController).to(AttributeController)
 container.bind<IController>(TYPES.CONTROLLERS.IController).to(AssetController)
 
 // Middlewares
@@ -84,4 +96,5 @@ container.bind<IFileLoaderMiddleware>(TYPES.MIDDLEWARES.IFileLoaderMiddleware).t
 container.bind<ICategoryRepository>(TYPES.REPOSITORIES.CategoryRepository).to(CategoryRepository)
 container.bind<IProductRepository>(TYPES.REPOSITORIES.ProductRepository).to(ProductRepository)
 container.bind<IAssetsRepository>(TYPES.REPOSITORIES.AssetsRepository).to(AssetRepository)
+container.bind<IAttributeRepository>(TYPES.REPOSITORIES.AttributeRepository).to(AttributeRepository)
 container.bind<IVariantRepository>(TYPES.REPOSITORIES.VariantRepository).to(VariantRepository)

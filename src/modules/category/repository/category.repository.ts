@@ -50,12 +50,12 @@ export class CategoryRepository implements ICategoryRepository {
     return categories
   }
 
-  async update($set: Partial<ICategory & Document>){
-    validateId($set._id)
+  async update(updates: Partial<ICategory & Document>){
+    validateId(updates._id)
 
     const updated = await CategoryModel.findByIdAndUpdate(
-      { _id: $set._id },
-      { $set },
+      { _id: updates._id },
+      { $set: updates },
       { new: true }
     )
       .populate('parent', [ 'title', 'url' ])
@@ -67,6 +67,6 @@ export class CategoryRepository implements ICategoryRepository {
   async delete(id){
     validateId(id)
 
-    return !!await CategoryModel.findByIdAndDelete({ _id: id })
+    return !!await CategoryModel.findByIdAndDelete(id)
   }
 }
