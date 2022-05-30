@@ -14,19 +14,19 @@ export class AttributeService implements IAttributeService {
   ){
   }
 
-  async create(attribute){
+  create(attribute){
     return this.repository.create(attribute)
   }
 
-  async read(id?: string): Promise<Array<Document<IAttribute>>>{
+  read(id?: string): Promise<Array<Document<IAttribute>>>{
     return this.repository.read(id)
   }
 
-  async update(updates: Partial<IAttribute & Document>): Promise<{ updated: Document<IAttribute> }>{
+  update(updates: Partial<IAttribute & Document>): Promise<{ updated: Document<IAttribute> }>{
     return this.repository.update(updates)
   }
 
-  async delete(id: string): Promise<boolean>{
+  delete(id: string): Promise<boolean>{
     return this.repository.delete(id)
   }
 }

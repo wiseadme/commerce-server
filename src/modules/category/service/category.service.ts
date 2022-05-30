@@ -64,8 +64,8 @@ export class CategoryService implements ICategoryService {
     return this.repository.update(Category.update(update))
   }
 
-  async read<T extends Partial<Document & ICategory>>(query: T){
-    return await this.repository.read(query)
+  read<T extends Partial<Document & ICategory>>(query: T){
+    return this.repository.read(query)
   }
 
   async delete(id: string): Promise<boolean>{
