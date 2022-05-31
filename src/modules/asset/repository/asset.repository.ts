@@ -72,6 +72,7 @@ export class AssetRepository implements IAssetsRepository {
   async delete(id: string, url?: string){
     try {
       validateId(id)
+
       const assets = await AssetModel.find({ ownerId: id })
       const ownerDir = id.slice(-4)
 

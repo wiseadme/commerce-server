@@ -1,14 +1,16 @@
 import { IAttribute } from '@/types/models'
 
-export class Attribute implements IAttribute{
+export class Attribute implements IAttribute {
   private _key: string
   private _value: string
   private _meta: string
+  private _order: number
 
-  constructor({ key, value, meta }){
+  constructor({ key, value, meta, order }){
     this._key = key
     this._value = value
     this._meta = meta
+    this._order = order
   }
 
   get key(){
@@ -21,6 +23,10 @@ export class Attribute implements IAttribute{
 
   get meta(){
     return this._meta
+  }
+
+  get order(){
+    return this._order
   }
 
   static create(attribute: IAttribute){

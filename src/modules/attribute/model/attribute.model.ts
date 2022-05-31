@@ -14,6 +14,10 @@ const AttributeSchema = new Schema<Document & IAttribute>({
   meta: {
     type: String,
     default: null
+  },
+  order: {
+    type: Number,
+    default: 0
   }
 }, {
   timestamps: true

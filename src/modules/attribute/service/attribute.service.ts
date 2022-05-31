@@ -22,7 +22,7 @@ export class AttributeService implements IAttributeService {
     return this.repository.read(id)
   }
 
-  update(updates: Partial<IAttribute & Document>): Promise<{ updated: Document<IAttribute> }>{
+  update(updates: Array<IAttribute & Document>): Promise<{ updated: Array<Document<IAttribute>> }>{
     return this.repository.update(updates)
   }
 

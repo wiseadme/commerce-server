@@ -1,3 +1,4 @@
+import { Document } from 'mongoose'
 import expressAsyncHandler from 'express-async-handler'
 import { BaseController } from '@common/controller/base.controller'
 import { IController } from '@/types'
@@ -24,8 +25,8 @@ export class AttributeController extends BaseController implements IController {
   initRoutes(){
     this.router.post('/', expressAsyncHandler(this.createAttribute.bind(this)))
     this.router.get('/', expressAsyncHandler(this.getAttribute.bind(this)))
+    this.router.patch('/', expressAsyncHandler(this.updateAttributes.bind(this)))
     this.router.delete('/', expressAsyncHandler(this.deleteAttribute.bind(this)))
-    this.router.patch('/')
   }
 
   async createAttribute({ body, method }: Request<{}, {}, IAttribute>, res: Response){
@@ -54,6 +55,24 @@ export class AttributeController extends BaseController implements IController {
       this.send({
         response: res,
         data: attributes,
+        url: this.path,
+        method
+      })
+    } catch (err) {
+      return this.error({
+        error: err,
+        url: this.path,
+        method
+      })
+    }
+  }
+
+  async updateAttributes({ body, method }: Request<{}, {}, Array<IAttribute & Document>>, res: Response){
+    try {
+      const { updated } = await this.service.update(body)
+      this.send({
+        response: res,
+        data: updated,
         url: this.path,
         method
       })

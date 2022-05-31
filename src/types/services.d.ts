@@ -28,7 +28,7 @@ export interface IAttributeService {
 
   read(id?: string): Promise<Array<Document<IAttribute>>>,
 
-  update(updates: Partial<IAttribute & Document>): Promise<{ updated: Document<IAttribute> }>
+  update(updates: Array<IAttribute & Document>): Promise<{ updated: Array<Document<IAttribute>> }>
 
   delete(id: string): Promise<boolean>
 }

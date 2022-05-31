@@ -43,6 +43,7 @@ interface IAttribute {
   key: string
   value: string
   meta: Maybe<string>
+  order: number
 }
 
 export interface IVariant {

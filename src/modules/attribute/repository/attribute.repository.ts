@@ -19,7 +19,8 @@ export class AttributeRepository implements IAttributeRepository {
       _id: new mongoose.Types.ObjectId(),
       key: attribute.key,
       value: attribute.value,
-      meta: attribute.meta
+      meta: attribute.meta,
+      order: attribute.order
     }).save()
   }
 
@@ -27,14 +28,20 @@ export class AttributeRepository implements IAttributeRepository {
     return AttributeModel.find({ id })
   }
 
-  async update(updates: Partial<IAttribute & Document>): Promise<{ updated: Document<IAttribute> }>{
-    validateId(updates._id)
+  async update(updates: Array<IAttribute & Document>): Promise<{ updated: Array<Document<IAttribute>> }>{
+    const updated: Array<Document<IAttribute>> = []
 
-    const updated = await AttributeModel.findByIdAndUpdate(
-      { _id: updates._id },
-      { $set: updates },
-      { new: true }
-    ) as Document<IAttribute>
+    for (const attr of updates) {
+      validateId(attr._id)
+
+      const attribute = await AttributeModel.findByIdAndUpdate(
+        { _id: attr._id },
+        { $set: attr },
+        { new: true }
+      ) as Document<IAttribute>
+
+      updated.push(attribute)
+    }
 
     return { updated }
   }
