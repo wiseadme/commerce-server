@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 import { Document } from 'mongoose'
-import { IAttribute, ICategory, IProduct, IVariant } from './models'
+import { IAssetItem, IAttribute, ICategory, IProduct, IVariant } from './models'
 import { ProductQuery } from '@/types/types'
 
 export interface ICategoryService {
@@ -45,6 +45,8 @@ export interface IVariantService {
 
 export interface IAssetsService {
   saveFile(req: Request, res: Response): Promise<{ url: string }>
+
+  updateFile(updates: Partial<IAssetItem>): Promise<{ updated: IAssetItem }>
 
   deleteFile(params: { id: string, url: string }): Promise<boolean>
 }

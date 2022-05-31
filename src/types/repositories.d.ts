@@ -1,7 +1,8 @@
-import { IAttribute, ICategory, IProduct, IVariant } from './models'
+import { IAssetItem, IAttribute, ICategory, IProduct, IVariant } from './models'
 import { Document } from 'mongoose'
 import { ProductQuery } from '@/types/types'
 import { Request, Response } from 'express'
+import { IAssetsService } from '@/types/services'
 
 export interface IBaseRepository {
   validateId(id: string): boolean | undefined
@@ -51,6 +52,8 @@ export interface IAttributeRepository {
 
 export interface IAssetsRepository {
   save(req: Request, res: Response): Promise<AssetsResponse>
+
+  update(updates: Partial<IAssetItem>): Promise<{ updated: IAssetItem }>
 
   delete(id: string, fileName?: string): any
 }

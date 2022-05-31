@@ -7,6 +7,8 @@ import expressAsyncHandler from 'express-async-handler'
 import { ILogger } from '@/types/utils'
 import { IController } from '@/types'
 import { IAssetsService } from '@/types/services'
+import { IAssetItem, ICategory } from '@/types/models'
+import { Document } from 'mongoose'
 
 @injectable()
 export class AssetController extends BaseController implements IController {
@@ -24,6 +26,7 @@ export class AssetController extends BaseController implements IController {
   initRoutes(){
     this.router.post('/', expressAsyncHandler(this.uploadImage.bind(this)))
     this.router.delete('/', expressAsyncHandler(this.deleteImage.bind(this)))
+    this.router.patch('/', expressAsyncHandler(this.updateImage.bind(this)))
   }
 
   async uploadImage(req: Request, res: Response){
@@ -41,6 +44,25 @@ export class AssetController extends BaseController implements IController {
         error: err,
         url: this.path,
         method: req.method
+      })
+    }
+  }
+
+  async updateImage({ body, method }: Request<{}, {}, Partial<IAssetItem & Document>>, res: Response) {
+    try {
+      const { updated } = await this.service.updateFile(body)
+
+      this.send({
+        response: res,
+        data: updated,
+        url: this.path,
+        method
+      })
+    } catch (err: any) {
+      return this.error({
+        error: err,
+        url: this.path,
+        method
       })
     }
   }

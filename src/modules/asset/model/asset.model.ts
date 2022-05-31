@@ -18,6 +18,10 @@ const AssetSchema: Schema = new Schema<IAssetItem & Document>({
   ownerId: {
     type: String,
     required: true
+  },
+  main: {
+    type: Boolean,
+    default: false
   }
 }, {
   timestamps: true

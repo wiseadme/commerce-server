@@ -65,5 +65,6 @@ export interface IAssetItem {
   url: string
   type: string,
   fileName: string,
-  ownerId: string
+  ownerId: string,
+  main: boolean
 }

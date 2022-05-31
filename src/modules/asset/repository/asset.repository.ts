@@ -8,6 +8,8 @@ import config from '@app/config'
 import mongoose from 'mongoose'
 import { validateId } from '@common/utils/mongoose-validate-id'
 import { Request, Response } from 'express'
+import rimraf from 'rimraf'
+import { IAssetItem } from '@/types/models'
 
 @injectable()
 export class AssetRepository implements IAssetsRepository {
@@ -26,7 +28,7 @@ export class AssetRepository implements IAssetsRepository {
 
       const { fileName } = req.query
 
-      const url = `/uploads/${ownerDir}/${ assetId.toString() }|${ fileName }`
+      const url = `/uploads/${ ownerDir }/${ assetId.toString() }|${ fileName }`
 
       req.query.assetId = assetId.toString()
       req.query.ownerDir = ownerDir
@@ -48,19 +50,48 @@ export class AssetRepository implements IAssetsRepository {
     })
   }
 
-  async delete(id: string, url?: string){
+  async update(updates){
+    validateId(updates._id)
 
+    const oldMain = await AssetModel.findOneAndUpdate({ main: true })
+
+    if (oldMain) {
+      oldMain.main = false
+      oldMain.update()
+    }
+
+    const updated = await AssetModel.findByIdAndUpdate(
+      { _id: updates._id },
+      { $set: updates },
+      { new: true }
+    ) as IAssetItem
+
+    return { updated }
+  }
+
+  async delete(id: string, url?: string){
     try {
       validateId(id)
-      const res = await AssetModel.find({ ownerId: id })
+      const assets = await AssetModel.find({ ownerId: id })
       const ownerDir = id.slice(-4)
 
-      res.forEach(it => {
-        const file = url ? url.split('/')[3] : it._id + '|' + it.fileName
+      assets.forEach(it => {
+        const fileName = url ? url.split('/')[3] : it._id + '|' + it.fileName
 
-        fs.unlink(`${ config.uploadsDir }/${ownerDir}/${ file }`)
-        it.deleteOne()
+        if ((url && it.url === url) || !url) {
+          it.deleteOne()
+          fs.unlink(`${ config.uploadsDir }/${ ownerDir }/${ fileName }`)
+        }
       })
+
+      const dir = await fs.readdir(`${ config.uploadsDir }/${ ownerDir }/`)
+
+      if (!dir.length) {
+        rimraf(
+          `${ config.uploadsDir }/${ ownerDir }/`,
+          () => console.log(`${ config.uploadsDir }/${ ownerDir }/ deleted`)
+        )
+      }
 
       return true
     } catch (err) {

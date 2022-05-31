@@ -51,7 +51,7 @@ const ProductSchema = new Schema<IProduct & Document>({
   attributes: {
     type: [ {
       meta: String,
-      name: String,
+      key: String,
       value: String,
       _id: false,
     } ],

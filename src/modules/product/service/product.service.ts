@@ -7,7 +7,7 @@ import { Product } from '@modules/product/entity/product.entity'
 // Types
 import { ILogger } from '@/types/utils'
 import { IProductRepository } from '@/types/repositories'
-import { IProductService } from '@/types/services'
+import { IEventBusService, IProductService } from '@/types/services'
 import { IProduct } from '@/types/models'
 import { Document } from 'mongoose'
 
@@ -16,6 +16,7 @@ export class ProductService implements IProductService {
   constructor(
     @inject(TYPES.UTILS.ILogger) private logger: ILogger,
     @inject(TYPES.REPOSITORIES.ProductRepository) private repository: IProductRepository,
+    @inject(TYPES.SERVICES.IEventBusService) private events: IEventBusService
   ){
   }
 
@@ -33,11 +34,14 @@ export class ProductService implements IProductService {
   }
 
   async update(updates: Partial<Document & IProduct>){
-    if (updates.assets) updates.image = updates.assets[0].url
+    if (updates.assets) updates.image = updates.assets?.find(it => it.main)?.url || ''
     return await this.repository.update(Product.update(updates))
   }
 
   async delete(id){
-    return await this.repository.delete(id)
+    const res = await this.repository.delete(id)
+    this.events.emit('delete:product', { id })
+
+    return res
   }
 }
