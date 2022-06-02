@@ -53,6 +53,7 @@ const ProductSchema = new Schema<IProduct & Document>({
       meta: String,
       key: String,
       value: String,
+      order: Number,
       _id: false,
     } ],
     default: []
