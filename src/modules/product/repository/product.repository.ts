@@ -28,6 +28,7 @@ export class ProductRepository implements IProductRepository {
       categories: product.categories,
       variants: product.variants,
       attributes: product.attributes,
+      unit: product.unit,
       assets: product.assets,
       seo: product.seo
     }).save()).populate([ 'categories', 'assets', 'variants' ])
@@ -57,6 +58,8 @@ export class ProductRepository implements IProductRepository {
         .limit(count)
     }
 
+    // here we sure that params is the product id
+    // string type and that's why need validate it
     params && validateId(params)
 
     return ProductModel.find({ _id: params }).populate([ 'categories', 'variants' ])

@@ -1,18 +1,24 @@
 import { RefType } from 'mongoose'
-import { IAssetItem, IAttribute, ISEOType, IVariant } from '@/types/models'
+import { IAttribute } from '@modules/attribute/types/model'
+import { IAssetItem } from '@modules/asset/types/model'
+import { IVariant } from '@modules/variant/types/model'
+import { ICategory } from '@modules/category/types/model'
+import { IUnit } from '@modules/unit/types/model'
+import { ISEOType } from '@/types/models'
+import { Maybe } from '@/types/types'
 
 export interface IProduct {
   name: string
   description: string
   price: number
   count: number
-  unit: string
   image?: string
   url?: string
   isVisible: boolean
-  categories: RefType[]
   seo?: ISEOType
-  assets: IAssetItem[]
-  variants: IVariant[]
+  unit: Maybe<IUnit>
+  categories: (ICategory & RefType)[]
+  assets: (IAssetItem & RefType)[]
+  variants: (IVariant & RefType)[]
   attributes: IAttribute[]
 }

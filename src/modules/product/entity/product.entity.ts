@@ -2,19 +2,19 @@ import { translator } from '@common/utils/translator'
 import { IProduct } from '../types/model'
 
 export class Product implements IProduct {
-  private readonly _name: string
-  private readonly _price: number
-  private readonly _count: number
-  private readonly _unit: string
-  private readonly _description: string
-  private readonly _image: string
-  private readonly _url: string
+  private readonly _name: IProduct['name']
+  private readonly _price: IProduct['price']
+  private readonly _count: IProduct['count']
+  private readonly _unit: IProduct['unit']
+  private readonly _description: IProduct['description']
+  private readonly _image: IProduct['image']
+  private readonly _url: IProduct['url']
   private readonly _categories: IProduct['categories']
   private readonly _seo: IProduct['seo']
   private readonly _assets: IProduct['assets']
   private readonly _variants: IProduct['variants']
   private readonly _attributes: IProduct['attributes']
-  private readonly _isVisible: boolean
+  private readonly _isVisible: IProduct['isVisible']
 
   constructor({
     name,

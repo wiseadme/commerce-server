@@ -21,8 +21,11 @@ const ProductSchema = new Schema<IProduct & Document>({
     default: 0
   },
   unit: {
-    type: String,
-    default: ''
+    type: {
+      value: String,
+      meta: String
+    },
+    default: null
   },
   url: {
     type: String,
@@ -31,7 +34,7 @@ const ProductSchema = new Schema<IProduct & Document>({
   categories: {
     type: [ {
       type: Schema.Types.ObjectId,
-      ref: 'Category'
+      ref: 'Category',
     } ],
     required: true
   },
