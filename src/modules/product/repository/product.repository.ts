@@ -4,10 +4,10 @@ import { TYPES } from '@common/schemes/di-types'
 import { ProductModel } from '@modules/product/model/product.model'
 import { validateId } from '@common/utils/mongoose-validate-id'
 // Types
-import { IProductRepository } from '@/types/repositories'
+import { IProductRepository } from '../types/repository'
+import { IProduct } from '../types/model'
+import { ProductQuery } from '../types/params'
 import { ILogger } from '@/types/utils'
-import { IProduct } from '@/types/models'
-import { ProductQuery } from '@/types/types'
 
 import { translator } from '@common/utils/translator'
 
@@ -30,7 +30,7 @@ export class ProductRepository implements IProductRepository {
       attributes: product.attributes,
       assets: product.assets,
       seo: product.seo
-    }).save()).populate(['categories', 'assets', 'variants'])
+    }).save()).populate([ 'categories', 'assets', 'variants' ])
   }
 
   async read(params: string | ProductQuery){

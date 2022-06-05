@@ -1,20 +1,21 @@
-import { Router, Request, Response } from 'express'
+import { Router } from 'express'
 import { inject, injectable } from 'inversify'
 import expressAsyncHandler from 'express-async-handler'
 
 import { TYPES } from '@common/schemes/di-types'
 import { BaseController } from '@common/controller/base.controller'
 import { Variant } from '../entity/variant.entity'
-
+// Types
+import { Request, Response } from 'express'
 import { IController } from '@/types'
 import { ILogger } from '@/types/utils'
-import { IVariant } from '@/types/models'
-import { IVariantService } from '@/types/services'
-import { VariantQuery } from '@/types/types'
+import { IVariant } from '../types/model'
+import { IVariantService } from '../types/service'
+import { VariantQuery } from '../types/params'
 
 @injectable()
 export class VariantController extends BaseController implements IController {
-  public path = '/v1/variant'
+  public path = '/v1/variants'
   public router = Router()
 
   constructor(

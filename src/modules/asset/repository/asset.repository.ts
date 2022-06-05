@@ -1,15 +1,18 @@
 import * as fs from 'fs/promises'
-import { IAssetsRepository, AssetsResponse } from '@/types/repositories'
+import rimraf from 'rimraf'
+import mongoose from 'mongoose'
 import { inject, injectable } from 'inversify'
+import { validateId } from '@common/utils/mongoose-validate-id'
+
 import { TYPES } from '@common/schemes/di-types'
-import { IFileLoaderMiddleware } from '@/types/middlewares'
 import { AssetModel } from '@modules/asset/model/asset.model'
 import config from '@app/config'
-import mongoose from 'mongoose'
-import { validateId } from '@common/utils/mongoose-validate-id'
+// Types
 import { Request, Response } from 'express'
-import rimraf from 'rimraf'
-import { IAssetItem } from '@/types/models'
+import { IAssetsRepository } from '../types/repository'
+import { AssetsResponse } from '../types/params'
+import { IAssetItem } from '../types/model'
+import { IFileLoaderMiddleware } from '@/types/middlewares'
 
 @injectable()
 export class AssetRepository implements IAssetsRepository {

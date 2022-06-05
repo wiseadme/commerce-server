@@ -1,11 +1,12 @@
 import mongoose, { Document } from 'mongoose'
-import { IAttributeRepository } from '@/types/repositories'
 import { inject, injectable } from 'inversify'
 import { TYPES } from '@common/schemes/di-types'
-import { ILogger } from '@/types/utils'
-import { IAttribute } from '@/types/models'
 import { AttributeModel } from '@modules/attribute/model/attribute.model'
 import { validateId } from '@common/utils/mongoose-validate-id'
+// Types
+import { ILogger } from '@/types/utils'
+import { IAttribute } from '../types/model'
+import { IAttributeRepository } from '../types/repository'
 
 @injectable()
 export class AttributeRepository implements IAttributeRepository {

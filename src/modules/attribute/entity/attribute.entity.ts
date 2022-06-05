@@ -1,4 +1,4 @@
-import { IAttribute } from '@/types/models'
+import { IAttribute } from '../types/model'
 
 export class Attribute implements IAttribute {
   private _key: string

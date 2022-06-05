@@ -6,8 +6,8 @@ import expressAsyncHandler from 'express-async-handler'
 // Types
 import { ILogger } from '@/types/utils'
 import { IController } from '@/types'
-import { IAssetsService } from '@/types/services'
-import { IAssetItem, ICategory } from '@/types/models'
+import { IAssetsService } from '../types/service'
+import { IAssetItem } from '../types/model'
 import { Document } from 'mongoose'
 
 @injectable()

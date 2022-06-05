@@ -8,13 +8,13 @@ import { BaseController } from '@common/controller/base.controller'
 // Types
 import { ILogger } from '@/types/utils'
 import { IController } from '@/types'
-import { IProduct } from '@/types/models'
-import { IProductService } from '@/types/services'
-import { ProductQuery } from '@/types/types'
+import { IProduct } from '../types/model'
+import { IProductService } from '../types/service'
+import { ProductQuery } from '../types/params'
 
 @injectable()
 export class ProductController extends BaseController implements IController {
-  public path = '/v1/product'
+  public path = '/v1/products'
   public router = Router()
 
   constructor(
@@ -89,20 +89,20 @@ export class ProductController extends BaseController implements IController {
     }
   }
 
-  async deleteProduct({ query, method, path }: Request<{}, {}, {}, { id: string }>, res: Response){
+  async deleteProduct({ query, method }: Request<{}, {}, {}, { id: string }>, res: Response){
     try {
       await this.service.delete(query.id)
 
       this.send({
         response: res,
         data: true,
-        url: this.path + path,
+        url: this.path,
         method
       })
     } catch (err) {
       return this.error({
         error: err,
-        url: this.path + path,
+        url: this.path,
         method
       })
     }

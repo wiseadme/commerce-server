@@ -1,16 +1,17 @@
 import { Document } from 'mongoose'
 import { inject, injectable } from 'inversify'
 import { TYPES } from '@common/schemes/di-types'
+// Types
 import { ILogger } from '@/types/utils'
-import { IAttributeService } from '@/types/services'
-import { IAttributeRepository } from '@/types/repositories'
-import { IAttribute } from '@/types/models'
+import { IAttributeService } from '../types/service'
+import { IAttributeRepository } from '../types/repository'
+import { IAttribute } from '../types/model'
 
 @injectable()
 export class AttributeService implements IAttributeService {
   constructor(
     @inject(TYPES.UTILS.ILogger) private logger: ILogger,
-    @inject(TYPES.REPOSITORIES.AttributeRepository) private repository: IAttributeRepository
+    @inject(TYPES.REPOSITORIES.IAttributeRepository) private repository: IAttributeRepository
   ){
   }
 

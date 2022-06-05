@@ -1,4 +1,4 @@
-import { IVariant } from '@/types/models'
+import { IVariant } from '../types/model'
 
 export class Variant {
   private readonly _group: string

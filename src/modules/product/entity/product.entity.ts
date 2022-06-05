@@ -1,5 +1,5 @@
 import { translator } from '@common/utils/translator'
-import { IProduct } from '@/types/models'
+import { IProduct } from '../types/model'
 
 export class Product implements IProduct {
   private readonly _name: string

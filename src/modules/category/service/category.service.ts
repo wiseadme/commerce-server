@@ -8,17 +8,18 @@ import { Category } from '../entity/category.entity'
 import { TYPES } from '@common/schemes/di-types'
 
 // Types
-import { ICategory } from '@/types/models'
-import { IEventBusService, ICategoryService } from '@/types/services'
+import { ICategory } from '../types/model'
+import { ICategoryService } from '../types/service'
+import { ICategoryRepository } from '../types/repository'
+import { IEventBusService } from '@/types/services'
 import { ILogger } from '@/types/utils'
-import { ICategoryRepository } from '@/types/repositories'
 
 @injectable()
 export class CategoryService implements ICategoryService {
 
   constructor(
     @inject(TYPES.UTILS.ILogger) private logger: ILogger,
-    @inject(TYPES.REPOSITORIES.CategoryRepository) private repository: ICategoryRepository,
+    @inject(TYPES.REPOSITORIES.ICategoryRepository) private repository: ICategoryRepository,
     @inject(TYPES.SERVICES.IEventBusService) private events: IEventBusService
   ){
   }

@@ -1,5 +1,5 @@
 import { Document, model, Schema } from 'mongoose'
-import { IAssetItem } from '@/types/models'
+import { IAssetItem } from '../types/model'
 
 const AssetSchema: Schema = new Schema<IAssetItem & Document>({
   _id: Schema.Types.ObjectId,

@@ -1,16 +1,17 @@
-import { IVariantService } from '@/types/services'
 import { inject, injectable } from 'inversify'
 import { TYPES } from '@common/schemes/di-types'
+// Types
 import { ILogger } from '@/types/utils'
-import { IVariant } from '@/types/models'
-import { IVariantRepository } from '@/types/repositories'
 import { Document } from 'mongoose'
+import { IVariant } from '../types/model'
+import { IVariantService } from '../types/service'
+import { IVariantRepository } from '../types/repository'
 
 @injectable()
 export class VariantService implements IVariantService {
   constructor(
     @inject(TYPES.UTILS.ILogger) private logger: ILogger,
-    @inject(TYPES.REPOSITORIES.VariantRepository) private repository: IVariantRepository
+    @inject(TYPES.REPOSITORIES.IVariantRepository) private repository: IVariantRepository
   ){
   }
 

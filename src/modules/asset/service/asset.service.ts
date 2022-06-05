@@ -1,12 +1,14 @@
-import { IAssetsService, IEventBusService } from '@/types/services'
 import { inject, injectable } from 'inversify'
 import { TYPES } from '@common/schemes/di-types'
-import { IAssetsRepository } from '@/types/repositories'
+// Types
+import { IAssetsService } from '../types/service'
+import { IAssetsRepository } from '../types/repository'
+import { IEventBusService } from '@/types/services'
 
 @injectable()
 export class AssetService implements IAssetsService {
   constructor(
-    @inject(TYPES.REPOSITORIES.AssetsRepository) private repository: IAssetsRepository,
+    @inject(TYPES.REPOSITORIES.IAssetsRepository) private repository: IAssetsRepository,
     @inject(TYPES.SERVICES.IEventBusService) private events: IEventBusService
   ){
     this.addEventListeners()

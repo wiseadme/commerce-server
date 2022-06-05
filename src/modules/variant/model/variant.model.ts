@@ -1,5 +1,5 @@
 import { model, Schema, Document } from 'mongoose'
-import { IVariant } from '@/types/models'
+import { IVariant } from '../types/model'
 
 const VariantSchema = new Schema<Document & IVariant>({
   _id: Schema.Types.ObjectId,

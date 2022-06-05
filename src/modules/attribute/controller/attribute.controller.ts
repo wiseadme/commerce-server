@@ -1,17 +1,19 @@
-import { Document } from 'mongoose'
 import expressAsyncHandler from 'express-async-handler'
 import { BaseController } from '@common/controller/base.controller'
-import { IController } from '@/types'
-import { Request, Response, Router } from 'express'
+import { Router } from 'express'
 import { inject, injectable } from 'inversify'
 import { TYPES } from '@common/schemes/di-types'
+// Types
+import { Document } from 'mongoose'
+import { Request, Response } from 'express'
 import { ILogger } from '@/types/utils'
-import { IAttributeService } from '@/types/services'
-import { IAttribute } from '@/types/models'
+import { IController } from '@/types'
+import { IAttributeService } from '../types/service'
+import { IAttribute } from '../types/model'
 
 @injectable()
 export class AttributeController extends BaseController implements IController {
-  public path = '/v1/attribute'
+  public path = '/v1/attributes'
   public router = Router()
 
   constructor(
@@ -85,20 +87,20 @@ export class AttributeController extends BaseController implements IController {
     }
   }
 
-  async deleteAttribute({ query, method, path }: Request, res: Response){
+  async deleteAttribute({ query, method }: Request<{}, {}, {}, { id: string }>, res: Response){
     try {
-      await this.service.delete(query.id as string)
+      await this.service.delete(query.id)
 
       this.send({
         response: res,
         data: null,
-        url: this.path + path,
+        url: this.path,
         method
       })
     } catch (err: any) {
       return this.error({
         error: err,
-        url: this.path + path,
+        url: this.path,
         method
       })
     }

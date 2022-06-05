@@ -7,9 +7,9 @@ import { BaseController } from '@common/controller/base.controller'
 
 // Types
 import { IController } from '@/types'
-import { ICategory } from '@/types/models'
 import { ILogger } from '@/types/utils'
-import { ICategoryService } from '@/types/services'
+import { ICategory } from '../types/model'
+import { ICategoryService } from '../types/service'
 
 // Schemes
 import { TYPES } from '@common/schemes/di-types'
@@ -17,7 +17,7 @@ import { Document } from 'mongoose'
 
 @injectable()
 export class CategoryController extends BaseController implements IController {
-  public path = '/v1/category'
+  public path = '/v1/categories'
   public router = Router()
 
   constructor(
@@ -92,20 +92,20 @@ export class CategoryController extends BaseController implements IController {
     }
   }
 
-  async deleteCategory({ query, method, path }: Request, res: Response){
+  async deleteCategory({ query, method }: Request, res: Response){
     try {
       await this.service.delete(query.id as string)
 
       this.send({
         response: res,
         data: null,
-        url: this.path + path,
+        url: this.path,
         method
       })
     } catch (err: any) {
       return this.error({
         error: err,
-        url: this.path + path,
+        url: this.path,
         method
       })
     }

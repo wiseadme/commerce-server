@@ -1,11 +1,13 @@
-import { IVariantRepository } from '@/types/repositories'
 import { inject, injectable } from 'inversify'
 import { TYPES } from '@common/schemes/di-types'
-import { ILogger } from '@/types/utils'
-import { IVariant } from '@/types/models'
 import { VariantModel } from '@modules/variant/model/variant.model'
-import { Document, Types } from 'mongoose'
+import { Types } from 'mongoose'
 import { validateId } from '@common/utils/mongoose-validate-id'
+// Types
+import { Document } from 'mongoose'
+import { ILogger } from '@/types/utils'
+import { IVariant } from '../types/model'
+import { IVariantRepository } from '../types/repository'
 
 @injectable()
 export class VariantRepository implements IVariantRepository {

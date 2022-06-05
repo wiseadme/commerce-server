@@ -1,5 +1,5 @@
 import { model, Schema, Document } from 'mongoose'
-import { IProduct } from '@/types/models'
+import { IProduct } from '../types/model'
 
 const ProductSchema = new Schema<IProduct & Document>({
   _id: Schema.Types.ObjectId,

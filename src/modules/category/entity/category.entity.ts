@@ -1,7 +1,8 @@
-import { ICategory, ISEOType } from '@/types/models'
+import { ICategory } from '../types/model'
+import { ISEOType } from '@/types/models'
 import { translator } from '@common/utils/translator'
 
-export class Category implements ICategory{
+export class Category implements ICategory {
 
   private readonly _url: string
   private readonly _title: string

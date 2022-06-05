@@ -5,17 +5,18 @@ import { TYPES } from '@common/schemes/di-types'
 import { Product } from '@modules/product/entity/product.entity'
 
 // Types
-import { ILogger } from '@/types/utils'
-import { IProductRepository } from '@/types/repositories'
-import { IEventBusService, IProductService } from '@/types/services'
-import { IProduct } from '@/types/models'
 import { Document } from 'mongoose'
+import { ILogger } from '@/types/utils'
+import { IProductRepository } from '../types/repository'
+import { IProductService } from '../types/service'
+import { IProduct } from '../types/model'
+import { IEventBusService } from '@/types/services'
 
 @injectable()
 export class ProductService implements IProductService {
   constructor(
     @inject(TYPES.UTILS.ILogger) private logger: ILogger,
-    @inject(TYPES.REPOSITORIES.ProductRepository) private repository: IProductRepository,
+    @inject(TYPES.REPOSITORIES.IProductRepository) private repository: IProductRepository,
     @inject(TYPES.SERVICES.IEventBusService) private events: IEventBusService
   ){
   }
