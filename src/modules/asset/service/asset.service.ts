@@ -29,5 +29,6 @@ export class AssetService implements IAssetsService {
   addEventListeners(){
     this.events.on('delete:category', this.deleteFile.bind(this))
     this.events.on('delete:product', this.deleteFile.bind(this))
+    this.events.on('update:assets', this.updateFile.bind(this))
   }
 }

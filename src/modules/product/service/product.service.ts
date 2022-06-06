@@ -35,7 +35,12 @@ export class ProductService implements IProductService {
   }
 
   async update(updates: Partial<Document & IProduct>){
-    if (updates.assets) updates.image = updates.assets?.find(it => it.main)?.url || ''
+    if (updates.assets) {
+      updates.assets.forEach(it => this.events.emit('update:assets', it))
+
+      updates.image = updates.assets?.find(it => it.main)?.url || ''
+    }
+
     return await this.repository.update(Product.update(updates))
   }
 

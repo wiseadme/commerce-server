@@ -56,13 +56,6 @@ export class AssetRepository implements IAssetsRepository {
   async update(updates){
     validateId(updates._id)
 
-    const oldMain = await AssetModel.findOneAndUpdate({ main: true })
-
-    if (oldMain) {
-      oldMain.main = false
-      oldMain.update()
-    }
-
     const updated = await AssetModel.findByIdAndUpdate(
       { _id: updates._id },
       { $set: updates },
