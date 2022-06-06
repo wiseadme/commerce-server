@@ -77,7 +77,9 @@ export class AssetRepository implements IAssetsRepository {
 
         if ((url && it.url === url) || !url) {
           it.deleteOne()
+
           fs.unlink(`${ config.uploadsDir }/${ ownerDir }/${ fileName }`)
+            .catch(err => console.log(err))
         }
       })
 
