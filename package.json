@@ -1,7 +1,7 @@
 {
-  "name": "shop-server",
-  "version": "1.0.0",
-  "description": "e-commerce server",
+  "name": "@ecommerce-platform/server",
+  "version": "1.0.2",
+  "description": "ecommerce platform admin server",
   "main": "cluster.js",
   "type": "commonjs",
   "scripts": {
@@ -10,7 +10,14 @@
     "start": "node dist/src/app/cluster.js"
   },
   "keywords": [],
-  "author": "",
+  "author": {
+    "name": "Anar Allakhverdiev",
+    "email": "wiseadme@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:wiseadme/commerce-server.git"
+  },
   "license": "ISC",
   "devDependencies": {
     "@types/express": "^4.17.13",
@@ -40,9 +47,9 @@
     "swagger-ui-express": "^4.3.0"
   },
   "_moduleAliases": {
-    "@common": "dist/src/common",
-    "@app": "dist/src/app",
-    "@modules": "dist/src/modules",
-    "@swagger": "dist/swagger"
+    "@common": "src/common",
+    "@app": "src/app",
+    "@modules": "src/modules",
+    "@swagger": "swagger"
   }
 }

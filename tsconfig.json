@@ -4,6 +4,7 @@
     "module": "commonjs",
     "rootDir": "./",
     "outDir": "./dist",
+    "allowJs": true,
     "noImplicitAny": false,
     "esModuleInterop": true,
     "experimentalDecorators": true,
@@ -12,7 +13,7 @@
     "types": [
       "@types/express"
     ],
-    "baseUrl": ".",
+    "baseUrl": "./",
     "paths": {
       "@/*": [
         "src/*"
